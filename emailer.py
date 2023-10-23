@@ -9,10 +9,10 @@ import base64
 
 class Emailer :
     def __init__(self)  -> None :
-        self.MailSenderAddress = "randomusermanas1@gmail.com"
-        self.Password = "ksekfatjysemvsyn"
+        self.MailSenderAddress = "astronomyclub@iittp.ac.in"
+        self.Password = "crdzwkqneqsmacyf"
 
-    def SendMail(self, receipient) -> None :
+    def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()
         object_1['From'] = self.MailSenderAddress
         object_1['To'] = receipient
@@ -40,9 +40,14 @@ class Emailer :
         object_1.attach(html_part1)
 
         # Attaching the File
+        attachment_path = f"Certificates/{name}.pdf"
+        with open(attachment_path,'rb') as attachment :
+            attachment_part = MIMEApplication(attachment.read())
+            attachment_part.add_header('Content-Disposition', 'attachment', filename = f'{name}.pdf')
+            object_1.attach(attachment_part)
 
         # Send Mail
-        try: 
+        try : 
             connection = smtplib.SMTP("smtp.gmail.com")
             connection.starttls()
             connection.login(user=self.MailSenderAddress, password=self.Password)

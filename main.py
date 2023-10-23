@@ -18,7 +18,7 @@ OUTPUT_DIRECTORY = "Certificates"
 os.makedirs(OUTPUT_DIRECTORY,exist_ok=True)
 
 # Make List of Participants
-names = ["Manas Poddar", "Mayank"]
+names = []
 df = pandas.read_csv(r"names.csv")
 names = df['Name'].tolist()
 emails = df['Email'].tolist()
@@ -28,25 +28,28 @@ emails = df['Email'].tolist()
 name_position = (0,825)
 
 EmailSender = Emailer()
-EmailSender.SendMail("iamscientistmanas@gmail.com")
 
 
-# for name in names :
-#     certificate_with_name = certificate_img.copy()
-#     drawer = ImageDraw.Draw(certificate_with_name)
 
-#     # Calculate the text width for the name
-#     text_width = drawer.textlength(name, font=font)
+for name,email in zip(names, emails)  :
+    certificate_with_name = certificate_img.copy()
+    drawer = ImageDraw.Draw(certificate_with_name)
 
-#     # Adjust Position (x,y)
-#     # Adjust x automatically, and adjust y by font size
-#     name_position = ((certificate_img.width - text_width)/2, 825 - 56 )
+    # Calculate the text width for the name
+    text_width = drawer.textlength(name, font=font)
 
-#     drawer.text(name_position,name,fill="blue", font=font)
+    # Adjust Position (x,y)
+    # Adjust x automatically, and adjust y by font size
+    name_position = ((certificate_img.width - text_width)/2, 825 - 56 )
 
-#     out_path_certificate = os.path.join(OUTPUT_DIRECTORY,f"{name}.pdf")
+    drawer.text(name_position,name,fill="blue", font=font)
 
-#     certificate_with_name.save(out_path_certificate,"PDF")
+    out_path_certificate = os.path.join(OUTPUT_DIRECTORY,f"{name}.pdf")
+
+    certificate_with_name.save(out_path_certificate,"PDF")
+
+    # Sending Mail
+    EmailSender.SendMail(email,name)
 
 # Closing the template image
 certificate_img.close()
