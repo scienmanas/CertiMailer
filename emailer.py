@@ -2,21 +2,18 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-from email.mime.image import MIMEImage
-from PIL import Image
-import base64
-
 
 class Emailer :
     def __init__(self)  -> None :
-        self.MailSenderAddress = "astronomyclub@iittp.ac.in"
-        self.Password = "crdzwkqneqsmacyf"
+        self.MailSenderAddress = "Your Email Id"
+        self.Password = "Your Password (App Password)"    # For creating App Password, Check Youtube
 
     def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()
-        object_1['From'] = self.MailSenderAddress
-        object_1['To'] = receipient
-        object_1['Subject'] = "Partcipation Certificate, Astrophotography Workshop - Athereum 2.0"
+        name_ = "Coders Conclave"
+        object_1['From'] = f"{name_} <{self.MailSenderAddress}>"
+        object_1['To'] = f"{name} <{receipient}>"        # Recipient Address
+        object_1['Subject'] = "Partcipation Certificate, Astrophotography Workshop: Athereum 2.0"  # Subject of the mail
 
         # HTML Element :
         html_content = """
@@ -24,14 +21,12 @@ class Emailer :
 <body style="background: linear-gradient(to bottom, #3a6186, #89253e); background-repeat: no-repeat; background-attachment: fixed; margin: 0; padding: 0; text-align: center;">
     <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
         <h1 style="color: #333;">Thank You for Participating</h1>
-        <p style="color: #666;">In the Astrophotography and Light Painting Workshop conducted on 22nd October under Aethereum, The Annual Collaborative Astrofest of IIT and IISER Tirupati.</p>
+        <p style="color: #666;">In the coding contest conducted on 22nd October under Coders, The Annual Coding competition of India.</p>
         <p style="color: #666;">The participation certificate is attached in this mail.</p>
-        <p style="color: #666;">Wishing you clear skies and happy stargazing!</p>
+        <p style="color: #666;">Wishing you hemlo World!</p>
         </br>
         <p style="color: #333; font-weight: bold;"><a href="https://github.com/scienmanas" style="color: #007BFF; text-decoration: none;">Manas Poddar</a></p>
-        <p style="color: #333; font-weight: bold;"><a href="https://www.instagram.com/arjit0_0sb/" style="color: #FF8800; text-decoration: none;">Arjit Banerjee</a></p>
-        <p style="color: #666;">Heads, Aethereum</p>
-        <img src="https://raw.githubusercontent.com/scienmanas/Miscellanous-Files/main/AEthereum__logo.png?token=GHSAT0AAAAAACHCYQFTM3NWGE7VC7LM7KAYZJW73MQ" alt="Aethereum Logo" style="max-width: 100px; margin: 0 auto;">
+        <p style="color: #666;">Heads, Some Event</p>
     </div>
 </body>
 </html>
