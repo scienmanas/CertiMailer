@@ -18,7 +18,31 @@ This is a Python Script to generate certificates and mail them to invidually in 
 git clone https://github.com/scienmanas/Certificates-Generator.git
 `
 2. Install the requirements using `pip install -r requirements.txt`
-3. Add the details of the participants in the `data.csv` file
+3. Add the details of the participants in the `names.csv` file
 4. Add the certificate template in the `template` folder
 5. Run the script using `python main.py`
 6. The certificates will be generated in the `certificates` folder and the mails will be sent to the participants
+
+## Note
+
+- The `data.csv` file should contain the following columns:
+    - `Name` : Name of the participant
+    - `Email` : Email of the participant
+
+- The `template` folder should contain the certificate template in `.png` format
+- Change the `self.MailSenderAddress` and `self.Passwords` to your organization Email and Password (App Password)
+- Change the `html_content to your desired redering Content` 
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Author
+
+- [Manas Gupta](https://www.instagram.com/scienmanas/)
+
+## Contribution
+
+- All contributions are welcome
+- Fork the repository, improve the code and send pull requests
+- If you find any issue, raise an issue
