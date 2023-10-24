@@ -48,6 +48,6 @@ class Emailer :
             connection.login(user=self.MailSenderAddress, password=self.Password)
             connection.sendmail(object_1["From"], [receipient], object_1.as_string())
             connection.quit()
-            print('Email sent successfully')
+            print(f'Email sent successfully to {name}')
         except Exception as e :
-            print(f"Email could not be sent: {str(e)}")
+            print(f"Email could not be sent to {name} : {str(e)}")
