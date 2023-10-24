@@ -39,7 +39,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Author
 
-- [Manas Gupta](https://www.instagram.com/scienmanas/)
+- [Manas Poddar](https://www.instagram.com/scienmanas/)
 
 ## Contribution
 
