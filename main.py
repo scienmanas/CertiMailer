@@ -57,3 +57,4 @@ for name,email in zip(names, emails)  :
 
 # Closing the template image
 certificate_img.close()
+print("Scripting Running complete")
