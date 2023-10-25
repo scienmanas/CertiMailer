@@ -1,4 +1,4 @@
-# Certificate Generator
+# CertiMailer
 
 This is a Python Script to generate certificates and mail them to invidually in Bulk for competetions, workshops, classroom material distribution, etc.
 
