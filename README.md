@@ -19,13 +19,13 @@ git clone https://github.com/scienmanas/Certificates-Generator.git
 `
 2. Install the requirements using `pip install -r requirements.txt`
 3. Add the details of the participants in the `names.csv` file
-4. Add the certificate template in the `template` folder
+4. Add the certificate template in the `template` folder. Also change the name of the certificate template in `main.py` to your certificate name.
 5. Run the script using `python main.py`
 6. The certificates will be generated in the `certificates` folder and the mails will be sent to the participants
 
 ## Note
 
-- The `data.csv` file should contain the following columns:
+- The `names.csv` file should contain the following columns:
     - `Name` : Name of the participant
     - `Email` : Email of the participant
 
@@ -36,6 +36,8 @@ git clone https://github.com/scienmanas/Certificates-Generator.git
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+The repository is free to use but copying this is strictly prohibited.
 
 ## Author
 
