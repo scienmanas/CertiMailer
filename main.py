@@ -72,6 +72,7 @@ while True :
         GENERATOR = GenerateByImage()
         _script_animation()
         GENERATOR._send_email()
+        GENERATOR._retry_failed_operation()
         break
     else:
         print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either 'pdf' or 'png'.{Fore.RESET}{Style.RESET_ALL}")
