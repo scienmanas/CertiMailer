@@ -47,7 +47,11 @@ The repository is free to use but copying this is strictly prohibited.
 ## Feautres under development 
 
 - [ ] Support for both template pdf and png
-- [ ] Add a GUI probably a tkinter or shell maybe a data uploading option too
+- [x] Add a GUI probably a tkinter or shell maybe a data uploading option too
 - [ ] console for sending confirmation
 - [ ] Retrying to those not sent, maintain list
 - [ ] Read mail by api and check if mail not send is received when sender id is wrong (thinking, not confirmed)
+
+Add commands: 
+chmod +x certimailer.sh
+./certimailer.sh

@@ -7,7 +7,10 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+import keyboard
+from colorama import init, Fore, Style
 
+init(autoreset=True)  # Initialize colorama for cross-platform colored text
 # Set the Colour before drawing
 TEXT_COLOUR = (0,0,255) 
 
@@ -77,7 +80,7 @@ class GenerateByImage() :
 
         # Closing the template image
         self.certificate_img.close()
-        print("Script running complete")
+        print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
 
 
 
