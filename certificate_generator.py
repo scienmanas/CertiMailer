@@ -19,6 +19,15 @@ class GenerateByPdf() :
     def __init__(self) -> None:
         pass
 
+    def _store_participants_data(self) ->None :
+        pass
+
+    def _send_email(self) -> None :
+        pass
+
+    def _retry_failed_operation(self) -> None :
+        pass
+
 class GenerateByImage() :
 
     def __init__(self) -> None:

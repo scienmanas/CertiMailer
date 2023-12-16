@@ -86,3 +86,12 @@ If you want custom script for your organization, I can do it according to your o
 - [x] The script contains timeout time of 60s, so if there is some error while email sending, it will automatically shutdown after timeout time, the emails which are sent correctly is maintained and the `names.csv` is updated automatically after shutting shown of script so that again email is not sent to ther person already sent
 - [x] Retry feature for network errors.
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package
+
+
+
+
+
+Remain :
+Pdf support
+integrate name and email enter
+width and height url and adjustments instruction a well as in code
