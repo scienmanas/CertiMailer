@@ -1,44 +1,54 @@
 from certificate_generator import GenerateByImage, GenerateByPdf
 import time
 
-# Configure the email address and password
+# ASCII Art logo
 logo = """
-
-░█████╗░███████╗██████╗░████████╗██╗███╗░░░███╗░█████╗░██╗██╗░░░░░███████╗██████╗░
+\033[1;36m░█████╗░███████╗██████╗░████████╗██╗███╗░░░███╗░█████╗░██╗██╗░░░░░███████╗██████╗░
 ██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██║████╗░████║██╔══██╗██║██║░░░░░██╔════╝██╔══██╗
 ██║░░╚═╝█████╗░░██████╔╝░░░██║░░░██║██╔████╔██║███████║██║██║░░░░░█████╗░░██████╔╝
 ██║░░██╗██╔══╝░░██╔══██╗░░░██║░░░██║██║╚██╔╝██║██╔══██║██║██║░░░░░██╔══╝░░██╔══██╗
 ╚█████╔╝███████╗██║░░██║░░░██║░░░██║██║░╚═╝░██║██║░░██║██║███████╗███████╗██║░░██║
 ░╚════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝╚══════╝╚══════╝╚═╝░░╚═╝
-
-            The Complete solution for automatic certificates mailing
-
+\033[0mThe Complete solution for automatic certificates mailing
 """
 print(logo)
 print("Configuring the basic settings ")
 
+# Get user credentials
 EMAIL = input("Enter the account email: ")
 PASSWORD = input("Enter App Password, For setting up app password, follow the tutorial: link: ")
 
-print("Update the entries of names.csv file")
-# Add delay lke something enter pressing
-print("Update your template in template folder, kepping the template name same ,eg: sameple.png or sameple.pdf")
-# same with this
-def _get_template_type() -> None :
+# Inform user to update entries in names.csv and template folder
+print("Updating entries in names.csv file...")
+time.sleep(2)
+
+print("Updating the template in the template folder...")
+time.sleep(2)
+
+# Function to get template type
+def _get_template_type() -> None:
     type = input()
     return type
 
-# Add Delay 
-# print somenice here like animation of staring 
-    
-print('Type "pdf" if you have templte in .pdf format and "png" if templte is in .png format: ')
-
+# Inform user to choose template type
+print('Type "\033[1;33mpdf\033[0m" if you have a template in .pdf format and "\033[1;33mpng\033[0m" if the template is in .png format: ')
 TEMPLATE_TYPE = _get_template_type()
-if (TEMPLATE_TYPE.lower() == 'pdf') :
+
+# Rotating animation with changing color during setup
+animation_chars = "-\|/"
+for _ in range(10):
+    for char in animation_chars:
+        print(f"\r\033[1;32mSetting up... {char}\033[0m", end="", flush=True)
+        time.sleep(0.1)
+
+print()
+# Initialize the generator based on the chosen template type
+if TEMPLATE_TYPE.lower() == 'pdf':
     GENERATOR = GenerateByPdf()
-elif (TEMPLATE_TYPE.lower() == 'png') :
+elif TEMPLATE_TYPE.lower() == 'png':
     GENERATOR = GenerateByImage()
+    # Add some delay or animation here
     GENERATOR._send_email()
-else :
-    print("Invalid Template Type\nPlease Enter either 'pdf' or 'png' ")
+else:
+    print("\n\033[1;31mInvalid Template Type. Please enter either 'pdf' or 'png'.\033[0m")
     TEMPLATE_TYPE = _get_template_type()
