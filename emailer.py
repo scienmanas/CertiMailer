@@ -2,13 +2,19 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+import keyboard
+from colorama import init, Fore, Style
+import time
+
+init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
     def __init__(self)  -> None :
         self.MailSenderAddress = "randomusermanas1@gmail.com"
         self.Password = "ndozcojxqoayhslj"    # For creating App Password, Check Youtube
+        self.retry_dictionary = {}
 
-    def SendMail(self, receipient, name) -> None :
+    def SendMail(self, receipient, name, attachment_type) -> None :
         object_1 = MIMEMultipart()
         name_ = "Coders Conclave"
         object_1['From'] = f"{name_} <{self.MailSenderAddress}>"
@@ -38,16 +44,28 @@ class Emailer :
         attachment_path = f"Certificates/{name}.pdf"
         with open(attachment_path,'rb') as attachment :
             attachment_part = MIMEApplication(attachment.read())
-            attachment_part.add_header('Content-Disposition', 'attachment', filename = f'{name}.pdf')
+            attachment_part.add_header('Content-Disposition', 'attachment', filename = f'{name}{attachment_type}')
             object_1.attach(attachment_part)
 
         # Send Mail
         try : 
-            connection = smtplib.SMTP("smtp.gmail.com")
+            connection = smtplib.SMTP("smtp.gmail.com", timeout=60)
             connection.starttls()
             connection.login(user=self.MailSenderAddress, password=self.Password)
             connection.sendmail(object_1["From"], [receipient], object_1.as_string())
             connection.quit()
-            print(f'Email sent successfully to {name}')
+            print(f'Email sent successfully to {Style.BRIGHT}{Fore.YELLOW}{name}{Fore.RESET}{Style.RESET_ALL}')
+            return "sent"
         except Exception as e :
-            print(f"Email could not be sent to {name} : {str(e)}")
+            print(f"{Style.BRIGHT}{Fore.RED}Email could not be sent to{Fore.RESET} {Fore.YELLOW}{name}{Fore.RESET} : {Fore.RED}{str(e)}{Fore.RESET}{Style.RESET_ALL}")
+            return "failed"
+
+
+    def _retry_not_send(self) -> None :
+        # if len(self.retry_dictionary) == 0 :
+        #     pass
+        # else :
+        #     time.sleep(0.1)
+        #     print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed main...{Style.RESET_ALL}{Fore.RESET}")
+        pass
+

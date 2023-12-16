@@ -48,7 +48,7 @@ The repository is free to use but copying this is strictly prohibited.
 
 - [ ] Support for both template pdf and png
 - [x] Add a GUI probably a tkinter or shell maybe a data uploading option too
-- [ ] console for sending confirmation
+- [x] console for sending confirmation
 - [ ] Retrying to those not sent, maintain list
 - [ ] Read mail by api and check if mail not send is received when sender id is wrong (thinking, not confirmed)
 

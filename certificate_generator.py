@@ -45,13 +45,14 @@ class GenerateByImage() :
 
     def _store_participants_data(self) -> None : 
         self.names = []
-        df = pandas.read_csv(r"names.csv")
-        self.names = df['Name'].tolist()
-        self.emails = df['Email'].tolist()
+        self.df = pandas.read_csv(r"names.csv")
+        self.names = self.df['Name'].tolist()
+        self.emails = self.df['Email'].tolist()
+        self.success_indices = []
 
     def _send_email(self) -> None :
 
-        for name,email in zip(self.names, self.emails) :
+        for index, (name,email) in enumerate(zip(self.names, self.emails)) :
             self.out_path_certificate = os.path.join(self.OUTPUT_DIRECTORY, f"{name}.pdf")
 
             # Make a canvas
@@ -76,11 +77,20 @@ class GenerateByImage() :
             self.drawer.save()
 
             # Sending the mail
-            self.mailer.SendMail(email, name)
+            self.status = self.mailer.SendMail(email, name, ".png")
+            if self.status == "sent" :
+                self.success_indices.append(index)
+
+        #  Update the original dataframe: 
+        self.df = self.df.drop(index=self.success_indices)
+
+        # Save the dataframe
+        self.df.to_csv(r"names.csv", index=False)
 
         # Closing the template image
         self.certificate_img.close()
         print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
 
-
+    def _retry_failed_operation(self) -> None :
+        pass
 
