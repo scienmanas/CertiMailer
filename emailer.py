@@ -5,8 +5,8 @@ from email.mime.application import MIMEApplication
 
 class Emailer :
     def __init__(self)  -> None :
-        self.MailSenderAddress = "Your Email Id"
-        self.Password = "Your Password (App Password)"    # For creating App Password, Check Youtube
+        self.MailSenderAddress = "randomusermanas1@gmail.com"
+        self.Password = "ndozcojxqoayhslj"    # For creating App Password, Check Youtube
 
     def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()

@@ -1,60 +1,44 @@
-import os
-import pandas
-from PIL import Image, ImageDraw, ImageFont
-from emailer import Emailer
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from certificate_generator import GenerateByImage, GenerateByPdf
+import time
 
-# Loading the certificate tenplate
-certificate_img = Image.open(r"template/sample.png")
+# Configure the email address and password
+logo = """
 
-drawer_img = ImageDraw.Draw(certificate_img)  # Creating a drawing object
-EmailSender = Emailer()   # Creating Emailer Object
+░█████╗░███████╗██████╗░████████╗██╗███╗░░░███╗░█████╗░██╗██╗░░░░░███████╗██████╗░
+██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██║████╗░████║██╔══██╗██║██║░░░░░██╔════╝██╔══██╗
+██║░░╚═╝█████╗░░██████╔╝░░░██║░░░██║██╔████╔██║███████║██║██║░░░░░█████╗░░██████╔╝
+██║░░██╗██╔══╝░░██╔══██╗░░░██║░░░██║██║╚██╔╝██║██╔══██║██║██║░░░░░██╔══╝░░██╔══██╗
+╚█████╔╝███████╗██║░░██║░░░██║░░░██║██║░╚═╝░██║██║░░██║██║███████╗███████╗██║░░██║
+░╚════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝╚══════╝╚══════╝╚═╝░░╚═╝
 
-# Fonts Configuration
-font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
-pdfmetrics.registerFont(TTFont("cer_font",r"Fonts/PlaypenSans-Bold.ttf"))
+            The Complete solution for automatic certificates mailing
 
-# Folder to store output certificates.
-OUTPUT_DIRECTORY = "Certificates"
-os.makedirs(OUTPUT_DIRECTORY,exist_ok=True)
+"""
+print(logo)
+print("Configuring the basic settings ")
 
-# Make List of Participants
-names = []
-df = pandas.read_csv(r"names.csv")
-names = df['Name'].tolist()
-emails = df['Email'].tolist()
+EMAIL = input("Enter the account email: ")
+PASSWORD = input("Enter App Password, For setting up app password, follow the tutorial: link: ")
 
-for name,email in zip(names, emails)  :
-    out_path_certificate = os.path.join(OUTPUT_DIRECTORY,f"{name}.pdf")
+print("Update the entries of names.csv file")
+# Add delay lke something enter pressing
+print("Update your template in template folder, kepping the template name same ,eg: sameple.png or sameple.pdf")
+# same with this
+def _get_template_type() -> None :
+    type = input()
+    return type
 
-    # Make a Canvas
-    drawer = canvas.Canvas(out_path_certificate, pagesize=(certificate_img.width, certificate_img.height))
+# Add Delay 
+# print somenice here like animation of staring 
+    
+print('Type "pdf" if you have templte in .pdf format and "png" if templte is in .png format: ')
 
-    # Insert Image
-    drawer.drawImage(r"template/sample.png",0,0,width=certificate_img.width,height=certificate_img.height)
-
-    # Setting Drawer Font
-    drawer.setFont("cer_font",56)
-    # Set the Colour before drawing
-    text_colour = (0,0,255)  # For Blue Colour
-    drawer.setFillColor(text_colour)
-
-    # Adjust Position (x,y)
-    # Adjust Coordinates by https://www.image-map.net/
-    # Y - coordinate keep the touching line - Use link above to get the coordinates
-    text_width = drawer_img.textlength(name,font=font)
-    name_position = ((certificate_img.width - text_width)/2, certificate_img.height - 805)
-
-    # Draw the name
-    drawer.drawString(name_position[0],name_position[1],name)
-
-    drawer.save()
-
-    # Sending Mail
-    EmailSender.SendMail(email,name)
-
-# Closing the template image
-certificate_img.close()
-print("Scripting Running complete")
+TEMPLATE_TYPE = _get_template_type()
+if (TEMPLATE_TYPE.lower() == 'pdf') :
+    GENERATOR = GenerateByPdf()
+elif (TEMPLATE_TYPE.lower() == 'png') :
+    GENERATOR = GenerateByImage()
+    GENERATOR._send_email()
+else :
+    print("Invalid Template Type\nPlease Enter either 'pdf' or 'png' ")
+    TEMPLATE_TYPE = _get_template_type()
