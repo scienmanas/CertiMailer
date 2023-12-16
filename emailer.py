@@ -12,9 +12,8 @@ class Emailer :
     def __init__(self)  -> None :
         self.MailSenderAddress = "randomusermanas1@gmail.com"
         self.Password = "ndozcojxqoayhslj"    # For creating App Password, Check Youtube
-        self.retry_dictionary = {}
 
-    def SendMail(self, receipient, name, attachment_type) -> None :
+    def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()
         name_ = "Coders Conclave"
         object_1['From'] = f"{name_} <{self.MailSenderAddress}>"
@@ -44,7 +43,7 @@ class Emailer :
         attachment_path = f"Certificates/{name}.pdf"
         with open(attachment_path,'rb') as attachment :
             attachment_part = MIMEApplication(attachment.read())
-            attachment_part.add_header('Content-Disposition', 'attachment', filename = f'{name}{attachment_type}')
+            attachment_part.add_header('Content-Disposition', 'attachment', filename = f'{name}.pdf')
             object_1.attach(attachment_part)
 
         # Send Mail
@@ -59,13 +58,4 @@ class Emailer :
         except Exception as e :
             print(f"{Style.BRIGHT}{Fore.RED}Email could not be sent to{Fore.RESET} {Fore.YELLOW}{name}{Fore.RESET} : {Fore.RED}{str(e)}{Fore.RESET}{Style.RESET_ALL}")
             return "failed"
-
-
-    def _retry_not_send(self) -> None :
-        # if len(self.retry_dictionary) == 0 :
-        #     pass
-        # else :
-        #     time.sleep(0.1)
-        #     print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed main...{Style.RESET_ALL}{Fore.RESET}")
-        pass
 

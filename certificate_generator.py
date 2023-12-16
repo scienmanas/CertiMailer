@@ -77,7 +77,7 @@ class GenerateByImage() :
             self.drawer.save()
 
             # Sending the mail
-            self.status = self.mailer.SendMail(email, name, ".png")
+            self.status = self.mailer.SendMail(email, name)
             if self.status == "sent" :
                 self.success_indices.append(index)
 
@@ -92,5 +92,14 @@ class GenerateByImage() :
         print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
 
     def _retry_failed_operation(self) -> None :
-        pass
+
+        # Reconfigure the remaining list 
+        self.names = self.df['Name'].tolist()
+        self.emails = self.df['Email'].tolist()
+
+        if len(self.names) == 0 or len(self.emails) == 0 :
+            pass
+        else :
+            print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed connection...{Fore.RESET}{Style.RESET_ALL}")
+            self._send_email() 
 
