@@ -71,7 +71,6 @@ while True :
         GENERATOR = GenerateByImage(EMAIL, PASSWORD)
         if (GENERATOR._is_csv_updated() == "break") :
             break
-
         _animation()
         _script_animation()
         GENERATOR._send_email()
@@ -82,7 +81,6 @@ while True :
         GENERATOR = GenerateByImage(EMAIL, PASSWORD)
         if (GENERATOR._is_csv_updated() == "break") :
             break
-
         _animation()
         _script_animation()
         GENERATOR._send_email()
