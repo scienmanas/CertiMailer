@@ -93,5 +93,4 @@ If you want custom script for your organization, I can do it according to your o
 
 Remain :
 Pdf support
-integrate name and email enter
 width and height url and adjustments instruction a well as in code

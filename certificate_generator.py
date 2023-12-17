@@ -30,10 +30,10 @@ class GenerateByPdf() :
 
 class GenerateByImage() :
 
-    def __init__(self) -> None:
+    def __init__(self, account, password) -> None:
 
         # Mailer Object
-        self.mailer = Emailer()
+        self.mailer = Emailer(account, password)
 
         # Load the certificate templae
         self.certificate_img = Image.open(r"template/sample.png")

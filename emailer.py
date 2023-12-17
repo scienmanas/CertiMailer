@@ -9,9 +9,12 @@ import time
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
-    def __init__(self)  -> None :
+    def __init__(self, account, password)  -> None :
         self.MailSenderAddress = "randomusermanas1@gmail.com"
         self.Password = "ndozcojxqoayhslj"    # For creating App Password, Check Youtube
+        if account != "auto" and password != "auto" :
+            self.MailSenderAddress = account
+            self.Password = password
 
     def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()

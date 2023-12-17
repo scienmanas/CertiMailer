@@ -20,7 +20,7 @@ logo = f"""
 
 """
 print(logo)
-print("Configuring the basic settings ")
+print(f"Configuring the basic settings enter {Style.BRIGHT}{Fore.YELLOW} 'auto' {Fore.RESET}{Style.RESET_ALL} if already configure in the emailer file")
 
 # Get user credentials
 EMAIL = input("Enter the account email: ")
@@ -69,7 +69,7 @@ while True :
         # GENERATOR.send_email()
         break
     elif TEMPLATE_TYPE.lower() == 'png':
-        GENERATOR = GenerateByImage()
+        GENERATOR = GenerateByImage(EMAIL, PASSWORD)
         _script_animation()
         GENERATOR._send_email()
         GENERATOR._retry_failed_operation()
