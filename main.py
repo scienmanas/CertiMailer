@@ -77,6 +77,7 @@ while True :
         _script_animation()
         GENERATOR._send_email()
         GENERATOR._retry_failed_operation()
+        GENERATOR._check_remaining()
         break
     else:
         print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")

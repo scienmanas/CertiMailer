@@ -105,6 +105,7 @@ class GenerateByImage() :
     def _retry_failed_operation(self) -> None :
 
         # Reconfigure the remaining list 
+        self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
 
@@ -113,6 +114,11 @@ class GenerateByImage() :
         else :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed connection...{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
-            self.df = pandas.read_csv(r"names.csv")
             self._send_email() 
 
+    def _check_remaining(self) :
+        
+        if len(self.names) == 0 or len(self.emails) == 0 :
+            print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
+        else :
+            print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
