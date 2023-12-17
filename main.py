@@ -46,8 +46,9 @@ def _animation() -> None :
     animation_chars = "-\|/"
     for _ in range(10):
         for char in animation_chars:
-            print(f"\r{Style.BRIGHT}{Fore.GREEN}Setting up... {char}{Fore.RESET}{Style.RESET_ALL}", flush=True)
+            print(f"\r{Style.BRIGHT}{Fore.GREEN}Setting up... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
             time.sleep(0.1)
+    print()
 
 def _script_animation() -> None :
     animation_chars = "-\|/"
@@ -58,21 +59,21 @@ def _script_animation() -> None :
     print()
 
 # Inform user to update entries in names.csv and template folder
-print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
-time.sleep(2)
+# print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
+# time.sleep(2)
 
-print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
+# print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
 
-time.sleep(2)
+# time.sleep(2)
 
 # Initialize the generator based on the chosen template type
 while True :
     if TEMPLATE_TYPE.lower() == 'pdf':
-        GENERATOR = GenerateByImage(EMAIL, PASSWORD)
+        GENERATOR = GenerateByPdf(EMAIL, PASSWORD)
         if (GENERATOR._is_csv_updated() == "break") :
             break
-        _animation()
-        _script_animation()
+        # _animation()
+        # _script_animation()
         GENERATOR._send_email()
         GENERATOR._retry_failed_operation()
         GENERATOR._check_remaining()
@@ -81,8 +82,8 @@ while True :
         GENERATOR = GenerateByImage(EMAIL, PASSWORD)
         if (GENERATOR._is_csv_updated() == "break") :
             break
-        _animation()
-        _script_animation()
+        # _animation()
+        # _script_animation()
         GENERATOR._send_email()
         GENERATOR._retry_failed_operation()
         GENERATOR._check_remaining()

@@ -88,6 +88,7 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Retry feature for network errors.
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package.
 - [x] Notify whether all have been mailed or not at last.
+- [ ] Multiple entrying positions like as many wanted according to template, e.g.: Printing dates, competitions, names (Under development, wanted collaboration for it, tentative time to release: 4-5 month during May 2024)
 
 
 

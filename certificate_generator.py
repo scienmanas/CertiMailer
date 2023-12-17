@@ -3,32 +3,59 @@ import time
 import pandas
 from PIL import Image, ImageDraw, ImageFont
 from emailer import Emailer
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-import keyboard
 from colorama import init, Fore, Style
+from shutil import copyfile
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 # Set the Colour before drawing
 TEXT_COLOUR = (0,0,255) 
+# Configure the folders
+OUTPUT_DIRECTORY = "Certificates"
+TEMPLATE_DIRECTORY = "template"
+# Font configuration
+FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
+pdfmetrics.registerFont(TTFont("cer_font",r"Fonts/PlaypenSans-Bold.ttf"))
 
-class GenerateByPdf() :
-
+class GenerateByPdf():
     def __init__(self, account, password) -> None:
-        self.mailer = Emailer(account, password) 
+        self.mailer = Emailer(account, password)
+        self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
 
+        # Make output directory
+        os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
+        self._store_participants_data()
 
-    def _store_participants_data(self) -> None : 
+    def _store_participants_data(self) -> None:
         self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
 
-    def _send_email(self) -> None :
+    def _draw_text_on_pdf(self, pdf_path, name):
+       
         pass
+    
+    def _send_email(self) -> None:
+        for index, (name, email) in enumerate(zip(self.names, self.emails)):
+            # Make path and generate certificates
+            out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
+            self._draw_text_on_pdf(out_path_certificate, name)
+
+            # Sending the mail
+            self.status = self.mailer.SendMail(email, name)
+            if self.status == "sent":
+                self.success_indices.append(index)
+
+        self.df = self.df.drop(index=self.success_indices)
+        self.df.to_csv(r"names.csv", index=False)
+        print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", flush=True)
+        self.success_indices = []
+
 
     def _retry_failed_operation(self) -> None :
 
@@ -69,15 +96,10 @@ class GenerateByImage() :
         self.drawer_img = ImageDraw.Draw(self.certificate_img)
         
         # Font configuration
-        self.font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
-        pdfmetrics.registerFont(TTFont("cer_font",r"Fonts/PlaypenSans-Bold.ttf"))
-
-        # Folder to store the generated certificates
-        self.OUTPUT_DIRECTORY = "Certificates"
-        os.makedirs(self.OUTPUT_DIRECTORY, exist_ok=True)
+        # self.font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
+        self.png_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.png")
+        os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
         self._store_participants_data()
-
-
 
     def _store_participants_data(self) -> None : 
         self.df = pandas.read_csv(r"names.csv")
@@ -85,31 +107,35 @@ class GenerateByImage() :
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
 
+    def _draw_on_img(self, name) -> None :
+        # Output path
+        self.out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
+
+        # Make a canvas
+        self.drawer = canvas.Canvas(self.out_path_certificate, pagesize=(self.certificate_img.width, self.certificate_img.height))
+
+        # Insert image
+        self.drawer.drawImage(self.png_template_path,0,0, width=self.certificate_img.width, height=self.certificate_img.height)
+
+        # Set the drawer object font and colour
+        self.drawer.setFont("cer_font",56)
+        self.drawer.setFillColor(TEXT_COLOUR)
+
+        # Adjust Position (x,y)
+        # Adjust Coordinates by https://www.image-map.net/
+        # Y - coordinate keep the touching line - Use link above to get the coordinates
+        self.text_width = self.drawer_img.textlength(name,font=FONT)
+        self.name_position = ((self.certificate_img.width - self.text_width)/2, self.certificate_img.height - 805)
+
+        # Draw the name: 
+        self.drawer.drawString(self.name_position[0], self.name_position[1], name)
+        # Save the pdf with text written  
+        self.drawer.save()
+
     def _send_email(self) -> None :
-
         for index, (name,email) in enumerate(zip(self.names, self.emails)) :
-            self.out_path_certificate = os.path.join(self.OUTPUT_DIRECTORY, f"{name}.pdf")
-
-            # Make a canvas
-            self.drawer = canvas.Canvas(self.out_path_certificate, pagesize=(self.certificate_img.width, self.certificate_img.height))
-
-            # Insert image
-            self.drawer.drawImage(r"template/sample.png",0,0, width=self.certificate_img.width, height=self.certificate_img.height)
-
-            # Set the drawer object font and colour
-            self.drawer.setFont("cer_font",56)
-            self.drawer.setFillColor(TEXT_COLOUR)
-
-            # Adjust Position (x,y)
-            # Adjust Coordinates by https://www.image-map.net/
-            # Y - coordinate keep the touching line - Use link above to get the coordinates
-            self.text_width = self.drawer_img.textlength(name,font=self.font)
-            self.name_position = ((self.certificate_img.width - self.text_width)/2, self.certificate_img.height - 805)
-            
-            # Draw the name: 
-            self.drawer.drawString(self.name_position[0], self.name_position[1], name)
-
-            self.drawer.save()
+            # Make certificate
+            self._draw_on_img(name)
 
             # Sending the mail
             self.status = self.mailer.SendMail(email, name)
