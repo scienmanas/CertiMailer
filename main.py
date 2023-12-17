@@ -26,6 +26,10 @@ print(f"Configuring the basic settings enter {Style.BRIGHT}{Fore.YELLOW} 'auto' 
 EMAIL = input("Enter the account email: ")
 PASSWORD = input("Enter App Password, For setting up app password, follow the tutorial: link: ")
 
+# Erros due to copy-pasting omited 
+EMAIL = EMAIL.strip()
+PASSWORD = PASSWORD.strip().replace(' ','')
+
 # Inform user to update entries in names.csv and template folder
 print(f"{Style.BRIGHT}{Fore.GREEN}Updating entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
 time.sleep(2)
@@ -75,5 +79,5 @@ while True :
         GENERATOR._retry_failed_operation()
         break
     else:
-        print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either 'pdf' or 'png'.{Fore.RESET}{Style.RESET_ALL}")
+        print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
         TEMPLATE_TYPE = _get_template_type()

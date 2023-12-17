@@ -1,4 +1,5 @@
 import os
+import time
 import pandas
 from PIL import Image, ImageDraw, ImageFont
 from emailer import Emailer
@@ -98,7 +99,8 @@ class GenerateByImage() :
 
         # Closing the template image
         self.certificate_img.close()
-        print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
+        print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", flush=True)
+        self.success_indices = []
 
     def _retry_failed_operation(self) -> None :
 
@@ -110,5 +112,7 @@ class GenerateByImage() :
             pass
         else :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed connection...{Fore.RESET}{Style.RESET_ALL}")
+            time.sleep(1)
+            self.df = pandas.read_csv(r"names.csv")
             self._send_email() 
 
