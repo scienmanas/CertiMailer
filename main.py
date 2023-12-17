@@ -68,9 +68,15 @@ time.sleep(2)
 # Initialize the generator based on the chosen template type
 while True :
     if TEMPLATE_TYPE.lower() == 'pdf':
-        GENERATOR = GenerateByPdf()
+        GENERATOR = GenerateByImage(EMAIL, PASSWORD)
+        if (GENERATOR._is_csv_updated() == "break") :
+            break
+
+        _animation()
         _script_animation()
-        # GENERATOR.send_email()
+        GENERATOR._send_email()
+        GENERATOR._retry_failed_operation()
+        GENERATOR._check_remaining()
         break
     elif TEMPLATE_TYPE.lower() == 'png':
         GENERATOR = GenerateByImage(EMAIL, PASSWORD)
