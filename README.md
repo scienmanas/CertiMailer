@@ -89,10 +89,3 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package.
 - [x] Notify whether all have been mailed or not at last.
 <!-- - [X] Multiple entrying positions like as many wanted according to template, e.g.: Printing dates, competitions, names. -->
-
-
-
-
-Remain :
-Pdf support
-width and height url and adjustments instruction a well as in code
