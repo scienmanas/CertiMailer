@@ -3,13 +3,13 @@ import time
 import pandas
 from PIL import Image, ImageDraw, ImageFont
 from emailer import Emailer
-from PyPDF2 import PdfReader, PdfWriter
+import PyPDF2
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from colorama import init, Fore, Style
-from shutil import copyfile
+import shutil
+import io
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 # Set the Colour before drawing
@@ -26,9 +26,16 @@ class GenerateByPdf():
         self.mailer = Emailer(account, password)
         self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
 
+        # Configure template dimensions
+        self.template_dimensions = self._get_page_dimension()
+        self.template_width = self.template_dimensions[0]
+        self.template_height = self.template_dimensions[1]
+
         # Make output directory
         os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
         self._store_participants_data()
+        values = self._get_page_dimension()
+        print(f"Width = {values[0]} and heigth = {values[1]}")
 
     def _store_participants_data(self) -> None:
         self.df = pandas.read_csv(r"names.csv")
@@ -36,10 +43,52 @@ class GenerateByPdf():
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
 
-    def _draw_text_on_pdf(self, pdf_path, name):
-       
-        pass
-    
+    def _get_page_dimension(self) :
+        template = PyPDF2.PdfReader(open(self.pdf_template_path, "rb"))
+        template_page = template.pages[0]
+        template_page_width, template_page_height = template_page.mediabox.width  ,template_page.mediabox.height
+        return (template_page_width, template_page_height)
+
+    def _draw_text_on_pdf(self, out_path, name):
+
+        # Copy the original PDF to the output path
+        shutil.copy(self.pdf_template_path, out_path)
+
+        # Open the copied PDF file
+        with open(out_path, 'rb+') as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            pdf_writer = PyPDF2.PdfWriter()
+
+            # Iterate through each page in the original PDF
+            length_iterate = len(pdf_reader.pages)
+            for page_num in range(0, length_iterate):
+                page = pdf_reader.pages[page_num]
+
+                # Create a PDF canvas for drawing
+                packet = io.BytesIO()
+                drawer = canvas.Canvas(packet, pagesize=(self.template_width, self.template_height))
+
+                # Set font and colour
+                drawer.setFont("cer_font", 56)
+                drawer.setFillColor(TEXT_COLOUR)
+
+                # Draw the text
+                drawer.drawString(200, 200, f"{name}")
+
+                # Save 
+                drawer.save()
+
+                # Move the buffer position back to the beginning
+                packet.seek(0)
+                new_pdf = PyPDF2.PdfReader(packet)
+
+                # Merge the original page and the new content
+                page.merge_page(new_pdf.pages[0])
+                pdf_writer.add_page(page)
+
+            # Write the modified PDF back to the file
+            pdf_writer.write(file)
+
     def _send_email(self) -> None:
         for index, (name, email) in enumerate(zip(self.names, self.emails)):
             # Make path and generate certificates
@@ -77,7 +126,7 @@ class GenerateByPdf():
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
 
-    def _is_csv_updated(self) :
+    def _is_csv_updated(self) ->str :
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             return "break"
@@ -173,7 +222,7 @@ class GenerateByImage() :
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
 
-    def _is_csv_updated(self) :
+    def _is_csv_updated(self) ->str :
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             return "break"

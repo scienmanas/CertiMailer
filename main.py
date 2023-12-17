@@ -32,14 +32,13 @@ PASSWORD = PASSWORD.strip().replace(' ','')
 
 # Function to get template type
 def _get_template_type() -> None:
-    type = input()
-    return type
+    # type = input()
+    return "pdf"
 
-# Inform user to choose template type
 # Inform user to choose template type
 print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
-TEMPLATE_TYPE = _get_template_type()
 
+TEMPLATE_TYPE = _get_template_type()
 
 # Rotating animation with changing color during setup
 def _animation() -> None :
@@ -59,34 +58,33 @@ def _script_animation() -> None :
     print()
 
 # Inform user to update entries in names.csv and template folder
-# print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
-# time.sleep(2)
+print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
+time.sleep(2)
 
-# print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
-
-# time.sleep(2)
+print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
+time.sleep(2)
 
 # Initialize the generator based on the chosen template type
 while True :
     if TEMPLATE_TYPE.lower() == 'pdf':
-        GENERATOR = GenerateByPdf(EMAIL, PASSWORD)
-        if (GENERATOR._is_csv_updated() == "break") :
+        certificate_generator_pdf = GenerateByPdf(EMAIL, PASSWORD)
+        if (certificate_generator_pdf._is_csv_updated() == "break") :
             break
-        # _animation()
-        # _script_animation()
-        GENERATOR._send_email()
-        GENERATOR._retry_failed_operation()
-        GENERATOR._check_remaining()
+        _animation()
+        _script_animation()
+        certificate_generator_pdf._send_email()
+        certificate_generator_pdf._retry_failed_operation()
+        certificate_generator_pdf._check_remaining()
         break
     elif TEMPLATE_TYPE.lower() == 'png':
-        GENERATOR = GenerateByImage(EMAIL, PASSWORD)
-        if (GENERATOR._is_csv_updated() == "break") :
+        certificate_generator_pdf = GenerateByImage(EMAIL, PASSWORD)
+        if (certificate_generator_pdf._is_csv_updated() == "break") :
             break
-        # _animation()
-        # _script_animation()
-        GENERATOR._send_email()
-        GENERATOR._retry_failed_operation()
-        GENERATOR._check_remaining()
+        _animation()
+        _script_animation()
+        certificate_generator_pdf._send_email()
+        certificate_generator_pdf._retry_failed_operation()
+        certificate_generator_pdf._check_remaining()
         break
     else:
         print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
