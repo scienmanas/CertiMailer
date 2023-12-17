@@ -54,7 +54,6 @@ class GenerateByImage() :
 
 
     def _store_participants_data(self) -> None : 
-        self.names = []
         self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
@@ -116,9 +115,13 @@ class GenerateByImage() :
             time.sleep(1)
             self._send_email() 
 
-    def _check_remaining(self) :
-        
+    def _check_remaining(self) -> None:
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
+
+    def _is_csv_updated(self) :
+        if len(self.names) == 0 or len(self.emails) == 0 :
+            print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
+            return "break"
