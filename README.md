@@ -53,6 +53,8 @@ chmod +x certimailer.sh
 
 - The `font` and `font size` are cutomizable, to chenge uploaad the font in `Fonts Folder` and chenge the path according to the name in `certificate_generator.py` file.
 
+- Number of parametrs that can be printed and be taken as input are also customizable.
+
 - Don't stop the running the script by `Ctrl + C/X` otherwise the progress of the mail sent will not updated for that run.
 
 ## License
@@ -92,6 +94,23 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Notify whether all have been mailed or not at last.
 - [X] Multiple inputs taken for customization of printing parametrs e.g.: Printing dates, competitions, names.
 
-# Credits
+## Demo Videos 
+
+### Demo for png & deterning coordinates for `png` sample: 
+
+[png_app_password_demo.webm](https://github.com/scienmanas/CertiMailer/assets/99756067/c2267784-ea5f-400d-ae8e-6923c1b38e4f)
+
+### Demo for `pdf`:
+
+#### Running for `pdf` sample
+
+[pdf_demo.webm](https://github.com/scienmanas/CertiMailer/assets/99756067/8bffdd36-b093-4d4a-aadc-11230b86cb4e)
+
+#### Determining coordinates for `pdf` sample
+
+[pdf_coordinates_demo.webm](https://github.com/scienmanas/CertiMailer/assets/99756067/0e9d664d-ff87-4663-a8f9-2e8103e5a344)
+
+
+## Credits
 
 - Wesites : https://www.i2pdf.com/measure-pdf & https://www.image-map.net/ used for coordinates measurement.
