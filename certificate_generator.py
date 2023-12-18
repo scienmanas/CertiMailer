@@ -18,7 +18,7 @@ TEXT_COLOUR = (0,0,255)
 OUTPUT_DIRECTORY = "Certificates"
 TEMPLATE_DIRECTORY = "template"
 # Font configuration
-FONT_SIZE = 100
+FONT_SIZE = 28
 FONT_NAME = "cer_font"
 FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=FONT_SIZE)
 pdfmetrics.registerFont(TTFont(FONT_NAME,r"Fonts/PlaypenSans-Bold.ttf"))
@@ -149,10 +149,10 @@ class GenerateByPdf():
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
         self.event_name = input("Enter event name: ")
         self.during_date = input("Enter month of event (eg: Jan'22): ")
-        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.i2pdf.com/measure-pdf/ {Fore.RESET}{Fore.YELLOW}To measure see readme{Fore.RESET}{Style.RESET_ALL}")
-        name_position = input("Given name position (values seprated by comma x,y)")
-        event_name_position = input("Given event position (values seprated by comma x,y)")
-        date_position = input("Date position (values seprated by comma x,y)")
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.i2pdf.com/measure-pdf {Fore.RESET}{Fore.YELLOW}To measure see readme{Fore.RESET}{Style.RESET_ALL}")
+        name_position = input("Given name position (values seprated by comma x,y): ")
+        event_name_position = input("Given event position (values seprated by comma x,y): ")
+        date_position = input("Date position (values seprated by comma x,y): ")
         self.name_position = tuple(name_position.strip().split(','))
         self.event_name_postion = tuple(event_name_position.strip().split(','))
         self.during_date_position = tuple(date_position.strip().split(','))
