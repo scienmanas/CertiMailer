@@ -91,3 +91,7 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package.
 - [x] Notify whether all have been mailed or not at last.
 - [X] Multiple inputs taken for customization of printing parametrs e.g.: Printing dates, competitions, names.
+
+# Credits
+
+- Wesites : https://www.i2pdf.com/measure-pdf & https://www.image-map.net/ used for coordinates measurement.

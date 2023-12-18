@@ -18,10 +18,10 @@ TEXT_COLOUR = (0,0,255)
 OUTPUT_DIRECTORY = "Certificates"
 TEMPLATE_DIRECTORY = "template"
 # Font configuration
-FONT_SIZE = 35
+FONT_SIZE = 100
 FONT_NAME = "cer_font"
 FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=FONT_SIZE)
-pdfmetrics.registerFont(TTFont("cer_font",r"Fonts/PlaypenSans-Bold.ttf"))
+pdfmetrics.registerFont(TTFont(FONT_NAME,r"Fonts/PlaypenSans-Bold.ttf"))
 
 class GenerateByPdf():
     def __init__(self, account, password) -> None:
@@ -69,25 +69,25 @@ class GenerateByPdf():
                 drawer = canvas.Canvas(packet, pagesize=(self.template_width, self.template_height))
 
                 # Set font and colour
-                drawer.setFont("cer_font", 56)
+                drawer.setFont(FONT_NAME, FONT_SIZE)
                 drawer.setFillColor(TEXT_COLOUR)
 
                 # Configure name position
-                name_text_width = drawer.stringWidth(name, "cer_font", FONT_SIZE)
-                name_position = ((float(self.name_position[0]) - float(name_text_width))/2, float(self.template_height) - float(self.name_position[1]))
+                name_text_width = drawer.stringWidth(name, FONT_NAME, FONT_SIZE)
+                name_position = (float(self.name_position[0]) - float(name_text_width)/2, float(self.template_height) - float(self.name_position[1]))
 
                 # Configure event position
-                event_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
-                event_postion = (float(self.event_name_postion[0]) - float(event_text_width), float(self.template_height) - float(self.event_name_postion[1]))
+                event_text_width = drawer.stringWidth(self.event_name, FONT_NAME, FONT_SIZE)
+                event_postion = (float(self.event_name_postion[0]) - float(event_text_width)/2, float(self.template_height) - float(self.event_name_postion[1]))
 
                 # Configure Date position
-                date_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
-                date_position = (float(self.during_date_position[0]) - float(date_text_width), float(self.template_height) - float(self.during_date_position[1]))
+                date_text_width = drawer.stringWidth(self.during_date, FONT_NAME, FONT_SIZE)
+                date_position = (float(self.during_date_position[0]) - float(date_text_width)/2, float(self.template_height) - float(self.during_date_position[1]))
 
                 # Write the name, event and date
-                drawer.drawString(200, 200, name)
-                drawer.drawString(300, 300, self.event_name)
-                drawer.drawString(400, 300, self.during_date)
+                drawer.drawString(name_position[0], name_position[1], name)
+                drawer.drawString(event_postion[0], event_postion[1], self.event_name)
+                drawer.drawString(date_position[0], date_position[1], self.during_date)
 
                 # Save 
                 drawer.save()
@@ -149,13 +149,13 @@ class GenerateByPdf():
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
         self.event_name = input("Enter event name: ")
         self.during_date = input("Enter month of event (eg: Jan'22): ")
-        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}https://www.image-map.net/ {Fore.BLUE}{Fore.RESET}{Fore.YELLOW}Take the middle postion for all postion seeking to configure{Fore.RESET}{Style.RESET_ALL}")
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.i2pdf.com/measure-pdf/ {Fore.RESET}{Fore.YELLOW}To measure see readme{Fore.RESET}{Style.RESET_ALL}")
         name_position = input("Given name position (values seprated by comma x,y)")
         event_name_position = input("Given event position (values seprated by comma x,y)")
         date_position = input("Date position (values seprated by comma x,y)")
-        self.name_position = tuple(name_position.split(','))
-        self.event_name_postion = tuple(event_name_position.split(','))
-        self.during_date_position = tuple(date_position.split(','))
+        self.name_position = tuple(name_position.strip().split(','))
+        self.event_name_postion = tuple(event_name_position.strip().split(','))
+        self.during_date_position = tuple(date_position.strip().split(','))
 
 class GenerateByImage() :
 
@@ -190,7 +190,7 @@ class GenerateByImage() :
         drawer.drawImage(self.png_template_path,0,0, width=self.certificate_img.width, height=self.certificate_img.height)
 
         # Set the drawer object font and colour
-        drawer.setFont("cer_font",56)
+        drawer.setFont(FONT_NAME, FONT_SIZE)
         drawer.setFillColor(TEXT_COLOUR)
 
         # Configure name position
@@ -202,7 +202,7 @@ class GenerateByImage() :
         event_postion = (float(self.event_name_postion[0]) - float(event_text_width)/2, float(self.certificate_img.height) - float(self.event_name_postion[1]))
 
         # Configure Date position
-        date_text_width = drawer.stringWidth(self.event_name, FONT_NAME, FONT_SIZE)
+        date_text_width = drawer.stringWidth(self.during_date, FONT_NAME, FONT_SIZE)
         date_position = (float(self.during_date_position[0]) - float(date_text_width)/2, float(self.certificate_img.height) - float(self.during_date_position[1]))
 
         # Write the name, event and date
