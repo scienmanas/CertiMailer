@@ -1,7 +1,7 @@
 import os
 import time
 import pandas
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageFont
 from emailer import Emailer
 import PyPDF2
 from reportlab.pdfgen import canvas

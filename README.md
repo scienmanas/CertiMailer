@@ -51,6 +51,8 @@ chmod +x certimailer.sh
 - Change the `self.MailSenderAddress` and `self.Passwords` to your organization Email and Password (App Password) or you can configure it in terminal
 - Change the `html_content to your desired redering Content` 
 
+- The `font` and `font size` are cutomizable, to chenge uploaad the font in `Fonts Folder` and chenge the path according to the name in `certificate_generator.py` file.
+
 - Don't stop the running the script by `Ctrl + C/X` otherwise the progress of the mail sent will not updated for that run.
 
 ## License
@@ -88,4 +90,4 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Retry feature for network errors.
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package.
 - [x] Notify whether all have been mailed or not at last.
-<!-- - [X] Multiple entrying positions like as many wanted according to template, e.g.: Printing dates, competitions, names. -->
+- [X] Multiple inputs taken for customization of printing parametrs e.g.: Printing dates, competitions, names.
