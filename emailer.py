@@ -2,11 +2,19 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+import keyboard
+from colorama import init, Fore, Style
+import time
+
+init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
-    def __init__(self)  -> None :
-        self.MailSenderAddress = "Your Email Id"
-        self.Password = "Your Password (App Password)"    # For creating App Password, Check Youtube
+    def __init__(self, account, password)  -> None :
+        self.MailSenderAddress = "Your Email"
+        self.Password = "Your App Password"    # For creating App Password, Check preview video or youtube
+        if account != "auto" and password != "auto" :
+            self.MailSenderAddress = account
+            self.Password = password
 
     def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()
@@ -43,11 +51,14 @@ class Emailer :
 
         # Send Mail
         try : 
-            connection = smtplib.SMTP("smtp.gmail.com")
+            connection = smtplib.SMTP("smtp.gmail.com", timeout=60)
             connection.starttls()
             connection.login(user=self.MailSenderAddress, password=self.Password)
             connection.sendmail(object_1["From"], [receipient], object_1.as_string())
             connection.quit()
-            print(f'Email sent successfully to {name}')
+            print(f'Email sent successfully to {Style.BRIGHT}{Fore.YELLOW}{name}{Fore.RESET}{Style.RESET_ALL}')
+            return "sent"
         except Exception as e :
-            print(f"Email could not be sent to {name} : {str(e)}")
+            print(f"{Style.BRIGHT}{Fore.RED}Email could not be sent to{Fore.RESET} {Fore.YELLOW}{name}{Fore.RESET} : {Fore.RED}{str(e)}{Fore.RESET}{Style.RESET_ALL}")
+            return "failed"
+

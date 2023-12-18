@@ -1,60 +1,92 @@
-import os
-import pandas
-from PIL import Image, ImageDraw, ImageFont
-from emailer import Emailer
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from certificate_generator import GenerateByImage, GenerateByPdf
+import time
+from colorama import init, Fore, Style
 
-# Loading the certificate tenplate
-certificate_img = Image.open(r"template/sample.png")
 
-drawer_img = ImageDraw.Draw(certificate_img)  # Creating a drawing object
-EmailSender = Emailer()   # Creating Emailer Object
+init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
-# Fonts Configuration
-font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
-pdfmetrics.registerFont(TTFont("cer_font",r"Fonts/PlaypenSans-Bold.ttf"))
+# ASCII Art logo
+logo = f"""
+{Fore.CYAN}
+░█████╗░███████╗██████╗░████████╗██╗███╗░░░███╗░█████╗░██╗██╗░░░░░███████╗██████╗░
+██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██║████╗░████║██╔══██╗██║██║░░░░░██╔════╝██╔══██╗
+██║░░╚═╝█████╗░░██████╔╝░░░██║░░░██║██╔████╔██║███████║██║██║░░░░░█████╗░░██████╔╝
+██║░░██╗██╔══╝░░██╔══██╗░░░██║░░░██║██║╚██╔╝██║██╔══██║██║██║░░░░░██╔══╝░░██╔══██╗
+╚█████╔╝███████╗██║░░██║░░░██║░░░██║██║░╚═╝░██║██║░░██║██║███████╗███████╗██║░░██║
+░╚════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝╚══════╝╚══════╝╚═╝░░╚═╝
 
-# Folder to store output certificates.
-OUTPUT_DIRECTORY = "Certificates"
-os.makedirs(OUTPUT_DIRECTORY,exist_ok=True)
+            {Fore.RESET}The Complete solution for automatic certificates mailing
 
-# Make List of Participants
-names = []
-df = pandas.read_csv(r"names.csv")
-names = df['Name'].tolist()
-emails = df['Email'].tolist()
+"""
+print(logo)
+print(f"Configuring the basic settings enter {Style.BRIGHT}{Fore.YELLOW} 'auto' {Fore.RESET}{Style.RESET_ALL} if already configure in the emailer file")
 
-for name,email in zip(names, emails)  :
-    out_path_certificate = os.path.join(OUTPUT_DIRECTORY,f"{name}.pdf")
+# Get user credentials
+EMAIL = input("Enter the account email: ")
+PASSWORD = input(f"Enter App Password {Style.BRIGHT}{Fore.LIGHTRED_EX}(Check tutorial video in readme){Fore.RESET}{Style.RESET_ALL} : ")
 
-    # Make a Canvas
-    drawer = canvas.Canvas(out_path_certificate, pagesize=(certificate_img.width, certificate_img.height))
+# Erros due to copy-pasting omited 
+EMAIL = EMAIL.strip()
+PASSWORD = PASSWORD.strip().replace(' ','')
 
-    # Insert Image
-    drawer.drawImage(r"template/sample.png",0,0,width=certificate_img.width,height=certificate_img.height)
+# Function to get template type
+def _get_template_type() -> None:
+    type = input()
+    return type
 
-    # Setting Drawer Font
-    drawer.setFont("cer_font",56)
-    # Set the Colour before drawing
-    text_colour = (0,0,255)  # For Blue Colour
-    drawer.setFillColor(text_colour)
+# Inform user to choose template type
+print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
 
-    # Adjust Position (x,y)
-    # Adjust Coordinates by https://www.image-map.net/
-    # Y - coordinate keep the touching line - Use link above to get the coordinates
-    text_width = drawer_img.textlength(name,font=font)
-    name_position = ((certificate_img.width - text_width)/2, certificate_img.height - 805)
+TEMPLATE_TYPE = _get_template_type()
 
-    # Draw the name
-    drawer.drawString(name_position[0],name_position[1],name)
+# Rotating animation with changing color during setup
+def _animation() -> None :
+    animation_chars = "-\|/"
+    for _ in range(10):
+        for char in animation_chars:
+            print(f"\r{Style.BRIGHT}{Fore.GREEN}Setting up... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
+            time.sleep(0.1)
+    print()
 
-    drawer.save()
+def _script_animation() -> None :
+    animation_chars = "-\|/"
+    for _ in range(10):
+        for char in animation_chars:
+            print(f"\r{Style.BRIGHT}{Fore.GREEN}Starting the mailer system... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
+            time.sleep(0.1)
+    print()
 
-    # Sending Mail
-    EmailSender.SendMail(email,name)
+# Inform user to update entries in names.csv and template folder
+print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
+time.sleep(2)
 
-# Closing the template image
-certificate_img.close()
-print("Scripting Running complete")
+print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
+time.sleep(2)
+
+# Initialize the generator based on the chosen template type
+while True :
+    if TEMPLATE_TYPE.lower() == 'pdf':
+        certificate_generator_pdf = GenerateByPdf(EMAIL, PASSWORD)
+        if (certificate_generator_pdf.is_csv_updated() == "break") :
+            break
+        certificate_generator_pdf.configure_postion_and_details()
+        _animation()
+        _script_animation()
+        certificate_generator_pdf.send_email()
+        certificate_generator_pdf.retry_failed_operation()
+        certificate_generator_pdf.check_remaining()
+        break
+    elif TEMPLATE_TYPE.lower() == 'png':
+        certificate_generator_pdf = GenerateByImage(EMAIL, PASSWORD)
+        if (certificate_generator_pdf.is_csv_updated() == "break") :
+            break
+        certificate_generator_pdf.configure_postion_and_details()
+        _animation()
+        _script_animation()
+        certificate_generator_pdf.send_email()
+        certificate_generator_pdf.retry_failed_operation()
+        certificate_generator_pdf.check_remaining()
+        break
+    else:
+        print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
+        TEMPLATE_TYPE = _get_template_type()
