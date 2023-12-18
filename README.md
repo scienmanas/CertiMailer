@@ -117,4 +117,6 @@ If you want custom script for your organization, I can do it according to your o
 
 ## Under Development
 
-- [ ] Customizing different input paramerts by giving user a list a parametrs to use, therefore customizing experince for every user. (Currenlty not working on it, tentative day of release: Feb-March '24)
+- [ ] Customizing different input paramerts by giving user a list a parametrs to use, therefore customizing experince for every user. (Currenlty not working on it, tentative day of release: Feb-March '24) take string with comma for dictionary list.
+
+- [ ] Options for different text colour, font, font size.
