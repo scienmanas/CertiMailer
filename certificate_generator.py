@@ -48,48 +48,6 @@ class GenerateByPdf():
         template_page = template.pages[0]
         template_page_width, template_page_height = template_page.mediabox.width  ,template_page.mediabox.height
         return (template_page_width, template_page_height)
-    
-    # def draw_text_on_pdf(self, out_path, name):
-
-    #     # Copy the original PDF to the output path
-    #     shutil.copy(self.pdf_template_path, out_path)
-
-    #     # Open the copied PDF file
-    #     with open(out_path, 'rb+') as file:
-    #         pdf_reader = PyPDF2.PdfReader(file)
-    #         pdf_writer = PyPDF2.PdfWriter()
-
-    #         # Iterate through each page in the original PDF
-    #         length_iterate = len(pdf_reader.pages)
-    #         for page_num in range(0, length_iterate):
-    #             page = pdf_reader.pages[page_num]
-
-    #             # Create a PDF canvas for drawing
-    #             packet = io.BytesIO()
-    #             drawer = canvas.Canvas(packet, pagesize=(self.template_width, self.template_height))
-
-    #             # Set font and colour
-    #             drawer.setFont("cer_font", 56)
-    #             drawer.setFillColor(TEXT_COLOUR)
-
-    #             # Draw the text
-    #             drawer.drawString(200, 200, f"{name}")
-    #             drawer.drawString(400, 400, f"{name}")
-    #             drawer.drawString(600, 600, f"{name}")
-
-    #             # Save 
-    #             drawer.save()
-
-    #             # Move the buffer position back to the beginning
-    #             packet.seek(0)
-    #             new_pdf = PyPDF2.PdfReader(packet)
-
-    #             # Merge the original page and the new content
-    #             page.merge_page(new_pdf.pages[0])
-    #             pdf_writer.add_page(page)
-
-    #         # Write the modified PDF back to the file
-    #         pdf_writer.write(file)
 
     def draw_text_on_pdf(self, out_path, name):
 
@@ -208,21 +166,18 @@ class GenerateByImage() :
 
         # Load the certificate templae
         self.certificate_img = Image.open(r"template/sample.png")
-
-        # Create a drawing object to calculate the length text wll take
-        self.drawer_img = ImageDraw.Draw(self.certificate_img)
         
         # Font configuration
         # self.font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
         self.png_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.png")
         os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
         self.store_participants_data()
+        self.success_indices = []
 
     def store_participants_data(self) -> None : 
         self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
-        self.success_indices = []
 
     def draw_on_img(self, name) -> None :
         # Output path
@@ -239,16 +194,16 @@ class GenerateByImage() :
         drawer.setFillColor(TEXT_COLOUR)
 
         # Configure name position
-        name_text_width = drawer.stringWidth(name, "cer_font", FONT_SIZE)
-        name_position = ((float(self.name_position[0]) - float(name_text_width))/2, float(self.certificate_img.height) - float(self.name_position[1]))
+        name_text_width = drawer.stringWidth(name, FONT_NAME, FONT_SIZE)
+        name_position = (float(self.name_position[0]) - float(name_text_width)/2, float(self.certificate_img.height) - float(self.name_position[1]))
 
         # Configure event position
-        event_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
-        event_postion = (float(self.event_name_postion[0]) - float(event_text_width), float(self.certificate_img.height) - float(self.event_name_postion[1]))
+        event_text_width = drawer.stringWidth(self.event_name, FONT_NAME, FONT_SIZE)
+        event_postion = (float(self.event_name_postion[0]) - float(event_text_width)/2, float(self.certificate_img.height) - float(self.event_name_postion[1]))
 
         # Configure Date position
-        date_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
-        date_position = (float(self.during_date_position[0]) - float(date_text_width), float(self.certificate_img.height) - float(self.during_date_position[1]))
+        date_text_width = drawer.stringWidth(self.event_name, FONT_NAME, FONT_SIZE)
+        date_position = (float(self.during_date_position[0]) - float(date_text_width)/2, float(self.certificate_img.height) - float(self.during_date_position[1]))
 
         # Write the name, event and date
         drawer.drawString(name_position[0], name_position[1], name)
@@ -282,9 +237,7 @@ class GenerateByImage() :
     def retry_failed_operation(self) -> None :
 
         # Reconfigure the remaining list 
-        self.df = pandas.read_csv(r"names.csv")
-        self.names = self.df['Name'].tolist()
-        self.emails = self.df['Email'].tolist()
+        self.store_participants_data()
 
         if len(self.names) == 0 or len(self.emails) == 0 :
             pass
@@ -308,10 +261,10 @@ class GenerateByImage() :
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
         self.event_name = input("Enter event name: ")
         self.during_date = input("Enter month of event (eg: Jan'22): ")
-        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}https://www.image-map.net/ {Fore.BLUE}{Fore.RESET}{Fore.YELLOW}Take the middle postion for all postion seeking to configure{Fore.RESET}{Style.RESET_ALL}")
-        name_position = input("Given name position (values seprated by comma x,y)")
-        event_name_position = input("Given event position (values seprated by comma x,y)")
-        date_position = input("Date position (values seprated by comma x,y)")
-        self.name_position = tuple(name_position.split(','))
-        self.event_name_postion = tuple(event_name_position.split(','))
-        self.during_date_position = tuple(date_position.split(','))
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.image-map.net/ {Fore.RESET}{Fore.YELLOW}Take the middle postion for all postion seeking to configure{Fore.RESET}{Style.RESET_ALL}")
+        name_position = input("Given name position (values seprated by comma x,y): ")
+        event_name_position = input("Given event position (values seprated by comma x,y): ")
+        date_position = input("Date position (values seprated by comma x,y): ")
+        self.name_position = tuple(name_position.strip().split(','))
+        self.event_name_postion = tuple(event_name_position.strip().split(','))
+        self.during_date_position = tuple(date_position.strip().split(','))
