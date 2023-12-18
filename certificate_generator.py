@@ -18,7 +18,9 @@ TEXT_COLOUR = (0,0,255)
 OUTPUT_DIRECTORY = "Certificates"
 TEMPLATE_DIRECTORY = "template"
 # Font configuration
-FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
+FONT_SIZE = 35
+FONT_NAME = "cer_font"
+FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=FONT_SIZE)
 pdfmetrics.registerFont(TTFont("cer_font",r"Fonts/PlaypenSans-Bold.ttf"))
 
 class GenerateByPdf():
@@ -27,29 +29,27 @@ class GenerateByPdf():
         self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
 
         # Configure template dimensions
-        self.template_dimensions = self._get_page_dimension()
+        self.template_dimensions = self.get_page_dimension()
         self.template_width = self.template_dimensions[0]
         self.template_height = self.template_dimensions[1]
 
         # Make output directory
         os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
-        self._store_participants_data()
-        values = self._get_page_dimension()
-        print(f"Width = {values[0]} and heigth = {values[1]}")
+        self.store_participants_data()
 
-    def _store_participants_data(self) -> None:
+    def store_participants_data(self) -> None:
         self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
 
-    def _get_page_dimension(self) :
+    def get_page_dimension(self) :
         template = PyPDF2.PdfReader(open(self.pdf_template_path, "rb"))
         template_page = template.pages[0]
         template_page_width, template_page_height = template_page.mediabox.width  ,template_page.mediabox.height
         return (template_page_width, template_page_height)
 
-    def _draw_text_on_pdf(self, out_path, name):
+    def draw_text_on_pdf(self, out_path, name):
 
         # Copy the original PDF to the output path
         shutil.copy(self.pdf_template_path, out_path)
@@ -72,8 +72,22 @@ class GenerateByPdf():
                 drawer.setFont("cer_font", 56)
                 drawer.setFillColor(TEXT_COLOUR)
 
-                # Draw the text
-                drawer.drawString(200, 200, f"{name}")
+                # Configure name position
+                name_text_width = drawer.stringWidth(name, "cer_font", FONT_SIZE)
+                name_position = ((float(self.name_position[0]) - name_text_width)/2, self.template_height - float(self.name_position[1]))
+
+                # Configure event position
+                event_text_width = drawer.stringWidth(self.event_name, "cet_font", FONT_SIZE)
+                event_postion = (float(self.event_name_postion[0]) - event_text_width, self.template_height - float(self.event_name_postion[1]))
+
+                # Configure Date position
+                date_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
+                date_position = (float(self.during_date_position[0]) - date_text_width, self.template_height - float(self.during_date_position[1]))
+
+                # Write the name, event and date
+                drawer.drawString(name_position[0], name_position[1], name)
+                drawer.drawString(event_postion[0], event_postion[1], self.event_name)
+                drawer.drawString(date_position[0], date_position[1], self.during_date)
 
                 # Save 
                 drawer.save()
@@ -89,11 +103,11 @@ class GenerateByPdf():
             # Write the modified PDF back to the file
             pdf_writer.write(file)
 
-    def _send_email(self) -> None:
+    def send_email(self) -> None:
         for index, (name, email) in enumerate(zip(self.names, self.emails)):
             # Make path and generate certificates
             out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
-            self._draw_text_on_pdf(out_path_certificate, name)
+            self.draw_text_on_pdf(out_path_certificate, name)
 
             # Sending the mail
             self.status = self.mailer.SendMail(email, name)
@@ -106,7 +120,7 @@ class GenerateByPdf():
         self.success_indices = []
 
 
-    def _retry_failed_operation(self) -> None :
+    def retry_failed_operation(self) -> None :
 
         # Reconfigure the remaining list 
         self.df = pandas.read_csv(r"names.csv")
@@ -118,18 +132,30 @@ class GenerateByPdf():
         else :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed connection...{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
-            self._send_email() 
+            self.send_email() 
 
-    def _check_remaining(self) -> None:
+    def check_remaining(self) -> None:
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
 
-    def _is_csv_updated(self) ->str :
+    def is_csv_updated(self) ->str :
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             return "break"
+        
+    def configure_postion_and_details(self) :
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
+        self.event_name = input("Enter event name: ")
+        self.during_date = input("Enter month of event (eg: Jan'22): ")
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}https://www.image-map.net/ {Fore.BLUE}{Fore.RESET}{Fore.YELLOW}Take the middle postion for all postion seeking to configure{Fore.RESET}{Style.RESET_ALL}")
+        name_position = input("Given name position (values seprated by comma x,y)")
+        event_name_position = input("Given event position (values seprated by comma x,y)")
+        date_position = input("Date position (values seprated by comma x,y)")
+        self.name_position = tuple(name_position.split(','))
+        self.event_name_postion = tuple(event_name_position.split(','))
+        self.during_date_position = tuple(date_position.split(','))
 
 class GenerateByImage() :
 
@@ -148,43 +174,52 @@ class GenerateByImage() :
         # self.font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
         self.png_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.png")
         os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
-        self._store_participants_data()
+        self.store_participants_data()
 
-    def _store_participants_data(self) -> None : 
+    def store_participants_data(self) -> None : 
         self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
 
-    def _draw_on_img(self, name) -> None :
+    def draw_on_img(self, name) -> None :
         # Output path
-        self.out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
+        out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
 
         # Make a canvas
-        self.drawer = canvas.Canvas(self.out_path_certificate, pagesize=(self.certificate_img.width, self.certificate_img.height))
+        drawer = canvas.Canvas(out_path_certificate, pagesize=(self.certificate_img.width, self.certificate_img.height))
 
         # Insert image
-        self.drawer.drawImage(self.png_template_path,0,0, width=self.certificate_img.width, height=self.certificate_img.height)
+        drawer.drawImage(self.png_template_path,0,0, width=self.certificate_img.width, height=self.certificate_img.height)
 
         # Set the drawer object font and colour
-        self.drawer.setFont("cer_font",56)
-        self.drawer.setFillColor(TEXT_COLOUR)
+        drawer.setFont("cer_font",56)
+        drawer.setFillColor(TEXT_COLOUR)
 
-        # Adjust Position (x,y)
-        # Adjust Coordinates by https://www.image-map.net/
-        # Y - coordinate keep the touching line - Use link above to get the coordinates
-        self.text_width = self.drawer_img.textlength(name,font=FONT)
-        self.name_position = ((self.certificate_img.width - self.text_width)/2, self.certificate_img.height - 805)
+        # Configure name position
+        name_text_width = drawer.stringWidth(name, "cer_font", FONT_SIZE)
+        name_position = ((float(self.name_position[0]) - name_text_width)/2, self.certificate_img.height - float(self.name_position[1]))
 
-        # Draw the name: 
-        self.drawer.drawString(self.name_position[0], self.name_position[1], name)
+        # Configure event position
+        event_text_width = drawer.stringWidth(self.event_name, "cet_font", FONT_SIZE)
+        event_postion = (float(self.event_name_postion[0]) - event_text_width, self.certificate_img.height - float(self.event_name_postion[1]))
+
+        # Configure Date position
+        date_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
+        date_position = (float(self.during_date_position[0]) - date_text_width, self.certificate_img.height - float(self.during_date_position[1]))
+
+        # Write the name, event and date
+        drawer.drawString(name_position[0], name_position[1], name)
+        drawer.drawString(event_postion[0], event_postion[1], self.event_name)
+        drawer.drawString(date_position[0], date_position[1], self.during_date)
+
         # Save the pdf with text written  
-        self.drawer.save()
+        drawer.save()
 
-    def _send_email(self) -> None :
+    def send_email(self) -> None :
         for index, (name,email) in enumerate(zip(self.names, self.emails)) :
             # Make certificate
-            self._draw_on_img(name)
+            self.draw_on_img(name)
 
             # Sending the mail
             self.status = self.mailer.SendMail(email, name)
@@ -202,7 +237,7 @@ class GenerateByImage() :
         print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", flush=True)
         self.success_indices = []
 
-    def _retry_failed_operation(self) -> None :
+    def retry_failed_operation(self) -> None :
 
         # Reconfigure the remaining list 
         self.df = pandas.read_csv(r"names.csv")
@@ -214,15 +249,27 @@ class GenerateByImage() :
         else :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Retrying the failed connection...{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
-            self._send_email() 
+            self.send_email() 
 
-    def _check_remaining(self) -> None:
+    def check_remaining(self) -> None:
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
 
-    def _is_csv_updated(self) ->str :
+    def is_csv_updated(self) ->str :
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             return "break"
+        
+    def configure_postion_and_details(self) -> None :
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
+        self.event_name = input("Enter event name: ")
+        self.during_date = input("Enter month of event (eg: Jan'22): ")
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}https://www.image-map.net/ {Fore.BLUE}{Fore.RESET}{Fore.YELLOW}Take the middle postion for all postion seeking to configure{Fore.RESET}{Style.RESET_ALL}")
+        name_position = input("Given name position (values seprated by comma x,y)")
+        event_name_position = input("Given event position (values seprated by comma x,y)")
+        date_position = input("Date position (values seprated by comma x,y)")
+        self.name_position = tuple(name_position.split(','))
+        self.event_name_postion = tuple(event_name_position.split(','))
+        self.during_date_position = tuple(date_position.split(','))

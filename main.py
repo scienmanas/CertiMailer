@@ -1,6 +1,5 @@
 from certificate_generator import GenerateByImage, GenerateByPdf
 import time
-import keyboard
 from colorama import init, Fore, Style
 
 
@@ -24,7 +23,7 @@ print(f"Configuring the basic settings enter {Style.BRIGHT}{Fore.YELLOW} 'auto' 
 
 # Get user credentials
 EMAIL = input("Enter the account email: ")
-PASSWORD = input("Enter App Password, For setting up app password, follow the tutorial: link: ")
+PASSWORD = input(f"Enter App Password {Style.BRIGHT}{Fore.LIGHTRED_EX}(Check tutorial video in readme){Fore.RESET}{Style.RESET_ALL} : ")
 
 # Erros due to copy-pasting omited 
 EMAIL = EMAIL.strip()
@@ -32,8 +31,8 @@ PASSWORD = PASSWORD.strip().replace(' ','')
 
 # Function to get template type
 def _get_template_type() -> None:
-    # type = input()
-    return "pdf"
+    type = input()
+    return type
 
 # Inform user to choose template type
 print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
@@ -68,23 +67,25 @@ time.sleep(2)
 while True :
     if TEMPLATE_TYPE.lower() == 'pdf':
         certificate_generator_pdf = GenerateByPdf(EMAIL, PASSWORD)
-        if (certificate_generator_pdf._is_csv_updated() == "break") :
+        if (certificate_generator_pdf.is_csv_updated() == "break") :
             break
+        certificate_generator_pdf.configure_postion_and_details()
         _animation()
         _script_animation()
-        certificate_generator_pdf._send_email()
-        certificate_generator_pdf._retry_failed_operation()
-        certificate_generator_pdf._check_remaining()
+        certificate_generator_pdf.send_email()
+        certificate_generator_pdf.retry_failed_operation()
+        certificate_generator_pdf.check_remaining()
         break
     elif TEMPLATE_TYPE.lower() == 'png':
         certificate_generator_pdf = GenerateByImage(EMAIL, PASSWORD)
-        if (certificate_generator_pdf._is_csv_updated() == "break") :
+        if (certificate_generator_pdf.is_csv_updated() == "break") :
             break
+        certificate_generator_pdf.configure_postion_and_details()
         _animation()
         _script_animation()
-        certificate_generator_pdf._send_email()
-        certificate_generator_pdf._retry_failed_operation()
-        certificate_generator_pdf._check_remaining()
+        certificate_generator_pdf.send_email()
+        certificate_generator_pdf.retry_failed_operation()
+        certificate_generator_pdf.check_remaining()
         break
     else:
         print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")

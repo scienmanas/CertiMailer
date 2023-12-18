@@ -75,9 +75,9 @@ The repository is free to use but copying this is strictly prohibited.
 
 ## Services 
 
-This project can be configured according with more diverse features such as printing events name too, if you are a coder, you can itself do it by changing the dimensions and functionality of the script
+This project can be configured according with more diverse features such as printing events name too, if you are a coder, you can itself do it by changing the dimensions and functionality of the script.
 
-If you want custom script for your organization, I can do it according to your organization need charging according to the amount of feautures needed. Drop me an email at **iamscientistmanas@gmail.com** for the same
+If you want custom script for your organization, I can do it according to your organization need charging according to the amount of feautures needed. Drop me an email at **iamscientistmanas@gmail.com** for the same.
 
 
 ## Help & Features
