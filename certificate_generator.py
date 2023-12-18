@@ -48,6 +48,48 @@ class GenerateByPdf():
         template_page = template.pages[0]
         template_page_width, template_page_height = template_page.mediabox.width  ,template_page.mediabox.height
         return (template_page_width, template_page_height)
+    
+    # def draw_text_on_pdf(self, out_path, name):
+
+    #     # Copy the original PDF to the output path
+    #     shutil.copy(self.pdf_template_path, out_path)
+
+    #     # Open the copied PDF file
+    #     with open(out_path, 'rb+') as file:
+    #         pdf_reader = PyPDF2.PdfReader(file)
+    #         pdf_writer = PyPDF2.PdfWriter()
+
+    #         # Iterate through each page in the original PDF
+    #         length_iterate = len(pdf_reader.pages)
+    #         for page_num in range(0, length_iterate):
+    #             page = pdf_reader.pages[page_num]
+
+    #             # Create a PDF canvas for drawing
+    #             packet = io.BytesIO()
+    #             drawer = canvas.Canvas(packet, pagesize=(self.template_width, self.template_height))
+
+    #             # Set font and colour
+    #             drawer.setFont("cer_font", 56)
+    #             drawer.setFillColor(TEXT_COLOUR)
+
+    #             # Draw the text
+    #             drawer.drawString(200, 200, f"{name}")
+    #             drawer.drawString(400, 400, f"{name}")
+    #             drawer.drawString(600, 600, f"{name}")
+
+    #             # Save 
+    #             drawer.save()
+
+    #             # Move the buffer position back to the beginning
+    #             packet.seek(0)
+    #             new_pdf = PyPDF2.PdfReader(packet)
+
+    #             # Merge the original page and the new content
+    #             page.merge_page(new_pdf.pages[0])
+    #             pdf_writer.add_page(page)
+
+    #         # Write the modified PDF back to the file
+    #         pdf_writer.write(file)
 
     def draw_text_on_pdf(self, out_path, name):
 
@@ -74,20 +116,20 @@ class GenerateByPdf():
 
                 # Configure name position
                 name_text_width = drawer.stringWidth(name, "cer_font", FONT_SIZE)
-                name_position = ((float(self.name_position[0]) - name_text_width)/2, self.template_height - float(self.name_position[1]))
+                name_position = ((float(self.name_position[0]) - float(name_text_width))/2, float(self.template_height) - float(self.name_position[1]))
 
                 # Configure event position
-                event_text_width = drawer.stringWidth(self.event_name, "cet_font", FONT_SIZE)
-                event_postion = (float(self.event_name_postion[0]) - event_text_width, self.template_height - float(self.event_name_postion[1]))
+                event_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
+                event_postion = (float(self.event_name_postion[0]) - float(event_text_width), float(self.template_height) - float(self.event_name_postion[1]))
 
                 # Configure Date position
                 date_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
-                date_position = (float(self.during_date_position[0]) - date_text_width, self.template_height - float(self.during_date_position[1]))
+                date_position = (float(self.during_date_position[0]) - float(date_text_width), float(self.template_height) - float(self.during_date_position[1]))
 
                 # Write the name, event and date
-                drawer.drawString(name_position[0], name_position[1], name)
-                drawer.drawString(event_postion[0], event_postion[1], self.event_name)
-                drawer.drawString(date_position[0], date_position[1], self.during_date)
+                drawer.drawString(200, 200, name)
+                drawer.drawString(300, 300, self.event_name)
+                drawer.drawString(400, 300, self.during_date)
 
                 # Save 
                 drawer.save()
@@ -198,15 +240,15 @@ class GenerateByImage() :
 
         # Configure name position
         name_text_width = drawer.stringWidth(name, "cer_font", FONT_SIZE)
-        name_position = ((float(self.name_position[0]) - name_text_width)/2, self.certificate_img.height - float(self.name_position[1]))
+        name_position = ((float(self.name_position[0]) - float(name_text_width))/2, float(self.certificate_img.height) - float(self.name_position[1]))
 
         # Configure event position
-        event_text_width = drawer.stringWidth(self.event_name, "cet_font", FONT_SIZE)
-        event_postion = (float(self.event_name_postion[0]) - event_text_width, self.certificate_img.height - float(self.event_name_postion[1]))
+        event_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
+        event_postion = (float(self.event_name_postion[0]) - float(event_text_width), float(self.certificate_img.height) - float(self.event_name_postion[1]))
 
         # Configure Date position
         date_text_width = drawer.stringWidth(self.event_name, "cer_font", FONT_SIZE)
-        date_position = (float(self.during_date_position[0]) - date_text_width, self.certificate_img.height - float(self.during_date_position[1]))
+        date_position = (float(self.during_date_position[0]) - float(date_text_width), float(self.certificate_img.height) - float(self.during_date_position[1]))
 
         # Write the name, event and date
         drawer.drawString(name_position[0], name_position[1], name)
