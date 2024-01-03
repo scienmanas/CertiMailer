@@ -44,6 +44,14 @@ for /l %%i in (0, 1, %load_interval%) do (
 )
 exit /b
 
+REM Function to install Chocolatey
+:install_chocolatey
+@echo off
+set "choco_url=https://chocolatey.org/install.ps1"
+echo Installing Chocolatey...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('%choco_url%'))" >nul 2>nul
+exit /b
+
 REM Function to install dependencies asynchronously
 :install_dependencies
 pip install -r requirements.txt >nul 2>nul
@@ -52,17 +60,20 @@ exit /b
 REM Detect the operating system
 for /f "delims=" %%s in ('ver') do set "os=%%s"
 
+REM Check if Chocolatey is installed
+call :command_exists choco
+if errorlevel 1 (
+    call :install_chocolatey
+    echo Chocolatey installed successfully.
+) else (
+    echo Chocolatey is already installed.
+)
+
 REM Check if Python is installed
 call :command_exists python3
 if errorlevel 1 (
     echo Python 3 not found. Installing...
-    if "!os!"=="Version 10." (
-        REM Windows 10
-        choco install python3 -y >nul 2>nul
-    ) else (
-        echo Unsupported operating system: !os!
-        exit /b 1
-    )
+    choco install python -y >nul 2>nul
     call :loading_animation 10 "Installing Python 3..."
     echo Python 3 installed successfully.
 ) else (

@@ -93,6 +93,7 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package.
 - [x] Notify whether all have been mailed or not at last.
 - [X] Multiple inputs taken for customization of printing parametrs e.g.: Printing dates, competitions, names.
+- [x] Support for Windows, Linux and Mac systems.
 
 ## Demo Videos 
 
@@ -122,4 +123,3 @@ If you want custom script for your organization, I can do it according to your o
 - [ ] Options for different text colour, font, font size.
 
 - [ ] auto checking for auto password
-- [ ] Support for mac, linux and windows(remain)
