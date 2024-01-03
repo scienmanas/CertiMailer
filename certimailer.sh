@@ -11,10 +11,6 @@ loading_animation() {
     local elapsed=0
     local loading_animation=( '—' "\\" '|' '/' )
 
-    # This part is to make the cursor not blink
-    # on top of the animation while it lasts
-    tput civis
-    trap "tput cnorm" EXIT
     while [ "${load_interval}" -ne "${elapsed}" ]; do
         for frame in "${loading_animation[@]}" ; do
             printf "%s\b" "${frame}"
