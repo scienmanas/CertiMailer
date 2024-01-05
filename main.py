@@ -1,4 +1,5 @@
 from certificate_generator import GenerateByImage, GenerateByPdf
+from emailer import Emailer
 import time
 from colorama import init, Fore, Style
 
@@ -19,11 +20,26 @@ logo = f"""
 
 """
 print(logo)
-print(f"Configuring the basic settings enter {Style.BRIGHT}{Fore.YELLOW} 'auto' {Fore.RESET}{Style.RESET_ALL} if already configure in the emailer file")
+print("Configuring the basic settings enter...")
+time.sleep(1)
+print("Checking for {Style.BRIGHT}{Fore.YELLOW}user's customizations{Fore.RESET}{Style.RESET_ALL}")
+time.sleep(1)
+
+# Check for email and password cutomization
+
+dummy_checker = Emailer()
+if dummy_checker.is_customization_done() == False :
+    print(f"{Style.BRIGHT}{Fore.GREEN}Customization found, configuring the customization...{Fore.RESET}{Style.RESET_ALL}")
+    time.sleep(1)
+else :
+    print(f"{Style.BRIGHT}{Fore.GREEN}No customization found, configuring the default setup{Fore.RESET}{Style.RESET_ALL}")
+    time.sleep(1)
+    default_setup()
 
 # Get user credentials
-EMAIL = input("Enter the account email: ")
-PASSWORD = input(f"Enter App Password {Style.BRIGHT}{Fore.LIGHTRED_EX}(Check tutorial video in readme){Fore.RESET}{Style.RESET_ALL} : ")
+def default_setup():
+    EMAIL = input("Enter the account email: ")
+    PASSWORD = input(f"Enter App Password {Style.BRIGHT}{Fore.LIGHTRED_EX}(Check tutorial video in readme){Fore.RESET}{Style.RESET_ALL} : ")
 
 # Erros due to copy-pasting omited 
 EMAIL = EMAIL.strip()

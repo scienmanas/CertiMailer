@@ -2,19 +2,27 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-import keyboard
 from colorama import init, Fore, Style
-import time
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
-    def __init__(self, account, password)  -> None :
-        self.MailSenderAddress = "Your Email"
-        self.Password = "Your App Password"    # For creating App Password, Check preview video or youtube
-        if account != "auto" and password != "auto" :
-            self.MailSenderAddress = account
-            self.Password = password
+    def __init__(self)  -> None :
+        # Initialising the mail id and password
+        self.MailSenderAddress = "your email"
+        self.Password = "your app_password"   
+
+    def set_details(self, **kwargs) -> None :
+        # Called when password is taken as input
+        self.MailSenderAddress = kwargs.get("email")
+        self.Password = kwargs.get("password")
+
+    def is_customization_done(self) -> bool :
+        """Checks whether the user has customized the mail sender address and password."""
+        if self.MailSenderAddress == "Your Email" or self.Password == "Your App" :
+            return False
+        
+    def initialize_credentials(self,**kwargs): 
 
     def SendMail(self, receipient, name) -> None :
         object_1 = MIMEMultipart()
@@ -61,4 +69,3 @@ class Emailer :
         except Exception as e :
             print(f"{Style.BRIGHT}{Fore.RED}Email could not be sent to{Fore.RESET} {Fore.YELLOW}{name}{Fore.RESET} : {Fore.RED}{str(e)}{Fore.RESET}{Style.RESET_ALL}")
             return "failed"
-
