@@ -15,7 +15,8 @@ class Emailer :
     def configure_email_subjects(self) -> None :
         pass
 
-    def 
+    def configure_email_template (self) -> None :
+        pass
 
     def SendMail(self, receipient, name) -> None :
         """
@@ -34,22 +35,22 @@ class Emailer :
         # Recipient Address
         mailer_object['Subject'] = "Partcipation Certificate, Astrophotography Workshop: Athereum 2.0"  # Subject of the mail
         
-        html_part1 = MIMEText(HTML_CONTENT,'html')
-        object_1.attach(html_part1)
+        html_part = MIMEText(HTML_CONTENT,'html')
+        mailer_object.attach(html_part)
 
         # Attaching the File
         attachment_path = f"Certificates/{name}.pdf"
         with open(attachment_path,'rb') as attachment :
             attachment_part = MIMEApplication(attachment.read())
             attachment_part.add_header('Content-Disposition', 'attachment', filename = f'{name}.pdf')
-            object_1.attach(attachment_part)
+            mailer_object.attach(attachment_part)
 
         # Send Mail
         try : 
             connection = smtplib.SMTP("smtp.gmail.com", timeout=60)
             connection.starttls()
             connection.login(user=self.MailSenderAddress, password=self.Password)
-            connection.sendmail(object_1["From"], [receipient], object_1.as_string())
+            connection.sendmail(mailer_object["From"], [receipient], mailer_object.as_string())
             connection.quit()
             print(f'Email sent successfully to {Style.BRIGHT}{Fore.YELLOW}{name}{Fore.RESET}{Style.RESET_ALL}')
             return "sent"

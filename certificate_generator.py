@@ -24,6 +24,10 @@ FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=FONT_SIZE)
 pdfmetrics.registerFont(TTFont(FONT_NAME,r"Fonts/PlaypenSans-Bold.ttf"))
 
 class GenerateByPdf():
+    """
+    A class to generate certificates from a PDF template using user data and an image of the signature.
+    Attributes: need to write -> incomplete
+    """
     def __init__(self, account, password) -> None:
         self.mailer = Emailer(account, password)
         self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
@@ -38,18 +42,34 @@ class GenerateByPdf():
         self.store_participants_data()
 
     def store_participants_data(self) -> None:
+        """
+        Store participants' information in a dictionary.
+        """
         self.df = pandas.read_csv(r"names.csv")
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
 
-    def get_page_dimension(self) :
+    def get_page_dimension(self) -> tuple :
+        """
+        Get the page dimension of the pdf file.
+        Args:
+        None
+        Returns:
+        A tuple (w, h): width and height of each page in points.
+        """
         template = PyPDF2.PdfReader(open(self.pdf_template_path, "rb"))
         template_page = template.pages[0]
         template_page_width, template_page_height = template_page.mediabox.width  ,template_page.mediabox.height
         return (template_page_width, template_page_height)
 
     def draw_text_on_pdf(self, out_path, name):
+        """
+        Draw text on the certificate pdf.
+        Args:
+        out_path: str, path to save the new pdf.
+        name: str, participant's name.
+        """
 
         # Copy the original PDF to the output path
         shutil.copy(self.pdf_template_path, out_path)
@@ -104,6 +124,9 @@ class GenerateByPdf():
             pdf_writer.write(file)
 
     def send_email(self) -> None:
+        """
+        Send an email with the generated certificate as attachment.
+        """
         for index, (name, email) in enumerate(zip(self.names, self.emails)):
             # Make path and generate certificates
             out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
@@ -121,6 +144,9 @@ class GenerateByPdf():
 
 
     def retry_failed_operation(self) -> None :
+        """
+        Retry a failed operation on the emails that have been flagged as not sent.
+        """
 
         # Reconfigure the remaining list 
         self.df = pandas.read_csv(r"names.csv")
@@ -135,17 +161,22 @@ class GenerateByPdf():
             self.send_email() 
 
     def check_remaining(self) -> None:
+        """
+        Check how many mails are still pending. If there is none left, end the program.
+        Otherwise, keep it running until all mails have been processed.
+        """
+        
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
-
-    def is_csv_updated(self) ->str :
-        if len(self.names) == 0 or len(self.emails) == 0 :
-            print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
-            return "break"
         
     def configure_postion_and_details(self) :
+        """
+        Set up the position of the QR code and details to be written on the certificate.
+        The function will set these attributes for each individual in the dataframe.
+        """
+
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
         self.event_name = input("Enter event name: ")
         self.during_date = input("Enter month of event (eg: Jan'22): ")
@@ -251,11 +282,6 @@ class GenerateByImage() :
             print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
         else :
             print(f'{Style.BRIGHT}{Fore.YELLOW}Some names are remaining in the list, you may run script again by running:{Fore.RESET}{Fore.BLUE} ./certimailer.sh {Fore.RESET}{Fore.YELLOW}to send mails to remaining persons. {Fore.RESET}{Style.RESET_ALL}')
-
-    def is_csv_updated(self) ->str :
-        if len(self.names) == 0 or len(self.emails) == 0 :
-            print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
-            return "break"
         
     def configure_postion_and_details(self) -> None :
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")

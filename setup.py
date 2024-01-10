@@ -84,9 +84,11 @@ class CertiMailer():
 
     def __init__(self) -> None:
         self.check_paramters = Checks()
+        self.animations = Animations()
         self.email = str()
         self.password = str()
         self.template = str()
+        self.generator_system = object()
 
     def show_logo(self) -> None :
         """
@@ -166,10 +168,24 @@ class CertiMailer():
             print("Existing the programme..")
             sys.exit()
 
-    def start_system(self) -> None :
-        
+    def activate_pdf_system(self) -> None :
+        self.generator_system = GenerateByPdf()
+        self.generator_system.configure_postion_and_details()
+        self.animations._animation_1
+        self.animations
 
-# Initialize the generator based on the chosen template type
+    def activate_png_system(self) -> None :
+        pass
+
+    def start_system(self) -> None :
+        """
+        Starts the system and then calls appropriate functions based on Template Type
+        """
+        if self.template is 'pdf' :
+            self.activate_pdf_system()
+        else :
+            self.activate_png_system()
+
 while True :
     if TEMPLATE_TYPE.lower() == 'pdf':
         certificate_generator_pdf = GenerateByPdf(EMAIL, PASSWORD)
