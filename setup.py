@@ -6,23 +6,41 @@ from logo import logo
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
-class CertiMailer():
+class Checks():
 
     def __init__(self) -> None:
-        self.email = ""
-        self.password = ""
+        pass
+
+    def check_csv_updation(self) -> bool :
+        pass
+
+class CertiMailer():
+    """
+    This class is the main class that handles user inputs and calls other classes to generate certificates.
+    """
+
+    def __init__(self) -> None:
+        self.email = str()
+        self.password = str()
+        self.template = str()
 
     def show_logo(self) -> None :
+        """
+        function to show the starting logo
+        """
         print(logo)
         print("Configuring the basic settings enter...")
         time.sleep(1)
 
     def run_setup(self) -> None: 
+        """
+        Function to handle user input and set up necessary information
+        """
         print("Checking for {Style.BRIGHT}{Fore.YELLOW}user's customizations{Fore.RESET}{Style.RESET_ALL}")
         time.sleep(1)
-        # Check for email and password cutomization
+ 
         dummy_checker = Emailer()
-        if dummy_checker.is_customization_done() == False :
+        if dummy_checker.is_customization_done() is False :
             print(f"{Style.BRIGHT}{Fore.GREEN}Customization found, configuring the customization...{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
         else :
@@ -31,24 +49,36 @@ class CertiMailer():
             self.default_setup()
     # Erros due to copy-pasting omited 
     def remove_extra_spaces(self) -> None:
+        """
+        Removes extra spaces in a string
+        """
         self.email.strip()
         self.password.strip().replace(' ','')
 
     def default_setup(self) -> None:
+        """
+        Sets up the email and password using the default method
+        """
         self.email = input("Enter the account email: ")
         self.password = input(f"Enter App Password {Style.BRIGHT}{Fore.LIGHTRED_EX}(Check tutorial video in readme){Fore.RESET}{Style.RESET_ALL} : ")
         self.remove_extra_spaces()
-    
 
-# Function to get template type
-def _get_template_type() -> None:
-    type = input()
-    return type
+    def get_template_type(self) -> None :
+        """
+        Prompts the user to select the type of template they want to use, then sets that as the current template type
+        """
+        print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
+        self.template = input()
 
-# Inform user to choose template type
-print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
+        if self.template.lower() is "pdf" or "png" :
+            print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
+            self.get_template_type()
+        else :
+            pass
 
-TEMPLATE_TYPE = _get_template_type()
+    def configure_csv_check(self) -> None:
+        print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
+        time.sleep(2)
 
 # Rotating animation with changing color during setup
 def _animation() -> None :
@@ -68,8 +98,7 @@ def _script_animation() -> None :
     print()
 
 # Inform user to update entries in names.csv and template folder
-print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
-time.sleep(2)
+
 
 print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
 time.sleep(2)
@@ -99,5 +128,5 @@ while True :
         certificate_generator_pdf.check_remaining()
         break
     else:
-        print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
+
         TEMPLATE_TYPE = _get_template_type()
