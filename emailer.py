@@ -3,51 +3,38 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from colorama import init, Fore, Style
+from email_template.template import HTML_CONTENT
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
-    def __init__(self)  -> None :
-        # Initialising the mail id and password
-        self.MailSenderAddress = "your email"
-        self.Password = "your app_password"   
-
-    def set_details(self, **kwargs) -> None :
-        # Called when password is taken as input
+    def __init__(self, **kwargs))  -> None :
         self.MailSenderAddress = kwargs.get("email")
         self.Password = kwargs.get("password")
 
-    def is_customization_done(self) -> bool :
-        """Checks whether the user has customized the mail sender address and password."""
-        if self.MailSenderAddress == "Your Email" or self.Password == "Your App" :
-            return False
-        
-    def initialize_credentials(self,**kwargs): 
+    def configure_email_subjects(self) -> None :
+        pass
+
+    def 
 
     def SendMail(self, receipient, name) -> None :
-        object_1 = MIMEMultipart()
+        """
+        This method is used to send an email with a given subject and body to the specified recipient
+        Parameters:
+        - receipient (str): The email address of the recipient
+        - name (str): The display name of the sender
+        Returns:
+        - None
+        """
+        mailer_object = MIMEMultipart()
         name_ = "Coders Conclave"
-        object_1['From'] = f"{name_} <{self.MailSenderAddress}>"
-        object_1['To'] = f"{name} <{receipient}>"        # Recipient Address
-        object_1['Subject'] = "Partcipation Certificate, Astrophotography Workshop: Athereum 2.0"  # Subject of the mail
-
-        # HTML Element :
-        html_content = """
-<html>
-<body style="background: linear-gradient(to bottom, #3a6186, #89253e); background-repeat: no-repeat; background-attachment: fixed; margin: 0; padding: 0; text-align: center;">
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <h1 style="color: #333;">Thank You for Participating</h1>
-        <p style="color: #666;">In the coding contest conducted on 22nd October under Coders, The Annual Coding competition of India.</p>
-        <p style="color: #666;">The participation certificate is attached in this mail.</p>
-        <p style="color: #666;">Wishing you hemlo World!</p>
-        </br>
-        <p style="color: #333; font-weight: bold;"><a href="https://github.com/scienmanas" style="color: #007BFF; text-decoration: none;">Manas Poddar</a></p>
-        <p style="color: #666;">Heads, Some Event</p>
-    </div>
-</body>
-</html>
-"""
-        html_part1 = MIMEText(html_content,'html')
+        mailer_object['From'] = f"{name_} <{self.MailSenderAddress}>"
+        mailer_object['To'] = f"{name} <{receipient}>"  
+        
+        # Recipient Address
+        mailer_object['Subject'] = "Partcipation Certificate, Astrophotography Workshop: Athereum 2.0"  # Subject of the mail
+        
+        html_part1 = MIMEText(HTML_CONTENT,'html')
         object_1.attach(html_part1)
 
         # Attaching the File

@@ -46,7 +46,7 @@ class Checks():
         pass
 
     @staticmethod
-    def check_csv_updation(self) -> bool :
+    def check_csv_updation() -> bool :
         """
         Check if csv file is updated or not
         """
@@ -59,8 +59,22 @@ class Checks():
         else :
             return True
         
-    def is_template_available(self) :
-        pass
+    @staticmethod
+    def is_template_available(template_type) -> bool :
+        """
+        Check if template of given type exists in templates folder
+        Args:
+        type (str): Type of email to be checked, can be html/txt
+        Returns:
+        Bool: True if available otherwise False
+        """
+        directory_path = "template"
+        file_name = f"sample.{template_type}"
+        path = os.path.join(directory_path, file_name)
+        if os.path.exists(path) :
+            return True
+        else :
+            return False
 
 
 class CertiMailer():
@@ -127,15 +141,33 @@ class CertiMailer():
             pass
 
     def configure_csv_check(self) -> None:
+        """
+        Configures csv file check, either from URL or local path
+        """
         print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
         time.sleep(1)
         if self.check_paramters.check_csv_updation() :
             print(f"{Style.BRIGHT}{Fore.GREEN}CSV file found updated..")
-            # print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
         else :
             print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv' and {Fore.RESET}{Style.RESET_ALL}")
             sys.exit()
+
+    def check_template_status(self) -> None :
+        """
+        Checks whether template type is set or not
+        If not it informs user and exit the programme .
+        """
+        if self.check_paramters.is_template_available(self.template) :
+            print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
+            time.sleep(1)
+        else :
+            print(f"{Style.BRIGHT}{Fore.RED}Error: cannot find the template..{Style.RESET_ALL}{Fore.RESET}")
+            print("Existing the programme..")
+            sys.exit()
+
+    def start_system(self) -> None :
+        
 
 # Initialize the generator based on the chosen template type
 while True :
