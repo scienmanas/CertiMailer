@@ -1,18 +1,67 @@
 from certificate_generator import GenerateByImage, GenerateByPdf
 from emailer import Emailer
 import time
+import pandas
+import sys
+import os
 from colorama import init, Fore, Style
 from logo import logo
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
-class Checks():
+class Animations() :
+    """
+    This class provides animations to the CLI.
+    """
 
     def __init__(self) -> None:
         pass
 
-    def check_csv_updation(self) -> bool :
+    @staticmethod
+    def _animation_1() -> None :
+        animation_chars = "-\|/"
+        for _ in range(10):
+            for char in animation_chars:
+                print(f"\r{Style.BRIGHT}{Fore.GREEN}Setting up... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
+                time.sleep(0.1)
+        print()
+
+    @staticmethod
+    def _animation_2() -> None :
+        animation_chars = "-\|/"
+        for _ in range(10):
+            for char in animation_chars:
+                print(f"\r{Style.BRIGHT}{Fore.GREEN}Starting the mailer system... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
+                time.sleep(0.1)
+        print()
+
+
+class Checks():
+    """
+    This class checks if all necessary packages are installed and prints appropriate messages.
+    If not it will install them using pip.
+    """
+
+    def __init__(self) -> None:
         pass
+
+    @staticmethod
+    def check_csv_updation(self) -> bool :
+        """
+        Check if csv file is updated or not
+        """
+        df = pandas.read_csv(r"names.csv")
+        names = df['Name'].to_list()
+        emails = df['Email'].tolist()
+        if len(names) != len(emails) or len(names) is 0 or len(emails) is 0 :
+            print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
+            return False
+        else :
+            return True
+        
+    def is_template_available(self) :
+        pass
+
 
 class CertiMailer():
     """
@@ -20,6 +69,7 @@ class CertiMailer():
     """
 
     def __init__(self) -> None:
+        self.check_paramters = Checks()
         self.email = str()
         self.password = str()
         self.template = str()
@@ -78,30 +128,14 @@ class CertiMailer():
 
     def configure_csv_check(self) -> None:
         print(f"{Style.BRIGHT}{Fore.GREEN}Checking the entries in names.csv file...{Fore.RESET}{Style.RESET_ALL}")
-        time.sleep(2)
-
-# Rotating animation with changing color during setup
-def _animation() -> None :
-    animation_chars = "-\|/"
-    for _ in range(10):
-        for char in animation_chars:
-            print(f"\r{Style.BRIGHT}{Fore.GREEN}Setting up... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
-            time.sleep(0.1)
-    print()
-
-def _script_animation() -> None :
-    animation_chars = "-\|/"
-    for _ in range(10):
-        for char in animation_chars:
-            print(f"\r{Style.BRIGHT}{Fore.GREEN}Starting the mailer system... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
-            time.sleep(0.1)
-    print()
-
-# Inform user to update entries in names.csv and template folder
-
-
-print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
-time.sleep(2)
+        time.sleep(1)
+        if self.check_paramters.check_csv_updation() :
+            print(f"{Style.BRIGHT}{Fore.GREEN}CSV file found updated..")
+            # print(f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
+            time.sleep(1)
+        else :
+            print(f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv' and {Fore.RESET}{Style.RESET_ALL}")
+            sys.exit()
 
 # Initialize the generator based on the chosen template type
 while True :
