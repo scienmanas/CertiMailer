@@ -1,4 +1,10 @@
-from colorama import Style, init, Fore
+"""
+Logo file for mailer system
+"""
+
+from colorama import init, Fore
+
+init(autoreset=True)
 
 logo = f"""
 {Fore.CYAN}
@@ -12,4 +18,3 @@ logo = f"""
             {Fore.RESET}The Complete solution for automatic certificates mailing
 
 """
-

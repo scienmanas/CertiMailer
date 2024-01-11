@@ -1,4 +1,4 @@
-from setup import CertiMailer
+from scripts.main_setup import CertiMailer
 
 app = CertiMailer()
 app.show_logo()

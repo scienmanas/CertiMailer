@@ -8,17 +8,19 @@ from email_template.template import HTML_CONTENT
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
-    def __init__(self, **kwargs))  -> None :
-        self.MailSenderAddress = kwargs.get("email")
-        self.Password = kwargs.get("password")
+    def __init__(self)  -> None :
+        self.mail_sender_address = str()
+        self.password = str()
 
-    def configure_email_subjects(self) -> None :
-        pass
+    # def configure_email_subjects(self) -> None :
+    #     pass
 
-    def configure_email_template (self) -> None :
-        pass
+    # def configure_email_template (self) -> None :
+    #     pass
+        
+    
 
-    def SendMail(self, receipient, name) -> None :
+    def send_mail(self, receipient, name) -> None :
         """
         This method is used to send an email with a given subject and body to the specified recipient
         Parameters:
@@ -29,7 +31,7 @@ class Emailer :
         """
         mailer_object = MIMEMultipart()
         name_ = "Coders Conclave"
-        mailer_object['From'] = f"{name_} <{self.MailSenderAddress}>"
+        mailer_object['From'] = f"{name_} <{self.mail_sender_address}>"
         mailer_object['To'] = f"{name} <{receipient}>"  
         
         # Recipient Address
@@ -49,7 +51,7 @@ class Emailer :
         try : 
             connection = smtplib.SMTP("smtp.gmail.com", timeout=60)
             connection.starttls()
-            connection.login(user=self.MailSenderAddress, password=self.Password)
+            connection.login(user=self.mail_sender_address, password=self.password)
             connection.sendmail(mailer_object["From"], [receipient], mailer_object.as_string())
             connection.quit()
             print(f'Email sent successfully to {Style.BRIGHT}{Fore.YELLOW}{name}{Fore.RESET}{Style.RESET_ALL}')

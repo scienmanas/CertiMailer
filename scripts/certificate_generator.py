@@ -2,7 +2,7 @@ import os
 import time
 import pandas
 from PIL import Image, ImageFont
-from emailer import Emailer
+from scripts.emailer import Emailer
 import PyPDF2
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
@@ -28,8 +28,11 @@ class GenerateByPdf():
     A class to generate certificates from a PDF template using user data and an image of the signature.
     Attributes: need to write -> incomplete
     """
-    def __init__(self, account, password) -> None:
-        self.mailer = Emailer(account, password)
+    def __init__(self) -> None:
+        """
+        Initializes the GenerateByPdf object with default values.
+        """
+        self.mailer = Emailer()
         self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
 
         # Configure template dimensions
@@ -165,7 +168,7 @@ class GenerateByPdf():
         Check how many mails are still pending. If there is none left, end the program.
         Otherwise, keep it running until all mails have been processed.
         """
-        
+
         if len(self.names) == 0 or len(self.emails) == 0 :
             print(f"{Style.BRIGHT}{Fore.GREEN}All the persons has been mailed, no need to run script again{Fore.RESET}{Style.RESET_ALL}")
         else :
@@ -190,10 +193,10 @@ class GenerateByPdf():
 
 class GenerateByImage() :
 
-    def __init__(self, account, password) -> None:
+    def __init__(self) -> None:
 
         # Mailer Object
-        self.mailer = Emailer(account, password)
+        self.mailer = Emailer()
 
         # Load the certificate templae
         self.certificate_img = Image.open(r"template/sample.png")

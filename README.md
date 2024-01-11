@@ -123,3 +123,5 @@ If you want custom script for your organization, I can do it according to your o
 - [ ] Options for different text colour, font, font size.
 
 - [ ] auto checking for auto password
+
+- [ ] Multiple csv support
