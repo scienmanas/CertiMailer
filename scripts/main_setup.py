@@ -45,8 +45,9 @@ import os
 import time
 import pandas
 from colorama import init, Fore, Style
-from .certificate_generator import GenerateByImage, GenerateByPdf
-from .emailer import Emailer
+from CertiMailer.scripts.certificate_generator import GenerateByImage, GenerateByPdf
+from CertiMailer.scripts.emailer import Emailer
+from CertiMailer.Logo.logo import logo
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text

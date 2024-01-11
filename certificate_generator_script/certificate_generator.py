@@ -1,15 +1,21 @@
+"""
+Write Docstring
+"""
+
 import os
 import time
-import pandas
-from PIL import Image, ImageFont
 from scripts.emailer import Emailer
-import PyPDF2
+import io
+from colorama import init, Fore, Style
+import shutil
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from colorama import init, Fore, Style
-import shutil
-import io
+import pandas
+from PIL import Image, ImageFont
+import PyPDF2
+
+
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 # Set the Colour before drawing
@@ -32,6 +38,12 @@ class GenerateByPdf():
         """
         Initializes the GenerateByPdf object with default values.
         """
+        # initialize variables
+        self.df = pandas.DataFrame()
+        self.nams = list()
+        self.emails = list()
+        self.success_indices = list()
+
         self.mailer = Emailer()
         self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
 
@@ -136,7 +148,7 @@ class GenerateByPdf():
             self.draw_text_on_pdf(out_path_certificate, name)
 
             # Sending the mail
-            self.status = self.mailer.SendMail(email, name)
+            self.status = self.mailer.send_mail(email, name)
             if self.status == "sent":
                 self.success_indices.append(index)
 
