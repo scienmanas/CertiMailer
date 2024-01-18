@@ -125,3 +125,5 @@ If you want custom script for your organization, I can do it according to your o
 - [ ] auto checking for auto password
 
 - [ ] Multiple csv support
+
+- [ ] Testing functionality to test HTML 
