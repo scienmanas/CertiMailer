@@ -5,12 +5,17 @@ from email.mime.application import MIMEApplication
 from colorama import init, Fore, Style
 from email_template.template import HTML_CONTENT
 
+# import the email and password
+
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 class Emailer :
     def __init__(self)  -> None :
         self.mail_sender_address = str()
         self.password = str()
+        # self.mailer_object = object()
+
+        self.configure_credentails()
 
     # def configure_email_subjects(self) -> None :
     #     pass
@@ -18,7 +23,30 @@ class Emailer :
     # def configure_email_template (self) -> None :
     #     pass
         
-    
+    def configure_credentails(self) -> None :
+        """
+        This function sets up the email and password by loading it from settings file
+        """
+        self.mail_sender_address = EMAIL
+        self.password = PASSWORD
+
+    def check_credentials(self) -> bool :
+        server = object()
+        status = bool()
+        try:
+            server = smtplib.SMTP('smtp.gmail.com', timeout=10)
+            server.starttls()
+            server.login(self.mail_sender_address, self.password)
+            print(f"{Style.BRIGHT}{Fore.GREEN}Successfully logged in to Mail Server{Fore.RESET}{Style.RESET_ALL}")
+            server.quit()
+            server = None
+            status = True
+        except Exception as e :
+            print(f"{Style.BRIGHT}{Fore.RED}Error in checking credentials:{Fore.RESET}{Style.RESET}")
+            status = False
+        return status
+
+            
 
     def send_mail(self, receipient, name) -> None :
         """

@@ -4,16 +4,16 @@ Write Docstring
 
 import os
 import time
-from scripts.emailer import Emailer
 import io
-from colorama import init, Fore, Style
 import shutil
+from colorama import init, Fore, Style
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 import pandas
-from PIL import Image, ImageFont
 import PyPDF2
+from PIL import Image, ImageFont
+from .emailer import Emailer
 
 
 
