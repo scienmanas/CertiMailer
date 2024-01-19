@@ -116,6 +116,10 @@ If you want custom script for your organization, I can do it according to your o
 
 - Wesites : https://www.i2pdf.com/measure-pdf & https://www.image-map.net/ used for coordinates measurement.
 
+[![Stargazers repo roster for @scienmanas/CertiMailer](https://reporoster.com/stars/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/stargazers)
+
+[![Forkers repo roster for @scienmanas/CertiMailer](https://reporoster.com/forks/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/network/members)
+
 ## Under Development
 
 - [ ] Customizing different input paramerts by giving user a list a parametrs to use, therefore customizing experince for every user. (Currenlty not working on it, tentative day of release: Feb-March '24) take string with comma for dictionary list.
