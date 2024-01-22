@@ -59,6 +59,17 @@ else
     echo "pip installed successfully."
 fi
 
+# Generate and activate virtual environment
+echo "Installing virtual env..."
+sudo apt install python3.11-venv
+
+echo "Generating virtual environment..."
+python3 -m venv venv >/dev/null 2>&1 
+echo "Virtual environment generated successfully."
+echo "Activating virtual environment..."
+source venv/bin/activate
+echo "Virtual environment activated successfully.."
+
 # Install dependencies from requirements.txt asynchronously
 echo "Installing dependencies..."
 coproc install_dependencies
