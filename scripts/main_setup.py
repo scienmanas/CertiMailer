@@ -45,9 +45,9 @@ import os
 import time
 import pandas
 from colorama import init, Fore, Style
-from CertiMailer.scripts.certificate_generator import GenerateByImage, GenerateByPdf
-from CertiMailer.scripts.emailer import Emailer
-from CertiMailer.Logo.logo import logo
+from scripts.certificate_generator import GenerateByImage, GenerateByPdf
+from scripts.emailer import Emailer
+from Logo.logo import logo
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
@@ -156,12 +156,13 @@ class CertiMailer():
         Function to handle user input and set up necessary information
         """
         print(
-            "Checking for {Style.BRIGHT}{Fore.YELLOW}user's customizations{Fore.RESET}{Style.RESET_ALL}")
+            f"Checking for {Style.BRIGHT}{Fore.YELLOW}user's customizations{Fore.RESET}{Style.RESET_ALL}")
         time.sleep(1)
 
         dummy_checker = Emailer()
-        if dummy_checker.is_customization_done() is False:
+        if dummy_checker.is_customization_done() == False:
             print(f"{Style.BRIGHT}{Fore.GREEN}Customization found, configuring the customization...{Fore.RESET}{Style.RESET_ALL}")
+            dummy_checker = None
             time.sleep(1)
         else:
             print(f"{Style.BRIGHT}{Fore.GREEN}No customization found, configuring the default setup{Fore.RESET}{Style.RESET_ALL}")
@@ -191,7 +192,7 @@ class CertiMailer():
         print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
         self.template = input()
 
-        if self.template.lower() is "pdf" or "png":
+        if self.template.lower() == "pdf" or self.template.lower() == "png":
             print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
             self.get_template_type()
         else:

@@ -4,8 +4,8 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from colorama import init, Fore, Style
 from email_template.template import HTML_CONTENT
+from scripts.settings import EMAIL, PASSWORD # Importing Email and password
 
-# import the email and password
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
