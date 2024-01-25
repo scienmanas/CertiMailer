@@ -3,19 +3,24 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from colorama import init, Fore, Style
-from email_template.template import HTML_CONTENT
+from boilerplates.template1 import HTML_CONTENT
 from scripts.settings import EMAIL, PASSWORD # Importing Email and password
 
-
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
+
 
 class Emailer :
     def __init__(self)  -> None :
         self.mail_sender_address = str()
         self.password = str()
-        # self.mailer_object = object()
 
+        # Configure credentials
         self.configure_credentails()
+
+    def check_customization(self) -> bool :
+        if self.mail_sender_address == "none" or self.password == "none" :
+            return False
+        return True
 
     # def configure_email_subjects(self) -> None :
     #     pass
@@ -42,7 +47,7 @@ class Emailer :
             server = None
             status = True
         except Exception as e :
-            print(f"{Style.BRIGHT}{Fore.RED}Error in checking credentials:{Fore.RESET}{Style.RESET}")
+            print(f"{Style.BRIGHT}{Fore.RED}Error in credentials:{Fore.RESET}{Fore.YELLOW}{e}{Fore.RESET}{Style.RESET_ALL}")
             status = False
         return status
 

@@ -13,18 +13,14 @@ from reportlab.pdfbase.ttfonts import TTFont
 import pandas
 import PyPDF2
 from PIL import Image, ImageFont
-from .emailer import Emailer
-
+from scripts.emailer import Emailer
+from scripts.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
-# Set the Colour before drawing
-TEXT_COLOUR = (0,0,255) 
-# Configure the folders
-OUTPUT_DIRECTORY = "Certificates"
-TEMPLATE_DIRECTORY = "template"
+
+
 # Font configuration
-FONT_SIZE = 28
 FONT_NAME = "cer_font"
 FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=FONT_SIZE)
 pdfmetrics.registerFont(TTFont(FONT_NAME,r"Fonts/PlaypenSans-Bold.ttf"))

@@ -60,13 +60,10 @@ else
 fi
 
 # Generate and activate virtual environment
-echo "Installing virtual env..."
 sudo apt install python3.11-venv
 
-echo "Generating virtual environment..."
+
 python3 -m venv venv >/dev/null 2>&1 
-echo "Virtual environment generated successfully."
-echo "Activating virtual environment..."
 source venv/bin/activate
 echo "Virtual environment activated successfully.."
 
@@ -80,4 +77,5 @@ echo "Dependencies installed successfully."
 # Run the Python script
 echo "Executing main.py..."
 # Add any loading animations or delays here if desired
+clear
 python3 main.py

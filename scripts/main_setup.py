@@ -40,14 +40,20 @@ Usage:
 Note: Ensure 'names.csv' is updated with correct data, and template files are available in the 'templates' folder.
 """
 
+# Standard library imports
 import sys
 import os
 import time
+
+# Third-party imports
 import pandas
 from colorama import init, Fore, Style
+
+# Local application/library specific imports
 from scripts.certificate_generator import GenerateByImage, GenerateByPdf
 from scripts.emailer import Emailer
-from Logo.logo import logo
+from assets.logo import logo
+from scripts import settings
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
@@ -102,10 +108,10 @@ class Checks():
         """
         Check if csv file is updated or not
         """
-        df = pandas.read_csv(r"names.csv")
+        df = pandas.read_csv(r"data/names.csv")
         names = df['Name'].to_list()
         emails = df['Email'].tolist()
-        if len(names) != len(emails) or len(names) is 0 or len(emails) is 0:
+        if len(names) != len(emails) and len(names) == 0 and len(emails) == 0:
             print(
                 f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             return False
@@ -121,7 +127,7 @@ class Checks():
         Returns:
         Bool: True if available otherwise False
         """
-        directory_path = "template"
+        directory_path = "templates"
         file_name = f"sample.{template_type}"
         path = os.path.join(directory_path, file_name)
         if os.path.exists(path):
@@ -145,10 +151,10 @@ class CertiMailer():
 
     def show_logo(self) -> None:
         """
-        function to show the starting logo
+        Function to show the starting logo
         """
         print(logo)
-        print("Configuring the basic settings enter...")
+        print("Configuring the settings..")
         time.sleep(1)
 
     def run_setup(self) -> None:
@@ -160,9 +166,9 @@ class CertiMailer():
         time.sleep(1)
 
         dummy_checker = Emailer()
-        if dummy_checker.is_customization_done() == False:
+        if dummy_checker.check_customization() is True :
             print(f"{Style.BRIGHT}{Fore.GREEN}Customization found, configuring the customization...{Fore.RESET}{Style.RESET_ALL}")
-            dummy_checker = None
+            del dummy_checker
             time.sleep(1)
         else:
             print(f"{Style.BRIGHT}{Fore.GREEN}No customization found, configuring the default setup{Fore.RESET}{Style.RESET_ALL}")
@@ -175,6 +181,27 @@ class CertiMailer():
         """
         self.email.strip()
         self.password.strip().replace(' ', '')
+    
+    def set_configuration(self) -> None :
+        """
+        Sets email, password, and template from user inputs
+        """
+        settings.EMAIL = self.email
+        settings.PASSWORD = self.password
+
+        # Read the existing content of the settings.py file
+        with open(r'scripts/settings.py', 'r', encoding='utf-8') as settings_file:
+            existing_content = settings_file.read()
+
+        # Update the values in the existing content
+        updated_content = existing_content.replace('EMAIL = "none"', f'EMAIL = "{self.email}"')
+        updated_content = updated_content.replace('PASSWORD = "none"', f'PASSWORD = "{self.password}"')
+
+        # Write the updated content back to the settings.py file
+        with open(r'scripts/settings.py', 'w', encoding='utf-8') as settings_file:
+            settings_file.write(updated_content)
+
+        print(f"{Style.BRIGHT}{Fore.GREEN}Email and Password updated successfully and saved!{Fore.RESET}{Style.RESET_ALL}")
 
     def default_setup(self) -> None:
         """
@@ -184,15 +211,16 @@ class CertiMailer():
         self.password = input(
             f"Enter App Password {Style.BRIGHT}{Fore.LIGHTRED_EX}(Check tutorial video in readme){Fore.RESET}{Style.RESET_ALL} : ")
         self.remove_extra_spaces()
+        self.set_configuration()
 
     def get_template_type(self) -> None:
         """
         Prompts the user to select the type of template they want to use, then sets that as the current template type
         """
         print(f'Type "{Fore.YELLOW}pdf{Fore.RESET}" if you have a template in .pdf format and "{Fore.YELLOW}png{Fore.RESET}" if the template is in .png format: ')
-        self.template = input()
+        self.template = input().strip().lower()
 
-        if self.template.lower() == "pdf" or self.template.lower() == "png":
+        if self.template != "pdf" and self.template != "png":
             print(f"\n{Style.BRIGHT}{Fore.RED}Invalid Template Type. Please enter either {Fore.RESET}{Fore.YELLOW}'pdf'{Fore.RESET} or {Fore.YELLOW}'png'{Fore.RESET}{Fore.RED}.{Fore.RESET}{Style.RESET_ALL}")
             self.get_template_type()
         else:
@@ -219,7 +247,7 @@ class CertiMailer():
         """
         if self.check_paramters.is_template_available(self.template):
             print(
-                f"{Style.BRIGHT}{Fore.GREEN}Updating the template in the template folder...{Fore.RESET}{Style.RESET_ALL}")
+                f"{Style.BRIGHT}{Fore.GREEN}Loading the template to the system..{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
         else:
             print(
@@ -241,6 +269,8 @@ class CertiMailer():
         self.generator_system.send_email()
         self.generator_system.retry_failed_operation()
         self.generator_system.check_remaining()
+        
+        del self.generator_system
 
     def activate_png_system(self) -> None:
         """
@@ -256,11 +286,13 @@ class CertiMailer():
         self.generator_system.retry_failed_operation()
         self.generator_system.check_remaining()
 
+        del self.generator_system
+
     def start_system(self) -> None:
         """
         Starts the system and then calls appropriate functions based on Template Type
         """
-        if self.template is 'pdf':
+        if self.template == 'pdf':
             self.activate_pdf_system()
         else:
             self.activate_png_system()
