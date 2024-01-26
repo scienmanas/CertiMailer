@@ -18,3 +18,4 @@ TEXT_COLOUR = (0,0,255)
 # Output directory
 OUTPUT_DIRECTORY = "Certificates"
 TEMPLATE_DIRECTORY = "templates"
+DATA_DIRECTORY = "data"

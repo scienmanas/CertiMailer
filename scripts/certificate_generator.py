@@ -14,7 +14,7 @@ import pandas
 import PyPDF2
 from PIL import Image, ImageFont
 from scripts.emailer import Emailer
-from scripts.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE
+from scripts.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE, DATA_DIRECTORY
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
@@ -56,10 +56,13 @@ class GenerateByPdf():
         """
         Store participants' information in a dictionary.
         """
-        self.df = pandas.read_csv(r"names.csv")
+        data_path = os.path.join(DATA_DIRECTORY, "names.csv")
+        self.df = pandas.read_csv(data_path)
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
+
+        del data_path
 
     def get_page_dimension(self) -> tuple :
         """

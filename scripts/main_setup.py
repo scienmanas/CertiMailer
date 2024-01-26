@@ -44,6 +44,7 @@ Note: Ensure 'names.csv' is updated with correct data, and template files are av
 import sys
 import os
 import time
+import smtplib
 
 # Third-party imports
 import pandas
@@ -136,7 +137,7 @@ class Checks():
             return False
         
     @staticmethod
-    def check_customization() -> None:
+    def check_customization() -> bool:
         """
         Check if email and password settings are customized.
         Returns:
@@ -145,6 +146,23 @@ class Checks():
         if len(settings.EMAIL) == 0 and len(settings.PASSWORD) == 0:
             return False
         return True
+    
+    @staticmethod
+    def check_credentials () -> None :
+        server = object()
+        status = bool()
+        try:
+            server = smtplib.SMTP('smtp.gmail.com', timeout=10)
+            server.starttls()
+            server.login(self.mail_sender_address, self.password)
+            print(f"{Style.BRIGHT}{Fore.GREEN}Successfully logged in to Mail Server{Fore.RESET}{Style.RESET_ALL}")
+            server.quit()
+            server = None
+            status = True
+        except Exception as e :
+            print(f"{Style.BRIGHT}{Fore.RED}Error in credentials:{Fore.RESET}{Fore.YELLOW}{e}{Fore.RESET}{Style.RESET_ALL}")
+            status = False
+        return status
 
 
 class CertiMailer():
@@ -265,6 +283,9 @@ class CertiMailer():
                 f"{Style.BRIGHT}{Fore.RED}Error: cannot find the template..{Style.RESET_ALL}{Fore.RESET}")
             print("Existing the programme..")
             sys.exit()
+    
+    def perform_checks(self) :
+        pass
 
     def activate_pdf_system(self) -> None:
         """
