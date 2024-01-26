@@ -3,8 +3,8 @@ Sets email and password of the mailing id
 """
 
 # Set email and passord
-EMAIL = "manas@admin_sys.admin.in"
-PASSWORD = "helloworld"
+EMAIL = "randomusermanas1@gmail.com"
+PASSWORD = "mtrmvzqcmnwwuusp"
 
 # Change the boiler late number
 EMAIL_BOILERPLATE = 1
@@ -19,3 +19,10 @@ TEXT_COLOUR = (0,0,255)
 OUTPUT_DIRECTORY = "Certificates"
 TEMPLATE_DIRECTORY = "templates"
 DATA_DIRECTORY = "data"
+
+# Template name
+TEMPLATE_NAME = "sample"
+
+# SMTP Server
+SMTP_SERVER = 'smtp.gmail.com'
+SERVER_TIMEOUT = 60

@@ -13,8 +13,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 import pandas
 import PyPDF2
 from PIL import Image, ImageFont
-from scripts.emailer import Emailer
-from scripts.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE, DATA_DIRECTORY
+from system.scripts.emailer import Emailer
+from system.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE, DATA_DIRECTORY
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
