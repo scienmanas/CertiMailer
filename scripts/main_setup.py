@@ -134,6 +134,17 @@ class Checks():
             return True
         else:
             return False
+        
+    @staticmethod
+    def check_customization() -> None:
+        """
+        Check if email and password settings are customized.
+        Returns:
+        bool: True if email and password settings are customized, False otherwise.
+        """
+        if len(settings.EMAIL) == 0 and len(settings.PASSWORD) == 0:
+            return False
+        return True
 
 
 class CertiMailer():
@@ -165,13 +176,13 @@ class CertiMailer():
             f"Checking for {Style.BRIGHT}{Fore.YELLOW}user's customizations{Fore.RESET}{Style.RESET_ALL}")
         time.sleep(1)
 
-        dummy_checker = Emailer()
-        if dummy_checker.check_customization() is True :
+        if self.check_paramters.check_customization() is True :
             print(f"{Style.BRIGHT}{Fore.GREEN}Customization found...{Fore.RESET}{Style.RESET_ALL}")
             is_rechange_needed = input(f"Do you wan to change the email and password {Style.BRIGHT}{Fore.YELLOW}[Y/N]? {Fore.RESET}{Style.RESET_ALL}").lower()
             if is_rechange_needed == 'y' :
                 self.default_setup()
-            del dummy_checker
+            else :
+                pass
         else:
             print(f"{Style.BRIGHT}{Fore.GREEN}No customization found, configuring the default setup{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)

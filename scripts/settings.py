@@ -3,8 +3,8 @@ Sets email and password of the mailing id
 """
 
 # Set email and passord
-EMAIL = ""
-PASSWORD = ""
+EMAIL = "manas@admin_sys.admin.in"
+PASSWORD = "helloworld"
 
 # Change the boiler late number
 EMAIL_BOILERPLATE = 1

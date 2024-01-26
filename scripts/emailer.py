@@ -17,10 +17,6 @@ class Emailer :
         # Configure credentials
         self.configure_credentails()
 
-    def check_customization(self) -> bool :
-        if self.mail_sender_address == "none" or self.password == "none" :
-            return False
-        return True
 
     # def configure_email_subjects(self) -> None :
     #     pass
