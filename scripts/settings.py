@@ -3,8 +3,8 @@ Sets email and password of the mailing id
 """
 
 # Set email and passord
-EMAIL = "syatemadmin@admin.in"
-PASSWORD = "nonfefe"
+EMAIL = ""
+PASSWORD = ""
 
 # Change the boiler late number
 EMAIL_BOILERPLATE = 1

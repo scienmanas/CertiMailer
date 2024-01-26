@@ -167,9 +167,11 @@ class CertiMailer():
 
         dummy_checker = Emailer()
         if dummy_checker.check_customization() is True :
-            print(f"{Style.BRIGHT}{Fore.GREEN}Customization found, configuring the customization...{Fore.RESET}{Style.RESET_ALL}")
+            print(f"{Style.BRIGHT}{Fore.GREEN}Customization found...{Fore.RESET}{Style.RESET_ALL}")
+            is_rechange_needed = input(f"Do you wan to change the email and password {Style.BRIGHT}{Fore.YELLOW}[Y/N]? {Fore.RESET}{Style.RESET_ALL}").lower()
+            if is_rechange_needed == 'y' :
+                self.default_setup()
             del dummy_checker
-            time.sleep(1)
         else:
             print(f"{Style.BRIGHT}{Fore.GREEN}No customization found, configuring the default setup{Fore.RESET}{Style.RESET_ALL}")
             time.sleep(1)
@@ -186,16 +188,14 @@ class CertiMailer():
         """
         Sets email, password, and template from user inputs
         """
-        settings.EMAIL = self.email
-        settings.PASSWORD = self.password
 
         # Read the existing content of the settings.py file
         with open(r'scripts/settings.py', 'r', encoding='utf-8') as settings_file:
             existing_content = settings_file.read()
 
         # Update the values in the existing content
-        updated_content = existing_content.replace('EMAIL = "none"', f'EMAIL = "{self.email}"')
-        updated_content = updated_content.replace('PASSWORD = "none"', f'PASSWORD = "{self.password}"')
+        updated_content = existing_content.replace(f'EMAIL = "{settings.EMAIL}"', f'EMAIL = "{self.email}"')
+        updated_content = updated_content.replace(f'PASSWORD = "{settings.PASSWORD}"', f'PASSWORD = "{self.password}"')
 
         # Write the updated content back to the settings.py file
         with open(r'scripts/settings.py', 'w', encoding='utf-8') as settings_file:

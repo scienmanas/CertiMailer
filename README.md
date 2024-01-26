@@ -131,3 +131,5 @@ If you want custom script for your organization, I can do it according to your o
 - [ ] Multiple csv support
 
 - [ ] Testing functionality to test HTML 
+
+ - [ ] All kinds of image support
