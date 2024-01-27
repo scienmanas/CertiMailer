@@ -42,11 +42,13 @@ class Checks():
         df = pandas.read_csv(os.path.join(settings.DATA_DIRECTORY, "names.csv"))
         names = df['Name'].to_list()
         emails = df['Email'].tolist()
-        if len(names) != len(emails) and len(names) == 0 and len(emails) == 0:
+        if len(names) != len(emails) or len(names) == 0 or len(emails) == 0:
             print(
                 f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             sys.exit()
         else:
+            print(len(names))
+            print(len(emails))
             print(f"{Style.BRIGHT}{Fore.GREEN}CSV file found updated..")
 
     @staticmethod
