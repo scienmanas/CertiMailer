@@ -14,16 +14,15 @@ import pandas
 import PyPDF2
 from PIL import Image, ImageFont
 from system.scripts.emailer import Emailer
-from system.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE, DATA_DIRECTORY
+from system.settings import OUTPUT_DIRECTORY, TEMPLATE_DIRECTORY, TEXT_COLOUR, FONT_SIZE, DATA_DIRECTORY, FONT_NAME, FONT_DIRECTORY, TEMPLATE_NAME
 
 
 init(autoreset=True)  # Initialize colorama for cross-platform colored text
 
 
 # Font configuration
-FONT_NAME = "cer_font"
-FONT = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=FONT_SIZE)
-pdfmetrics.registerFont(TTFont(FONT_NAME,r"Fonts/PlaypenSans-Bold.ttf"))
+FONT = ImageFont.truetype(FONT_DIRECTORY, size=FONT_SIZE)
+pdfmetrics.registerFont(TTFont(FONT_NAME,FONT_DIRECTORY))
 
 class GenerateByPdf():
     """
@@ -36,17 +35,28 @@ class GenerateByPdf():
         """
         # initialize variables
         self.df = pandas.DataFrame()
-        self.nams = list()
+        self.names = list()
         self.emails = list()
         self.success_indices = list()
 
+        # Initialise mailer system
         self.mailer = Emailer()
-        self.pdf_template_path = os.path.join(TEMPLATE_DIRECTORY, "sample.pdf")
+
+        # Files path
+        self.data_path = os.path.join(DATA_DIRECTORY, "names.csv")
+        self.template_path = os.path.join(TEMPLATE_DIRECTORY, f"{TEMPLATE_NAME}.pdf")
 
         # Configure template dimensions
         self.template_dimensions = self.get_page_dimension()
         self.template_width = self.template_dimensions[0]
         self.template_height = self.template_dimensions[1]
+
+        # Configure printing details
+        self.event_name = str()
+        self.during_date = str()
+        self.name_position = object()
+        self.event_name_postion = object()
+        self.during_date_position = object()
 
         # Make output directory
         os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
@@ -56,13 +66,10 @@ class GenerateByPdf():
         """
         Store participants' information in a dictionary.
         """
-        data_path = os.path.join(DATA_DIRECTORY, "names.csv")
-        self.df = pandas.read_csv(data_path)
+        self.df = pandas.read_csv(self.data_path)
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
         self.success_indices = []
-
-        del data_path
 
     def get_page_dimension(self) -> tuple :
         """
@@ -72,7 +79,7 @@ class GenerateByPdf():
         Returns:
         A tuple (w, h): width and height of each page in points.
         """
-        template = PyPDF2.PdfReader(open(self.pdf_template_path, "rb"))
+        template = PyPDF2.PdfReader(open(self.template_path, "rb"))
         template_page = template.pages[0]
         template_page_width, template_page_height = template_page.mediabox.width  ,template_page.mediabox.height
         return (template_page_width, template_page_height)
@@ -86,7 +93,7 @@ class GenerateByPdf():
         """
 
         # Copy the original PDF to the output path
-        shutil.copy(self.pdf_template_path, out_path)
+        shutil.copy(self.template_path, out_path)
 
         # Open the copied PDF file
         with open(out_path, 'rb+') as file:
@@ -147,12 +154,13 @@ class GenerateByPdf():
             self.draw_text_on_pdf(out_path_certificate, name)
 
             # Sending the mail
-            self.status = self.mailer.send_mail(email, name)
-            if self.status == "sent":
+            status = self.mailer.send_mail(email, name)
+            if status == "sent":
                 self.success_indices.append(index)
 
+        # Dropping of sucessful columns
         self.df = self.df.drop(index=self.success_indices)
-        self.df.to_csv(r"names.csv", index=False)
+        self.df.to_csv(self.data_path, index=False)
         print(f"{Style.BRIGHT}{Fore.GREEN}Script Running Completed.{Fore.RESET}{Style.RESET_ALL}", flush=True)
         self.success_indices = []
 
@@ -163,7 +171,7 @@ class GenerateByPdf():
         """
 
         # Reconfigure the remaining list 
-        self.df = pandas.read_csv(r"names.csv")
+        self.df = pandas.read_csv(self.data_path)
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
 
@@ -206,11 +214,29 @@ class GenerateByImage() :
 
     def __init__(self) -> None:
 
+        # initialize variables
+        self.df = pandas.DataFrame()
+        self.names = list()
+        self.emails = list()
+        self.success_indices = list()
+
         # Mailer Object
         self.mailer = Emailer()
 
+        
+        # Files path
+        self.data_path = os.path.join(DATA_DIRECTORY, "names.csv")
+        self.template_path = os.path.join(TEMPLATE_DIRECTORY, f"{TEMPLATE_NAME}.png")
+
         # Load the certificate templae
-        self.certificate_img = Image.open(r"template/sample.png")
+        self.certificate_img = Image.open(self.template_path)
+
+        # Configure printing details
+        self.event_name = str()
+        self.during_date = str()
+        self.name_position = object()
+        self.event_name_postion = object()
+        self.during_date_position = object()
         
         # Font configuration
         # self.font = ImageFont.truetype(r"Fonts/PlaypenSans-Bold.ttf", size=56)
@@ -220,11 +246,12 @@ class GenerateByImage() :
         self.success_indices = []
 
     def store_participants_data(self) -> None : 
-        self.df = pandas.read_csv(r"names.csv")
+        self.df = pandas.read_csv(self.data_path)
         self.names = self.df['Name'].tolist()
         self.emails = self.df['Email'].tolist()
+        self.success_indices = []
 
-    def draw_on_img(self, name) -> None :
+    def draw_text_on_img(self, name) -> None :
         # Output path
         out_path_certificate = os.path.join(OUTPUT_DIRECTORY, f"{name}.pdf")
 
@@ -261,10 +288,10 @@ class GenerateByImage() :
     def send_email(self) -> None :
         for index, (name,email) in enumerate(zip(self.names, self.emails)) :
             # Make certificate
-            self.draw_on_img(name)
+            self.draw_text_on_img(name)
 
             # Sending the mail
-            self.status = self.mailer.SendMail(email, name)
+            self.status = self.mailer.send_mail(email, name)
             if self.status == "sent" :
                 self.success_indices.append(index)
 
@@ -272,7 +299,7 @@ class GenerateByImage() :
         self.df = self.df.drop(index=self.success_indices)
 
         # Save the dataframe
-        self.df.to_csv(r"names.csv", index=False)
+        self.df.to_csv(self.data_path, index=False)
 
         # Closing the template image
         self.certificate_img.close()

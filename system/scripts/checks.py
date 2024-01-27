@@ -98,8 +98,6 @@ class Checks():
         try:
             server = smtplib.SMTP(settings.SMTP_SERVER, timeout=settings.SERVER_TIMEOUT)
             server.starttls()
-            print(settings.EMAIL)
-            print(settings.PASSWORD)
             server.login(settings.EMAIL, settings.PASSWORD)
             print(f"{Style.BRIGHT}{Fore.GREEN}Credentials verified with mail server{Fore.RESET}{Style.RESET_ALL}")
             server.quit()
