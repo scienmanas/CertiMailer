@@ -7,9 +7,9 @@ This is a Python Script to generate certificates and mail them to invidually in 
 
 1. Clone the repository
 ```bash
-git clone https://github.com/scienmanas/Certificates-Generator.git
-or you can download the zip and extract the files
+git clone https://github.com/scienmanas/CertiMailer
 ```
+`or you can download the zip and extract the files`
 
 2. Add the details of the participants in the `names.csv` file before running the program.
 
@@ -112,14 +112,10 @@ If you want custom script for your organization, I can do it according to your o
 
 [![Forkers repo roster for @scienmanas/CertiMailer](https://reporoster.com/forks/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/network/members)
 
-## Under Development
+## Under Development 
 
 - [ ] Customizing different input paramerts by giving user a list a parametrs to use, therefore customizing experince for every user. (Currenlty not working on it, tentative day of release: Feb-March '24) take string with comma for dictionary list.
-
-- [ ] auto checking for auto password
-
 - [ ] Multiple csv support
-
-- [ ] Testing functionality to test HTML 
-
- - [ ] All kinds of image support
+- [ ] Testing functionality to test HTML
+- [ ] All kinds of image support.
+- [ ] Proper full documenatation.
