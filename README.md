@@ -93,6 +93,7 @@ If you want custom script for your organization, I can do it according to your o
 - [x] Automatic checking of python, pip and dependencies, the shell script is configured in such a way it will itself install the missing package.
 - [x] Notify whether all have been mailed or not at last.
 - [X] Multiple inputs taken for customization of printing parametrs e.g.: Printing dates, competitions, names.
+- [x] Support for Windows, Linux and Mac systems.
 
 ## Demo Videos 
 
@@ -115,6 +116,10 @@ If you want custom script for your organization, I can do it according to your o
 
 - Wesites : https://www.i2pdf.com/measure-pdf & https://www.image-map.net/ used for coordinates measurement.
 
+[![Stargazers repo roster for @scienmanas/CertiMailer](https://reporoster.com/stars/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/stargazers)
+
+[![Forkers repo roster for @scienmanas/CertiMailer](https://reporoster.com/forks/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/network/members)
+
 ## Under Development
 
 - [ ] Customizing different input paramerts by giving user a list a parametrs to use, therefore customizing experince for every user. (Currenlty not working on it, tentative day of release: Feb-March '24) take string with comma for dictionary list.
@@ -122,3 +127,9 @@ If you want custom script for your organization, I can do it according to your o
 - [ ] Options for different text colour, font, font size.
 
 - [ ] auto checking for auto password
+
+- [ ] Multiple csv support
+
+- [ ] Testing functionality to test HTML 
+
+ - [ ] All kinds of image support
