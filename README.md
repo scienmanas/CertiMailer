@@ -123,9 +123,9 @@ If you want custom script for your organization, I can do it according to your o
 
 - Wesites : https://www.i2pdf.com/measure-pdf & https://www.image-map.net/ used for coordinates measurement.
 
-[![Stargazers repo roster for @scienmanas/CertiMailer](https://reporoster.com/stars/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/stargazers)
+<!--[![Stargazers repo roster for @scienmanas/CertiMailer](https://reporoster.com/stars/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/stargazers) -->
 
-[![Forkers repo roster for @scienmanas/CertiMailer](https://reporoster.com/forks/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/network/members)
+<!--[![Forkers repo roster for @scienmanas/CertiMailer](https://reporoster.com/forks/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/network/members) -->
 
 ## Feautres under development 
 
