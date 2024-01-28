@@ -22,8 +22,8 @@ Attributes:
 '''
 
 # Set email and passord
-EMAIL = "n"
-PASSWORD = "n"
+EMAIL = ""
+PASSWORD = ""
 
 # Change the boiler late number
 EMAIL_BOILERPLATE = 1
