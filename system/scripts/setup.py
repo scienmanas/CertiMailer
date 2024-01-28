@@ -179,9 +179,10 @@ class CertiMailer:
         Checks whether the entered details are valid or not
         Raises an exception if any field is empty
         """
-        if self.check_paramters.check_credentials() is False :
-            self.configure_credentials()
-            self.perform_checks()
+        if settings.ONLY_CERTIFICATES == "OFF" :
+            if self.check_paramters.check_credentials() is False :
+                self.configure_credentials()
+                self.perform_checks()
         self.check_paramters.check_csv_updation()
         self.check_paramters.is_template_available(self.template)
 
@@ -197,7 +198,7 @@ class CertiMailer:
         self.generator_system.configure_postion_and_details()
         self.animations.cli_animation_1()
         self.animations.cli_animation_2()
-        self.generator_system.send_email()
+        self.generator_system.start_system()
         self.generator_system.retry_failed_operation()
         self.generator_system.check_remaining()
         
@@ -213,7 +214,7 @@ class CertiMailer:
         self.generator_system.configure_postion_and_details()
         self.animations.cli_animation_1()
         self.animations.cli_animation_2()
-        self.generator_system.send_email()
+        self.generator_system.start_system()
         self.generator_system.retry_failed_operation()
         self.generator_system.check_remaining()
 

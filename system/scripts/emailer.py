@@ -34,6 +34,15 @@ class Emailer:
         __init__(self) -> None:
             Initialize the Emailer class.
 
+        attach_mail_contents(self, name: str, receipient: str) -> None:
+            Attach sender name, email subject, and email content based on HTML or plain text boilerplate.
+
+        attach_certificate(self, name: str) -> None:
+            Attach the certificate file to the email.
+
+        attach_boilerplate(self) -> None:
+            Attach email content based on HTML or plain text boilerplate.
+
         send_mail(self, receipient: str, name: str) -> str:
             Send an email with an attachment to the specified recipient.
 
@@ -58,16 +67,16 @@ class Emailer:
         Returns:
             None
         """
-        self.mailer_object = MIMEMultipart()
+        self.mailer_object = object
         importlib.reload(settings)
-        self.attach_mail_contents()
 
-    def attach_mail_contents(self) -> None:
+    def attach_mail_contents(self, name: str, receipient: str) -> None:
         """
         Attach sender name, email subject, and email content based on HTML or plain text boilerplate.
 
         Args:
-            None
+            name (str): Name of the recipient.
+            receipient (str): Email address of the recipient.
 
         Returns:
             None
@@ -75,8 +84,9 @@ class Emailer:
         self.mailer_object['From'] = f"{settings.SENDER_NAME} <{settings.EMAIL}>"
         self.mailer_object['Subject'] = settings.MAIL_SUBJECT
         self.attach_boilerplate()
+        self.mailer_object['To'] = f"{name} <{receipient}>"
 
-    def attach_certificate(self, name) -> None:
+    def attach_certificate(self, name: str) -> None:
         """
         Attach the certificate file to the email.
 
@@ -120,8 +130,8 @@ class Emailer:
         Returns:
             str: Status of the email sending process ("sent" if successful, "failed" otherwise).
         """
-
-        self.mailer_object['To'] = f"{name} <{receipient}>"
+        self.mailer_object = MIMEMultipart()
+        self.attach_mail_contents(name=name, receipient=receipient)
         self.attach_certificate(name=name)
 
         # Send Mail
@@ -132,8 +142,10 @@ class Emailer:
             connection.sendmail(self.mailer_object["From"], [receipient], self.mailer_object.as_string())
             connection.quit()
             print(f'Email sent successfully to {Style.BRIGHT}{Fore.YELLOW}{name}{Fore.RESET}{Style.RESET_ALL}')
+            self.mailer_object = None
             return "sent"
         except Exception as e:
             print(
                 f"{Style.BRIGHT}{Fore.RED}Email could not be sent to{Fore.RESET} {Fore.YELLOW}{name}{Fore.RESET} : {Fore.RED}{str(e)}{Fore.RESET}{Style.RESET_ALL}")
+            self.mailer_object = None
             return "failed"

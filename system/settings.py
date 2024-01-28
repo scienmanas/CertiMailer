@@ -18,11 +18,12 @@ Attributes:
     SENDER_NAME (str): The sender's name for the emails.
     MAIL_SUBJECT (str): The subject of the email.
     HTML_BOILERPLATE (str): A flag to indicate if HTML boilerplate is enabled. Values: 'ON', 'OFF'.
+    ONLY_CERTIFICATES (str):  Flag indicating whether only certificates should be generated or not. If OFF the certificates will also be mailed.
 '''
 
 # Set email and passord
-EMAIL = "randomusermanas1@gmail.com"
-PASSWORD = "xqtokorqrgaenszu"
+EMAIL = "n"
+PASSWORD = "n"
 
 # Change the boiler late number
 EMAIL_BOILERPLATE = 1
@@ -54,13 +55,13 @@ SENDER_NAME = "Conclave Head"
 MAIL_SUBJECT = "Participation Certificate, Coders' Conclave"
 
 #Values : On and OFF
-HTLM_BOILERPLATE = "ON"
+HTLM_BOILERPLATE = "OFF"
+
+#Values: ON and OFF
+ONLY_CERTIFICATES = "OFF"
 
 
-# # Currenlt under Development
-# #Values: ON and OFF
-# ONLY_CERTIFICATES = "OFF"
+##  Currenlt under Development
 
-# # Values: ON and OFF
+## Values: ON and OFF
 # TESTING_MODE = "OFF"
-
