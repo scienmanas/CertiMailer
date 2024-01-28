@@ -15,8 +15,9 @@ Attributes:
     TEMPLATE_NAME (str): The name of the certificate template to use.
     SMTP_SERVER (str): The SMTP server for sending emails.
     SERVER_TIMEOUT (int): The timeout for the server in seconds.
-    ONLY_CERTIFICATES (str): A flag to indicate if only certificates should be generated. Values: 'ON', 'OFF'.
-    TESTING_MODE (str): A flag to indicate if the application is in testing mode. Values: 'ON', 'OFF'.
+    SENDER_NAME (str): The sender's name for the emails.
+    MAIL_SUBJECT (str): The subject of the email.
+    HTML_BOILERPLATE (str): A flag to indicate if HTML boilerplate is enabled. Values: 'ON', 'OFF'.
 '''
 
 # Set email and passord
