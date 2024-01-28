@@ -19,7 +19,22 @@ git clone https://github.com/scienmanas/CertiMailer
 
 ## Running 
 
-1. Open the terminal and navigate to the cloned/downloaded repository location.
+### For Windows
+
+1. Open the `Powershell` and navigate to the cloned/downloaded repository location.
+
+2. Run the command
+```powershell
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+```
+3. To start the application run the following command in terminal (One time)
+```powershell
+.\certimailer.ps1
+```
+
+### For Linux
+
+1. Open the `terminal` and navigate to the cloned/downloaded repository location.
 
 2. To start the application run the following command in terminal (One time)
 ```bash
@@ -30,6 +45,7 @@ chmod +x certimailer.sh
 ```bash
 ./certimailer.sh
 ```
+
 
 ## Note & Customization
 
@@ -67,7 +83,6 @@ The repository is free to use but copying this is strictly prohibited.
 - If you want any new features raise an issue mentioning the same
 - This was developed and tested on Linux system, if there are errors while running in any other os, raise an issue mentioning the same.
 
-<!-- ## Feautres under development  -->
 
 ## Services 
 
@@ -112,10 +127,10 @@ If you want custom script for your organization, I can do it according to your o
 
 [![Forkers repo roster for @scienmanas/CertiMailer](https://reporoster.com/forks/dark/scienmanas/CertiMailer)](https://github.com/scienmanas/CertiMailer/network/members)
 
-## Under Development 
+## Feautres under development 
 
 - [ ] Customizing different input paramerts by giving user a list a parametrs to use, therefore customizing experince for every user. (Currenlty not working on it, tentative day of release: Feb-March '24) take string with comma for dictionary list.
 - [ ] Multiple csv support
-- [ ] Testing functionality to test HTML
-- [ ] All kinds of image support.
-- [ ] Proper full documenatation.
+- [ ] Testing functionality to test mail
+- [ ] All kinds of image(template) support.
+- [ ] Proper full documenatation. (maintaining a doc folder)

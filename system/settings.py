@@ -1,13 +1,30 @@
-"""
-Sets email and password of the mailing id
-"""
+'''
+This module contains the configuration settings for the application.
+
+Attributes:
+    EMAIL (str): The email address used for sending emails.
+    PASSWORD (str): The password for the email account.
+    EMAIL_BOILERPLATE (int): The boilerplate number for the email.
+    FONT_SIZE (int): The font size for the certificates.
+    FONT_NAME (str): The name of the font used in the certificates.
+    FONT_DIRECTORY (str): The directory where the font file is located.
+    TEXT_COLOUR (tuple): The RGB color code for the text in the certificates.
+    OUTPUT_DIRECTORY (str): The directory where the certificates will be saved.
+    TEMPLATE_DIRECTORY (str): The directory where the certificate templates are located.
+    DATA_DIRECTORY (str): The directory where the data for the certificates is located.
+    TEMPLATE_NAME (str): The name of the certificate template to use.
+    SMTP_SERVER (str): The SMTP server for sending emails.
+    SERVER_TIMEOUT (int): The timeout for the server in seconds.
+    ONLY_CERTIFICATES (str): A flag to indicate if only certificates should be generated. Values: 'ON', 'OFF'.
+    TESTING_MODE (str): A flag to indicate if the application is in testing mode. Values: 'ON', 'OFF'.
+'''
 
 # Set email and passord
 EMAIL = ""
 PASSWORD = ""
 
 # Change the boiler late number
-EMAIL_BOILERPLATE = 1
+EMAIL_BOILERPLATE = 2
 
 # Certificates custom settings
 # Font Size
@@ -29,5 +46,9 @@ TEMPLATE_NAME = "sample"
 SMTP_SERVER = 'smtp.gmail.com'
 SERVER_TIMEOUT = 60
 
+# Currenlt under Development
 # Values: ON and OFF
 ONLY_CERTIFICATES = "OFF"
+
+# Values: ON and OFF
+TESTING_MODE = "OFF"

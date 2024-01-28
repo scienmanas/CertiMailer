@@ -1,97 +1,51 @@
 # Function to check if a command is available
-function Test-Command {
-    param(
-        [string]$Command
-    )
-    $null = Get-Command $Command -ErrorAction SilentlyContinue
-    return !$?
+function Test-Command($command) {
+    return (Get-Command $command -ErrorAction SilentlyContinue) -ne $null
 }
-
-# Function to display loading animation
-function Loading-Animation {
-    param(
-        [int]$LoadInterval,
-        [string]$LoadingMessage
-    )
-    $LoadingAnimation = @('-', '\', '|', '/')
-    for ($Elapsed = 0; $Elapsed -lt $LoadInterval; $Elapsed++) {
-        foreach ($Frame in $LoadingAnimation) {
-            Write-Host -NoNewline $Frame
-            Start-Sleep -Seconds 0.25
-        }
-    }
-    Write-Host -NoNewline " `b"
-    Write-Host $LoadingMessage
-}
-
-# Function to install dependencies asynchronously
-function Install-Dependencies {
-    Start-Process -FilePath "pip3" -ArgumentList "install -r requirements.txt" -NoNewWindow -Wait
-}
-
-# Detect the operating system
-$OS = (Get-WmiObject Win32_OperatingSystem).Caption
 
 # Check if Python is installed
-if (Test-Command "python3") {
-    Write-Host "Python 3 is already installed."
-}
-else {
-    Write-Host "Python 3 not found. Installing..."
-    switch -Wildcard ($OS) {
-        "*Linux*" {
-            Start-Process -FilePath "sudo" -ArgumentList "apt-get update" -NoNewWindow -Wait
-            Start-Process -FilePath "sudo" -ArgumentList "apt-get install -y python3" -NoNewWindow -Wait
-        }
-        "*Darwin*" {
-            Start-Process -FilePath "brew" -ArgumentList "update" -NoNewWindow -Wait
-            Start-Process -FilePath "brew" -ArgumentList "install python3" -NoNewWindow -Wait
-        }
-        default {
-            Write-Host "Unsupported operating system: $OS"
-            exit 1
-        }
+if (-not (Test-Command 'python')) {
+    if (Test-Command 'python3') {
+        $pythonCommand = 'python3'
+    } else {
+        Write-Host "Python is not installed. Please install Python and try again."
+        exit
     }
-    Loading-Animation -LoadInterval 10 -LoadingMessage "Installing Python 3..."
-    Write-Host "Python 3 installed successfully."
+} else {
+    $pythonCommand = 'python'
 }
 
 # Check if pip is installed
-if (Test-Command "pip3") {
-    Write-Host "pip is already installed."
-}
-else {
-    Write-Host "pip not found. Installing..."
-    switch -Wildcard ($OS) {
-        "*Linux*" {
-            Start-Process -FilePath "sudo" -ArgumentList "apt-get install -y python3-pip" -NoNewWindow -Wait
-        }
-        "*Darwin*" {
-            Start-Process -FilePath "brew" -ArgumentList "install python3-pip" -NoNewWindow -Wait
-        }
-        default {
-            Write-Host "Unsupported operating system: $OS"
-            exit 1
-        }
+if (-not (Test-Command 'pip')) {
+    if (Test-Command 'pip3') {
+        $pipCommand = 'pip3'
+    } else {
+        Write-Host "pip is not installed. Please install pip and try again."
+        exit
     }
-    Loading-Animation -LoadInterval 10 -LoadingMessage "Installing pip..."
-    Write-Host "pip installed successfully."
+} else {
+    $pipCommand = 'pip'
 }
 
-# Generate and activate virtual environment
-Start-Process -FilePath "sudo" -ArgumentList "apt install python3.11-venv" -NoNewWindow -Wait
-python3 -m venv venv
-.\venv\Scripts\Activate
-Write-Host "Virtual environment activated successfully."
+# Check if venv directory exists
+if (-not (Test-Path .\venv)) {
+    # Install virtual environment
+    & $pythonCommand -m venv venv
+    Write-Host "Virtual environment created."
+}
 
-# Install dependencies from requirements.txt asynchronously
-Write-Host "Installing dependencies..."
-Install-Dependencies
-Loading-Animation -LoadInterval 10 -LoadingMessage "Installing dependencies..."
-Write-Host "Dependencies installed successfully."
+# Activate virtual environment
+. .\venv\Scripts\activate
 
-# Run the Python script
-Write-Host "Executing main.py..."
-# Add any loading animations or delays here if desired
+# Install dependencies from requirements.
+& $pipCommand install -r requirements.txt
+
+# Clear the screen
 Clear-Host
-python3 main.py
+
+# Run main Python script
+& $pythonCommand main.py
+
+# Deactivate virtual environment
+deactivate
+Write-Host "Virtual environment deactivated."
