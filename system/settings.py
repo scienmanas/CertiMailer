@@ -20,8 +20,8 @@ Attributes:
 '''
 
 # Set email and passord
-EMAIL = "randomusermanas1@gmail.com"
-PASSWORD = "pmomwgamfxaprrsz"
+EMAIL = ""
+PASSWORD = ""
 
 # Change the boiler late number
 EMAIL_BOILERPLATE = 2
