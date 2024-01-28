@@ -15,16 +15,18 @@ Attributes:
     TEMPLATE_NAME (str): The name of the certificate template to use.
     SMTP_SERVER (str): The SMTP server for sending emails.
     SERVER_TIMEOUT (int): The timeout for the server in seconds.
-    ONLY_CERTIFICATES (str): A flag to indicate if only certificates should be generated. Values: 'ON', 'OFF'.
-    TESTING_MODE (str): A flag to indicate if the application is in testing mode. Values: 'ON', 'OFF'.
+    SENDER_NAME (str): The sender's name for the emails.
+    MAIL_SUBJECT (str): The subject of the email.
+    HTML_BOILERPLATE (str): A flag to indicate if HTML boilerplate is enabled. Values: 'ON', 'OFF'.
+    ONLY_CERTIFICATES (str):  Flag indicating whether only certificates should be generated or not. If OFF the certificates will also be mailed.
 '''
 
 # Set email and passord
-EMAIL = ""
-PASSWORD = ""
+EMAIL = "n"
+PASSWORD = "n"
 
 # Change the boiler late number
-EMAIL_BOILERPLATE = 2
+EMAIL_BOILERPLATE = 1
 
 # Certificates custom settings
 # Font Size
@@ -46,9 +48,20 @@ TEMPLATE_NAME = "sample"
 SMTP_SERVER = 'smtp.gmail.com'
 SERVER_TIMEOUT = 60
 
-# Currenlt under Development
-# Values: ON and OFF
+# Senders name
+SENDER_NAME = "Conclave Head"
+
+# MAIL Subject
+MAIL_SUBJECT = "Participation Certificate, Coders' Conclave"
+
+#Values : On and OFF
+HTLM_BOILERPLATE = "OFF"
+
+#Values: ON and OFF
 ONLY_CERTIFICATES = "OFF"
 
-# Values: ON and OFF
-TESTING_MODE = "OFF"
+
+##  Currenlt under Development
+
+## Values: ON and OFF
+# TESTING_MODE = "OFF"

@@ -49,12 +49,12 @@ class Animations():
         """
         Starting mailer system animation.
 
-        Displays an animation indicating the start of the mailer system in the CLI.
+        Displays an animation indicating the start of the system in the CLI.
         """
         animation_chars = "-\|/"
         for _ in range(10):
             for char in animation_chars:
                 print(
-                    f"\r{Style.BRIGHT}{Fore.GREEN}Starting the mailer system... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
+                    f"\r{Style.BRIGHT}{Fore.GREEN}Starting the system... {char}{Fore.RESET}{Style.RESET_ALL}", end="", flush=True)
                 time.sleep(0.05)
         print()
