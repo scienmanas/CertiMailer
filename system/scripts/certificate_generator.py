@@ -329,17 +329,17 @@ class GenerateByPdf():
         """
 
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
-        self.event_name = input("Enter event name: ")
-        self.during_date = input("Enter month of event (eg: Jan'22): ")
-        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.i2pdf.com/measure-pdf {Fore.RESET}{Fore.YELLOW}To measure see readme{Fore.RESET}{Style.RESET_ALL}")
+        self.event_name = input(f"Enter {Style.BRIGHT}{Fore.YELLOW}event{Fore.RESET}{Style.RESET_ALL} name: ")
+        self.during_date = input(f"Enter {Style.BRIGHT}{Fore.YELLOW}month{Fore.RESET}{Style.RESET_ALL} of event (eg: Jan'22): ")
+        print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.i2pdf.com/measure-pdf {Fore.RESET}{Fore.YELLOW}to measure and see readme.{Fore.RESET}{Style.RESET_ALL}")
         name_position = input(
-            "Given name position (values seprated by comma x,y): ")
+            f"Given {Style.BRIGHT}{Fore.YELLOW}name{Fore.RESET}{Style.RESET_ALL} position (values seprated by comma x,y): ")
         event_name_position = input(
-            "Given event position (values seprated by comma x,y): ")
-        date_position = input("Date position (values seprated by comma x,y): ")
-        self.name_position = tuple(name_position.strip().split(','))
-        self.event_name_postion = tuple(event_name_position.strip().split(','))
-        self.during_date_position = tuple(date_position.strip().split(','))
+            f"Given {Style.BRIGHT}{Fore.YELLOW}event{Fore.RESET}{Style.RESET_ALL} position (values seprated by comma x,y): ")
+        date_position = input(f"{Style.BRIGHT}{Fore.YELLOW}Date position{Fore.RESET}{Style.RESET_ALL} (values seprated by comma x,y): ")
+        self.name_position = tuple(element.strip() for element in name_position.split(','))
+        self.event_name_postion = tuple(element.strip() for element in event_name_position.split(','))
+        self.during_date_position = tuple(element.strip() for element in date_position.split(','))
 
 
 class GenerateByImage():
@@ -511,14 +511,14 @@ class GenerateByImage():
         """
         
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring the event name and date..{Fore.RESET}{Style.RESET_ALL}")
-        self.event_name = input("Enter event name: ")
-        self.during_date = input("Enter month of event (eg: Jan'22): ")
+        self.event_name = input(f"Enter {Style.BRIGHT}{Fore.YELLOW}event{Fore.RESET}{Style.RESET_ALL} name: ")
+        self.during_date = input(f"Enter {Style.BRIGHT}{Fore.YELLOW}month{Fore.RESET}{Style.RESET_ALL} of event (eg: Jan'22): ")
         print(f"{Style.BRIGHT}{Fore.YELLOW}Configuring position of parameters, Refer: {Fore.RESET}{Fore.BLUE}https://www.image-map.net/ {Fore.RESET}{Fore.YELLOW}Take the middle postion for all postion seeking to configure{Fore.RESET}{Style.RESET_ALL}")
         name_position = input(
-            "Given name position (values seprated by comma x,y): ")
+            f"Given {Style.BRIGHT}{Fore.YELLOW}name{Fore.RESET}{Style.RESET_ALL} position (values seprated by comma x,y): ")
         event_name_position = input(
-            "Given event position (values seprated by comma x,y): ")
-        date_position = input("Date position (values seprated by comma x,y): ")
-        self.name_position = tuple(name_position.strip().split(','))
-        self.event_name_postion = tuple(event_name_position.strip().split(','))
-        self.during_date_position = tuple(date_position.strip().split(','))
+            f"Given {Style.BRIGHT}{Fore.YELLOW}event{Fore.RESET}{Style.RESET_ALL} position (values seprated by comma x,y): ")
+        date_position = input(f"{Style.BRIGHT}{Fore.YELLOW}Date position{Fore.RESET}{Style.RESET_ALL} (values seprated by comma x,y): ")
+        self.name_position = tuple(element.strip() for element in name_position.split(','))
+        self.event_name_postion = tuple(element.strip() for element in event_name_position.split(','))
+        self.during_date_position = tuple(element.strip() for element in date_position.split(','))

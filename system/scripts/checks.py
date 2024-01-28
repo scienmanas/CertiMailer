@@ -47,8 +47,6 @@ class Checks():
                 f"{Style.BRIGHT}{Fore.YELLOW}Please update the 'names.csv'{Fore.RESET}{Style.RESET_ALL}")
             sys.exit()
         else:
-            print(len(names))
-            print(len(emails))
             print(f"{Style.BRIGHT}{Fore.GREEN}CSV file found updated..")
 
     @staticmethod
