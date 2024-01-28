@@ -1,5 +1,9 @@
 from system.scripts.setup import CertiMailer
+from system import settings
 
+# if settings.TESTING_MODE  == "ON" :
+#     pass
+# else :
 app = CertiMailer()
 app.show_logo()
 app.run_setup()

@@ -273,12 +273,23 @@ class GenerateByPdf():
         """
         self.df = self.df.drop(index=index)
         self.df.to_csv(self.data_path, index=False)
+    
+    @staticmethod
+    def remove_extra_spaces(argument) -> str :
+        """
+        Remove extra spaces
+        """
+        return argument.strip()
 
     def send_email(self) -> None:
         """
         Send an email with the generated certificate as attachment.
         """
         for index, (name, email) in enumerate(zip(self.names, self.emails)):
+            # Remove extra spaces
+            name = self.remove_extra_spaces(name)
+            email = self.remove_extra_spaces(email)
+
             # Make path and generate certificates
             out_path_certificate = os.path.join(
                 OUTPUT_DIRECTORY, f"{name}.pdf")
@@ -461,11 +472,22 @@ class GenerateByImage():
         self.df = self.df.drop(index=index)
         self.df.to_csv(self.data_path, index=False)
 
+    @staticmethod
+    def remove_extra_spaces(argument) -> str :
+        """
+        Remove extra spaces
+        """
+        return argument.strip()
+
     def send_email(self) -> None:
         """
         Send an email to the user with a link to download their certificate
         """
         for index, (name, email) in enumerate(zip(self.names, self.emails)):
+            # Remove extra spaces
+            name = self.remove_extra_spaces(name)
+            email = self.remove_extra_spaces(email)
+
             # Make certificate
             self.draw_text_on_img(name)
 

@@ -20,11 +20,11 @@ Attributes:
 '''
 
 # Set email and passord
-EMAIL = ""
-PASSWORD = ""
+EMAIL = "randomusermanas1@gmail.com"
+PASSWORD = "xqtokorqrgaenszu"
 
 # Change the boiler late number
-EMAIL_BOILERPLATE = 2
+EMAIL_BOILERPLATE = 1
 
 # Certificates custom settings
 # Font Size
@@ -46,12 +46,20 @@ TEMPLATE_NAME = "sample"
 SMTP_SERVER = 'smtp.gmail.com'
 SERVER_TIMEOUT = 60
 
-# Currenlt under Development
-# Values: ON and OFF
-ONLY_CERTIFICATES = "OFF"
+# Senders name
+SENDER_NAME = "Conclave Head"
 
-# Values: ON and OFF
-TESTING_MODE = "OFF"
+# MAIL Subject
+MAIL_SUBJECT = "Participation Certificate, Coders' Conclave"
 
 #Values : On and OFF
 HTLM_BOILERPLATE = "ON"
+
+
+# # Currenlt under Development
+# #Values: ON and OFF
+# ONLY_CERTIFICATES = "OFF"
+
+# # Values: ON and OFF
+# TESTING_MODE = "OFF"
+
