@@ -52,3 +52,6 @@ ONLY_CERTIFICATES = "OFF"
 
 # Values: ON and OFF
 TESTING_MODE = "OFF"
+
+#Values : On and OFF
+HTLM_BOILERPLATE = "ON"
