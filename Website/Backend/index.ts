@@ -3,8 +3,8 @@ import cors from "cors";
 import { config } from "dotenv";
 import { connectToDB } from "./config/db";
 // Routes import
-import certificatesRoute from "./routes/certificate.ts";
-import authRoute from "./routes/auth.ts";
+import certificatesRoute from "./routes/certificate";
+import authRoute from "./routes/auth";
 
 // Load the env
 config();
