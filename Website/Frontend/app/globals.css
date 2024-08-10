@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+/* body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+} */
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.glow-button {
+  outline: none;
+  position: relative;
+  z-index: 0;
+}
+
+.glow-button::before {
+  content: '';
+  background: linear-gradient(45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+.glow-button:before {
+  opacity: 1;
+}
+
+.glow-button::after {
+  z-index: -1;
+  content: '';
+  background: black;
+  position: absolute;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  left: -2px;
+  top: -2px;
+  border-radius: 10px;
+}
+
+/* Add this CSS to your styles (e.g., styles.css) */
+.convert-white {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+.blurred-navbar {
+  backdrop-filter: blur(4px);
+}
