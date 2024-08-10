@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 export async function connectToDB(): Promise<void> {
   try {
     // Database Uri
-    const MONGO_URI: string = process.env.MONGO_TEST_URI as string;
-    // const MONGO_URI: string = process.env.MONGO_PROD_URI as string;
+    // const MONGO_URI: string = process.env.MONGO_TEST_URI as string;
+    const MONGO_URI: string = process.env.MONGO_PROD_URI as string;
 
     // logs
     console.log("Connecting to Mongo Db :|");
