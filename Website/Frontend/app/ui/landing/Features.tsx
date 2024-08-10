@@ -99,7 +99,7 @@ const Card = ({ card }: CardProps): JSX.Element => {
         <p className="w-fit h-fit cursor-pointer dark:border-blue-400 border-red-400 border-[1px] rounded-2xl py-1 px-2 dark:group-hover:text-yellow-200 group-hover:text-amber-800 dark:text-white text-neutral-800">
           Read more
         </p>
-        <FaLongArrowAltRight className="invisible group-hover:visible group-hover:translate-x-3 duration-200 group-hover:text-violet-400" />
+        <FaLongArrowAltRight className="invisible group-hover:visible group-hover:translate-x-3 duration-200 group-hover:text-violet-400 text-violet-400" />
       </div>
     </div>
   );

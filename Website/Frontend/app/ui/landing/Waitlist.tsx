@@ -60,7 +60,10 @@ export function Waitlist(): JSX.Element {
             className="flex flex-col gap-7 px-5 sm:px-10"
           >
             <div className="name-designation-container flex flex-row gap-x-3 sm:gap-x-5">
-              <label htmlFor="name" className="flex flex-col dark:text-neutral-200">
+              <label
+                htmlFor="name"
+                className="flex flex-col dark:text-neutral-200"
+              >
                 <span className="text-base">Name</span>
                 <input
                   required
@@ -68,11 +71,14 @@ export function Waitlist(): JSX.Element {
                   type="text"
                   name="name"
                   id="name"
-                  className="rounded-xl w-[9.2rem] h-11 sm:w-44 sm:h-12 p-4 dark:bg-[#27272a] bg-neutral-300 placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
+                  className="rounded-xl w-[9.2rem] h-11 sm:w-44 sm:h-12 p-4 dark:bg-[#27272a] bg-neutral-300 placeholder:text-neutral-800 dark:placeholder:text-neutral-200 border-[2px] dark:border-gray-600 border-gray-600"
                   placeholder="Name"
                 />
               </label>
-              <label htmlFor="designation" className="flex flex-col dark:text-neutral-200">
+              <label
+                htmlFor="designation"
+                className="flex flex-col dark:text-neutral-200"
+              >
                 <span className="text-base">Designation</span>
                 <select
                   defaultValue="Select"
@@ -80,7 +86,7 @@ export function Waitlist(): JSX.Element {
                   disabled={submitted}
                   name="designation"
                   id="designation"
-                  className="rounded-xl w-[9.2rem] h-11 p-2 sm:w-44 sm:h-12 sm:p-4 dark:bg-[#27272a] bg-neutral-300 placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
+                  className="rounded-xl w-[9.2rem] h-11 p-2 sm:py-0 sm:w-44 sm:h-12 sm:p-4 dark:bg-[#27272a] bg-neutral-300 placeholder:text-neutral-800 dark:placeholder:text-neutral-200 border-[2px] dark:border-gray-600 border-gray-600"
                 >
                   <option disabled value="Select">
                     Select
@@ -105,7 +111,7 @@ export function Waitlist(): JSX.Element {
                 type="email"
                 name="email"
                 placeholder="Join our waitlist !"
-                className="w-full p-4 rounded-3xl  dark:bg-[#27272a] bg-neutral-300 placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
+                className="w-full p-4 rounded-3xl  dark:bg-[#27272a] bg-neutral-300 placeholder:text-neutral-800 dark:placeholder:text-neutral-200 border-[2px] dark:border-gray-600 border-gray-600"
               />
             </label>
 
