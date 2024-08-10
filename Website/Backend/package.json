@@ -4,8 +4,8 @@
   "description": "certimailer backend app",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
-    "production": "npm run build && node ./build/index.js",
+    "build": "npm install && rimraf ./build && tsc",
+    "deploy": "node ./build/index.js",
     "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
