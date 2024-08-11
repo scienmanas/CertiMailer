@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import mongoose from "mongoose";
 import Certificate from "../models/certificate";
 import { certificatesParams } from "../lib/definitions";
 import { protectAdminRoutes } from "../middlewares/protectRoutes";
@@ -9,7 +10,12 @@ const router = Router();
 // Route - 1: Get the certificates information
 router.get("/get-info", async (req: Request, res: Response) => {
   // Get the id to serach for
-  const { _id } = req.body;
+  const { _id } = req.headers;
+
+  if (!_id || !mongoose.Types.ObjectId.isValid(_id as string)) {
+    res.status(404).json({ message: "Invalid ID format" });
+    return;
+  }
 
   try {
     const data: certificatesParams = (await Certificate.findById(

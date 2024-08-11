@@ -22,17 +22,17 @@ export type emailParams = {
   toName?: string;
 };
 
-export type IdFetchedDataProps = {
+export type FetchedCertificateDataProps = {
   fetchedData: {
-    orgLogo: StaticImageData;
-    orgName: string;
-    orgId: string;
-    orgStatus: string;
-    orgEmail: string;
-    issuedToName: string;
-    issueId: string;
-    issuedToEmail: string;
-    issuedDate: string;
-    expiryDate: string;
+    organization_logo_url: string;
+    organization_name: string;
+    organization_id: string;
+    organization_status: string;
+    organization_email: string;
+    _id: string;
+    issued_to: string;
+    issued_email: string;
+    issued_date: string;
+    expiry_date: string;
   };
 };

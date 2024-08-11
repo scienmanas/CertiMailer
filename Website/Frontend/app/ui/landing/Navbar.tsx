@@ -99,13 +99,14 @@ export function Navbar(): JSX.Element {
                   <Link href="#">Overview</Link>
                 </li>
                 <li className="dark:text-gray-400 dark:hover:text-gray-100 text-gray-400 hover:text-gray-100 sm:text-gray-600 sm:hover:text-black font-semibold cursor-pointer duration-150">
-                  <Link href="#">Solutions</Link>
+                  {/* <Link href="#">Solutions</Link> */}
+                  <Link href="/verify">Verify</Link>
                 </li>
                 <li className="dark:text-gray-400 dark:hover:text-gray-100 text-gray-400 hover:text-gray-100 sm:text-gray-600 sm:hover:text-black font-semibold cursor-pointer duration-150">
                   <Link href="#">Blog</Link>
                 </li>
                 <Link
-                  href="https://github.com"
+                  href="https://github.com/scienmanas/CertiMailer"
                   className="p-1 focus:outline-1 focus:outline-purple-400 transition duration-200 rounded-lg focus:outline-dashed dark:text-purple-200 dark:hover:text-purple-400 md:text-gray-800 md:hover:text-black text-purple-200 hover:text-purple-400 hover:scale-110 active:scale-95"
                 >
                   <li className="github text-lg w-fit h-fit">
