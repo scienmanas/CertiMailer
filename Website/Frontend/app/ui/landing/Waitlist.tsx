@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { Globe } from "@/app/ui/components/globe";
 import { WaitListSubmitLoader } from "../loaders";
-import { waitListUserFormSubmit } from "@/app/lib/action";
-import { SendEmail } from "@/app/lib/action";
 
 export function Waitlist(): JSX.Element {
   const [submitted, setSubmitted] = useState(false);
@@ -16,29 +14,66 @@ export function Waitlist(): JSX.Element {
     e
   ) => {
     e.preventDefault();
+    // Submit the form
+    setIsSubmitting(true);
+
+    // API URL
+    const EMAIL_API = "https://certimailer.onrender.com/api/send-email/admin";
+    const DATA_API =
+      "https://certimailer.onrender.com/api/user/waitlist-insert-user";
+    // const EMAIL_API = "http://localhost:5000/api/send-email/admin";
+    // const DATA_API = "http://localhost:5000/api/user/waitlist-insert-user";
 
     // Get data
     const formData = new FormData(e.target as HTMLFormElement);
     const email: string = formData.get("email") as string;
     const name: string = formData.get("name") as string;
+    const designation: string = formData.get("designation") as string;
 
-    // Submit the form
-    setIsSubmitting(true);
-    await waitListUserFormSubmit(formData);
-    setIsSubmitting(false);
+    const userData = {
+      name: name,
+      email: email,
+      designation: designation,
+    };
+
+    try {
+      await fetch(DATA_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+    } catch (error) {
+      console.log(error);
+      throw new Error("Failed to addd to waitlist");
+      return;
+    } finally {
+      setIsSubmitting(false);
+    }
     setSubmitted(true);
 
     // send the email
-    const emailParams = {
-      to: email,
-      subject: "Congratulations, you are added to waitlist !",
-      text: `Hola! ${name}.We have successfully added you to our wailtlist with ${email}. You are now in our beta program and there's a lot of crazy stuff coming up and you will be persons who will be given access to our new features\n\nBest Regards,\nTeam CertiMailer.
-      `,
-      fromName: "No-Reply CertiMailer",
+    const emailData = {
+      fromName: "Manas",
       toName: name,
+      toEmail: email,
+      subject: "Congratulations, you are added to waitlist !",
+      message: `Hola! ${name}\n\nWe have successfully added you to our wailtlist with ${email}. You are now in our beta program and there's a lot of crazy stuff coming up and you will be among the persons who will be given early access to our new features.\n\nBest Regards,\nTeam CertiMailer\n(Open Source).
+      `,
     };
 
-    await SendEmail(emailParams);
+    try {
+      await fetch(EMAIL_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emailData),
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

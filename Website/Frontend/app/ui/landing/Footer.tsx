@@ -12,7 +12,6 @@ import logo from "@/public/assets/logo/logo_nobg.png";
 import { useState } from "react";
 import { BackgroundBeams } from "@/app/ui/animations/background-beams";
 import { NewsLetterSubmitLoader } from "@/app/ui/loaders";
-import { SendEmail } from "@/app/lib/action";
 
 export function Footer(): JSX.Element {
   const buttonText = "Want to contribute/contact ?";
@@ -26,12 +25,19 @@ export function Footer(): JSX.Element {
     e.preventDefault();
     setSubmitted(() => true);
 
+    // API URI
+    const DATA_API = "https://certimailer.onrender.com/api/user/newsletter-insert-user";
+    const EMAIL_API = "https://certimailer.onrender.com/api/send-email/admin";
+
+    // const DATA_API = "http://localhost:5000/api/user/newsletter-insert-user";
+    // const EMAIL_API = "http://localhost:5000/api/send-email/admin";
+
     // Get the form data
     const formData = new FormData(e.currentTarget);
     const email: string = formData.get("email") as string;
 
     try {
-      const res = await fetch("/api/news-letter", {
+      await fetch(DATA_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,8 +46,6 @@ export function Footer(): JSX.Element {
           email,
         }),
       });
-
-      const data = await res.json();
     } catch (error) {
       console.error(error);
       throw new Error("Failed to subscribe to newsletter.");
@@ -55,19 +59,30 @@ export function Footer(): JSX.Element {
     setIsEmail(() => false);
 
     // Sned the email after all things is done
-    const emailParams = {
-      to: email,
-      subject: "Subscribed to CertiMailer Newsletter !",
-      text: `You have sucessfully subscribed to CertiMailer with ${email}. From now you will be receiving the news about updates, blogs, and much more.\n\nBest Regards,\nTeam CertiMailer\n\nThis is an automated generated mail which will be not monitored.
-      `,
-      fromName: "No-Reply CertiMailer",
+    const emailData = {
+      fromName: "Manas",
+      toName: "",
+      toEmail: email,
+      subject: "Subscribed to CertiMailer Newsletter ! !",
+      message: `You have sucessfully subscribed to CertiMailer with ${email}. From now you will be receiving the news about updates, blogs, and much more.\n\nBest Regards,\nTeam CertiMailer\n(Open Source)\n\n(This is an automated generated mail which will be not monitored.)`,
     };
-    await SendEmail(emailParams);
+
+    try {
+      await fetch(EMAIL_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emailData),
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <footer className="relative bg-transparent bg-gradient-to-tr from-black to-[#28243d] w-full flex justify-center">
-      <div className="footer-element relative p-8 w-screen max-w-screen-xl">
+      <div className="footer-element my-10 relative p-8 w-screen max-w-screen-xl">
         <div className="footer-contents relative z-10 flex flex-col gap-y-16">
           <div className="set-1 flex flex-row flex-wrap justify-between gap-10">
             <div className="left flex flex-col gap-4">

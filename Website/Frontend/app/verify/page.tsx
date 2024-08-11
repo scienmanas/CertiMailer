@@ -2,35 +2,63 @@
 
 import Image from "next/image";
 import logo from "@/public/assets/logo/logo_fig_nobg.png";
-import { Navbar } from "@/app/ui/landing/Navbar";
+import logoFull from "@/public/assets/logo/logo_full_no_bg.png";
 import { Footer } from "@/app/ui/landing/Footer";
 import { CiSearch } from "react-icons/ci";
 import { useState } from "react";
 import { FetchedDetails } from "@/app/ui/verify/FetchedDetails";
-import { IdFetchedDataProps } from "@/app/lib/definitions";
+import { FetchedCertificateDataProps } from "@/app/lib/definitions";
+import { FetchDataLoader } from "@/app/ui/loaders";
 
 export default function Verify(): JSX.Element {
   const [fetchedData, setFetchedData] = useState<
-    IdFetchedDataProps["fetchedData"]
-  >({
-    orgLogo: logo,
-    orgName: "Gagan Vedhi",
-    orgId: "1234-5678-9012",
-    orgStatus: "verified",
-    orgEmail: "astronomyclub@iittp.ac.in",
-    issuedToName: "Manas Poddar",
-    issueId: "1234-5678-9012",
-    issuedToEmail: "dumm12345y@person.com",
-    issuedDate: "01-01-2021",
-    expiryDate: "01-01-2022",
-  });
+    FetchedCertificateDataProps["fetchedData"] | null
+  >(null);
+  const [isFeteching, setIsFeteching] = useState<boolean>(false);
+  const [isFirstFetchDone, setIsFirstFetchDone] = useState(false);
 
-  const handleSubmit = async () => {};
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    setIsFeteching(true);
+    setIsFirstFetchDone(false);
+    setFetchedData(null);
+
+    // API URL
+    // const API_URL = "http://localhost:5000/api/certificate/get-info";
+    const API_URL = "https://certimailer.onrender.com/api/certificate/get-info";
+
+    // Get the form data
+    const formData = new FormData(e.target as HTMLFormElement);
+    const _id: string = formData.get("document-id") as string;
+
+    console.log(_id);
+    try {
+      const res = await fetch(API_URL, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          _id: _id,
+        },
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        console.log(data);
+        setFetchedData(data);
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error();
+    } finally {
+      setIsFeteching(false);
+      setIsFirstFetchDone(true);
+    }
+  };
 
   return (
-    <div className="verify-tab w-full flex flex-col items-center h-fit gap-20 dark:bg-gray-800 bg-white">
-      <section className="verify-wrapper flex w-full justify-center items-center mt-16 md:mt-0 py-6 px-6 md:py-0 mb-10 md:mb-0">
-        <div className="verify-tab-warpper w-screen max-w-screen-2xl flex flex-col gap-14">
+    <div className="verify-tab w-full flex flex-col items-center h-fit gap-20 dark:bg-gray-800 bg-white no-scrollbar">
+      <section className="verify-wrapper flex w-full justify-center items-center mt-16 md:mt-0 py-6 px-6 md:py-0 md:mb-0">
+        <div className="verify-tab-warpper w-screen max-w-screen-2xl flex flex-col gap-20">
           <div className="heading-and-form flex flex-col gap-10 w-full">
             <div className="head-contents flex items-center justify-start w-fit">
               <Image src={logo} alt="logo" className="w-28 sm:w-40 h-auto" />
@@ -41,7 +69,7 @@ export default function Verify(): JSX.Element {
             <form
               action=""
               className="flex flex-row flex-wrap gap-4 w-fit h-fit p-2"
-              //    onSubmit={}
+              onSubmit={handleSubmit}
             >
               <label
                 htmlFor=""
@@ -49,10 +77,11 @@ export default function Verify(): JSX.Element {
               >
                 <CiSearch className="text-xl dark:text-neutral-200 text-neutral-800" />
                 <input
+                  required
                   type="text"
                   placeholder="Enter the code !"
                   className="dark:bg-[#27272a] outline-none bg-neutral-300 dark:placeholder:text-neutral-300 dark:text-neutral-300 placeholder:text-neutral-600 text-neutral-900 w-56 h-10"
-                  name="verifytoken"
+                  name="document-id"
                 />
               </label>
               <button
@@ -63,6 +92,26 @@ export default function Verify(): JSX.Element {
               </button>
             </form>
           </div>
+          {isFirstFetchDone && !fetchedData && (
+            <div className="404-content w-full flex h-fit items-center justify-center">
+              <div className="text-content flex flex-col items-center gap-2">
+                <div className="404-text text-4xl sm:text-5xl">
+                  <span className="font-bold dark:text-blue-400 text-blue-600 animate-pulse">
+                    404{" "}
+                  </span>
+                  <span>🫠</span>
+                </div>
+                <span className="font-semibold dark:text-neutral-200 text-center text-base sm:text-xl w-fit sm:w-64">
+                  We are sorry, but we truly didn't find anything
+                </span>
+              </div>
+            </div>
+          )}
+          {isFeteching && (
+            <div className="loader w-full h-fit flex items-center justify-center">
+              <FetchDataLoader />
+            </div>
+          )}
           {fetchedData && <FetchedDetails fetchedData={fetchedData} />}
         </div>
       </section>

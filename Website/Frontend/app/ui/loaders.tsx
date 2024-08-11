@@ -13,3 +13,11 @@ export function NewsLetterSubmitLoader() {
         </div>
     );
 }
+
+export function FetchDataLoader() {
+    return (
+        <div className="flex justify-center items-center w-fit h-fit">
+        <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-pink-300"></div>
+        </div>
+    );
+}
