@@ -31,9 +31,8 @@ To set up the project locally, follow the steps mentioned in their respective fo
 
 ## ⚡ Features
 
-- `Various News Types Supported:` World, General, Nation, Business, Technology, Entertainment, Sports, Science, Health.
-
-- `Wide Range of Countries Supported:` India, Brazil, Canada, France, Japan, United States
+- `Fully customizable`: The python script is fully customizable (developer, get your hands dirty).
+- `id verification, automatic generation, automatic mailing, etc`.
 
 ## 📁 File Structure 
 
