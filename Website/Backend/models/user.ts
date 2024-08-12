@@ -8,8 +8,10 @@ const userSchema = new mongoose.Schema(
       default: () => new mongoose.Types.ObjectId(),
     },
     name: { type: String, required: true },
-    logo_url: { types: String, required: true },
+    email: { type: String, required: true },
     password: { type: String, required: true },
+    logo_url: { types: String, required: true },
+    status: { types: String, enum: ["verfied", "unverfied"], required: true },
   },
   {
     collection: "user",

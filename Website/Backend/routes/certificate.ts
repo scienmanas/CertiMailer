@@ -34,25 +34,25 @@ router.get("/get-info", async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+
 
 // Router - 2: Insert data
 router.post(
   "/insert-data",
-  protectAdminRoutes,
   async (req: Request, res: Response) => {
     // Get the body data to be inserted
-    const bodyData: certificatesParams = req.body;
+    const bodyData = req.body;
 
     try {
       // Insert the data
       const data = await Certificate.create(bodyData);
-      console.log(data);
-
-      res.status(201).json({ message: "Data Successfully inserted" });
+      // Return id and data
+      res.status(201).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
 );
+
+export default router;

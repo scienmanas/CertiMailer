@@ -3,7 +3,9 @@ import { waitlistParams } from "../lib/definitions";
 import { newsLetterParams } from "../lib/definitions";
 import Waitlist from "../models/waitlist";
 import Newsletter from "../models/newsletter";
+import PendingUser from "../models/pending-user";
 
+// Make router
 const router = Router();
 
 // Route - 1 : Insert wailist user
@@ -36,10 +38,41 @@ router.post("/waitlist-insert-user", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/pending-users", (req: Request, res: Response) => {});
+// Route - 3: See the pending user - only for admin
+// --------------------- To Test-----------------
+router.get("/add-to-pending-users", async (req: Request, res: Response) => {
 
-router.post("/approve-user", (req: Request, res: Response) => {});
+  // Get all users in pending list
+  try {
+    const data = await PendingUser.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
-router.post("/create-user", (req: Request, res: Response) => {});
+// Route - 4: Cancel user - only for admin
+// --------------------- To Test-----------------
+router.delete("/cancel-from-pending-list", async (req: Request, res: Response) => {
+  // Get the body
+  const { _id } = req.body;
+
+  try {
+    await PendingUser.deleteOne({ _id: _id });
+    res.status(204).json({message: "Pending user removed successfullt"})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+// Route - 5: 
+router.post("/create-user", (req: Request, res: Response) => {
+  // Auto generate the passord + approval + deletion from peding list
+});
+
+// Pending - One more admin route to get all the data of the user on admin pannel
 
 export default router;
