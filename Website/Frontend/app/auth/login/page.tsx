@@ -1,14 +1,12 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import displayImage from "@/public/assets/view/display.png";
-import { Navbar } from "@/app/ui/landing/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://certimailer.xyz"),
-  title: "CertiMailer",
+  title: "CertiMailer - Login",
   description:
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
   keywords:
@@ -36,20 +34,13 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "pink",
-};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} dark w-full antialiased`}>
-        <section className="dark:bg-[#151c25]">{children}</section>
-      </body>
-    </html>
-  );
+
+
+
+
+export default function Login():JSX.Element {
+    return (
+        <div>I am Login</div>
+    )
 }

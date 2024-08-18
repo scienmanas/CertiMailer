@@ -135,9 +135,9 @@ export function Navbar(): JSX.Element {
                 </li>
               </ul>
               <ul className="buttons-lan-git flex flex-row items-center gap-4  md:flex-row justify-between md:items-center w-full md:w-fit">
-                <Link href="/auth">
+                <Link href="/auth/login">
                   <li className="sign-up-button bg-transparent bg-gradient-to-tr from-[#7e3eee] to-[#a587fa] px-4 py-2 rounded-lg font-bold shadow-2xl shadow-white duration-150 hover:from-[#6a34c8] hover:to-[#a388ef]">
-                    <span className="text-white">Sign in</span>
+                    <span className="text-white">Log in</span>
                   </li>
                 </Link>
                 <li>
