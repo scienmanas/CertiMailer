@@ -145,17 +145,17 @@
 
 .bar:nth-child(1) {
   background-color: #da4733;
-  animation: loading 3s linear infinite;
+  animation: loading 3s linear 1s infinite;
 }
 
 .bar:nth-child(2) {
   background-color: #3b78e7;
-  animation: loading 3s linear 1s infinite;
+  animation: loading 3s linear 2s infinite;
 }
 
 .bar:nth-child(3) {
   background-color: #fdba2c;
-  animation: loading 3s linear 2s infinite;
+  animation: loading 3s linear 3s infinite;
 }
 
 @keyframes loading {
@@ -174,5 +174,31 @@
   to {
     left: 0;
     width: 100%;
+  }
+}
+
+/* Hero Image shadow */
+
+.image-shadow {
+  width: auto;
+  height: auto;
+  filter: drop-shadow(0 15px 30px rgba(255, 180, 17, 0.5));
+}
+
+/* Chat Bot CSS */
+
+.ping-circle {
+  animation: ping-circle 3s infinite ease-in-out;
+}
+
+@keyframes ping-circle {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+  100% {
+    scale: 1;
   }
 }

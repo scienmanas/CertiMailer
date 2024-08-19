@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { BsStars } from "react-icons/bs";
 import Image from "next/image";
@@ -9,6 +9,7 @@ import compass from "@/public/assets/universal/compass.png";
 import clsx from "clsx";
 import { CardProps } from "@/app/lib/definitions";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { SpotLight } from "@/app/ui/components/spot-lights";
 
 export function Features(): JSX.Element {
   const cards = [
@@ -52,7 +53,8 @@ export function Features(): JSX.Element {
         <div className="svg w-fit h-fit p-5">
           <BsStars className="dark:text-purple-400 text-purple-700 text-5xl" />
         </div>
-        <div className="contents-all w-full flex flex-col gap-10">
+        <div className="relative contents-all w-full flex flex-col gap-10 z-10">
+        <SpotLight width={450} height={250} opacity={0.2} top={0} left={0} />
           <div className="head-and-description flex flex-col gap-4 p-5">
             <div className="heading-text text-xl font-bold text-transparent bg-clip-text bg-gradient-to-br dark:from-slate-50 dark:to-slate-500 from-neutral-900 to bg-neutral-400 h-fit max-w-[29rem] sm:text-2xl ">
               A fully open-source tool to manage your certification tasks.

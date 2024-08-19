@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa";
 import hero from "@/public/assets/hero/hero.png";
 import { FlipWords } from "@/app/ui/components/flip-words";
+import { SpotLight } from "@/app/ui/components/spot-lights";
 
 export function Hero(): JSX.Element {
   const heroHeadWords = [
@@ -16,8 +17,9 @@ export function Hero(): JSX.Element {
   ];
 
   return (
-    <div className="hero w-full flex items-center justify-center relative md:mt-0 mt-12">
-      <div className="hero-content max-w-screen-2xl flex sm:flex-row flex-col p-8 relative items-center justify-between">
+    <div className="hero w-full flex items-center justify-center relative md:mt-0 mt-12 z-10">
+      <div className="hero-content z-10 max-w-screen-2xl flex sm:flex-row flex-col p-8 relative items-center justify-between">
+        <SpotLight width={170} height={150} opacity={0.4} top={40} left={150} />
         <div className="hero-text sm:w-[60%] gap-5 flex flex-col">
           <div className="hero-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl w-fit">
             <div className="w-fit h-[4rem] sm:h-[5rem] py-5">
@@ -28,7 +30,9 @@ export function Hero(): JSX.Element {
               />
             </div>
             <div className="w-fit">
-              <span className="text-neutral-900 dark:text-white">Our system supports </span>
+              <span className="text-neutral-900 dark:text-white">
+                Our system supports{" "}
+              </span>
               <span className="dark:text-yellow-400 text-orange-700 font-semibold underline">
                 Everything.{" "}
               </span>
@@ -54,11 +58,7 @@ export function Hero(): JSX.Element {
           </div>
         </div>
         <div className="hero-image w-[35%] hidden sm:flex relative">
-          <Image alt="hero_img" src={hero} className="w-auto h-auto" />
-          <p className="absolute select-none -bottom-5 text-xs px-3 py-1 border-[1px] rounded-2xl dark:border-purple-400 border-purple-800 dark:text-white text-neutral-800">
-            {" "}
-            Powered by DALL-E 3
-          </p>
+          <Image alt="hero_img" src={hero} className="w-auto h-auto image-shadow" />
         </div>
       </div>
     </div>
