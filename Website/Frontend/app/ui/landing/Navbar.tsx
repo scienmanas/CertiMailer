@@ -9,12 +9,14 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiGithub } from "react-icons/fi";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
+import { TopLoader } from "@/app/ui/components/top-loader";
 
 export function Navbar(): JSX.Element {
   const [languageCode, setLanguageCode] = useState("EN");
 
   const [isHamburgerOpened, setIsHamburgerOpened] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAnyTabClicked, setIsAnyTabClicked] = useState(false);
 
   const [theme, setTheme] = useState("dark");
 
@@ -47,9 +49,10 @@ export function Navbar(): JSX.Element {
         ${isScrolled ? "border-b-[1px] border-[#1f2c47]" : ""}
         `}
     >
+      {isAnyTabClicked && <TopLoader />}
       <div className="relative navbar w-screen max-w-screen-2xl py-3 px-6 flex justify-between items-center">
         <div className="left-logo">
-          <Link href={`/`}>
+          <Link onClick={() => setIsAnyTabClicked(true)} href={`/`}>
             <div className="logo">
               <Image
                 className=""
@@ -96,16 +99,21 @@ export function Navbar(): JSX.Element {
             <div className="navbar-buttons flex flex-col md:flex-row w-full gap-4 dark:bg-[#293041] bg-[#2a4079] dark:md:bg-transparent dark:border-[#4445a3] border-yellow-400 border-[2px] md:bg-transparent md:border-none rounded-lg p-4 md:items-center">
               <ul className="flex flex-col md:flex-row gap-4 items-start md:items-center w-fit">
                 <li className="dark:text-gray-400 dark:hover:text-gray-100 text-gray-400 hover:text-gray-100 sm:text-gray-600 sm:hover:text-black font-semibold cursor-pointer duration-150">
-                  <Link href="#">Overview</Link>
+                  <Link onClick={() => setIsAnyTabClicked(true)} href="#">
+                    Overview
+                  </Link>
                 </li>
                 <li className="dark:text-gray-400 dark:hover:text-gray-100 text-gray-400 hover:text-gray-100 sm:text-gray-600 sm:hover:text-black font-semibold cursor-pointer duration-150">
                   {/* <Link href="#">Solutions</Link> */}
                   <Link href="/verify">Verify</Link>
                 </li>
                 <li className="dark:text-gray-400 dark:hover:text-gray-100 text-gray-400 hover:text-gray-100 sm:text-gray-600 sm:hover:text-black font-semibold cursor-pointer duration-150">
-                  <Link href="#">Blog</Link>
+                  <Link onClick={() => setIsAnyTabClicked(true)} href="#">
+                    Blog
+                  </Link>
                 </li>
                 <Link
+                  onClick={() => setIsAnyTabClicked(true)}
                   href="https://github.com/scienmanas/CertiMailer"
                   className="p-1 focus:outline-1 focus:outline-purple-400 transition duration-200 rounded-lg focus:outline-dashed dark:text-purple-200 dark:hover:text-purple-400 md:text-gray-800 md:hover:text-black text-purple-200 hover:text-purple-400 hover:scale-110 active:scale-95"
                 >
@@ -135,7 +143,10 @@ export function Navbar(): JSX.Element {
                 </li>
               </ul>
               <ul className="buttons-lan-git flex flex-row items-center gap-4  md:flex-row justify-between md:items-center w-full md:w-fit">
-                <Link href="/auth/login">
+                <Link
+                  onClick={() => setIsAnyTabClicked(true)}
+                  href="/auth/login"
+                >
                   <li className="sign-up-button bg-transparent bg-gradient-to-tr from-[#7e3eee] to-[#a587fa] px-4 py-2 rounded-lg font-bold shadow-2xl shadow-white duration-150 hover:from-[#6a34c8] hover:to-[#a388ef]">
                     <span className="text-white">Log in</span>
                   </li>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import logo from "@/public/assets/logo/logo_fig_nobg.png";
-import logoFull from "@/public/assets/logo/logo_full_no_bg.png";
+import { Navbar } from "@/app/ui/landing/Navbar";
 import { Footer } from "@/app/ui/landing/Footer";
 import { CiSearch } from "react-icons/ci";
 import { useState } from "react";
@@ -57,6 +57,7 @@ export default function Verify(): JSX.Element {
 
   return (
     <div className="verify-tab w-full flex flex-col items-center h-fit gap-20 dark:bg-gray-800 bg-white no-scrollbar">
+      <Navbar />
       <section className="verify-wrapper flex w-full justify-center items-center mt-16 md:mt-0 py-6 px-6 md:py-0 md:mb-0">
         <div className="verify-tab-warpper w-screen max-w-screen-2xl flex flex-col gap-20">
           <div className="heading-and-form flex flex-col gap-10 w-full">

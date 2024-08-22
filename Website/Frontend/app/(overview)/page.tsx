@@ -4,7 +4,7 @@ import { Hero } from "@/app/ui/landing/Hero";
 import { Waitlist } from "@/app/ui/landing/Waitlist";
 import { MadeUsingRibbon } from "@/app/ui/landing/MadeUsing";
 import { Features } from "@/app/ui/landing/Features";
-import { ChatBot } from "@/app/ui/landing/ChatBot";
+import { ChatBot } from "@/app/ui/components/ChatBot";
 
 export default function Home() {
   return (

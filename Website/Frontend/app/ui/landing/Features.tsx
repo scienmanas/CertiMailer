@@ -54,8 +54,14 @@ export function Features(): JSX.Element {
           <BsStars className="dark:text-purple-400 text-purple-700 text-5xl" />
         </div>
         <div className="relative contents-all w-full flex flex-col gap-10 z-10">
-        <SpotLight width={450} height={250} opacity={0.2} top={0} left={0} />
           <div className="head-and-description flex flex-col gap-4 p-5">
+            <SpotLight
+              width={250}
+              height={250}
+              opacity={0.2}
+              top={0}
+              left={0}
+            />
             <div className="heading-text text-xl font-bold text-transparent bg-clip-text bg-gradient-to-br dark:from-slate-50 dark:to-slate-500 from-neutral-900 to bg-neutral-400 h-fit max-w-[29rem] sm:text-2xl ">
               A fully open-source tool to manage your certification tasks.
             </div>
