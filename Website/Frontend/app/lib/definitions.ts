@@ -36,3 +36,9 @@ export type FetchedCertificateDataProps = {
     expiry_date: string;
   };
 };
+
+export type submissionLoaderProps = {
+  width: number;
+  height: number;
+  color: string;
+};

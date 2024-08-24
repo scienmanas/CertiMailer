@@ -9,6 +9,6 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="bg-white h-screen w-full">{children}</section>
+    <section className="h-dvh w-full bg-neutral-200">{children}</section>
   );
 }

@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     logo_url: { type: String, required: true },
     status: { type: String, enum: ["verified", "unverified"], required: true },
+    about: { type: String, required: true },
   },
   {
     collection: "user",

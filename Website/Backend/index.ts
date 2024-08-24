@@ -6,7 +6,8 @@ import { connectToDB } from "./config/db";
 import certificatesRoute from "./routes/certificate";
 import authRoute from "./routes/auth";
 import sendEmailsRoute from "./routes/sendEmails";
-import UserRoute from "./routes/user";
+import userRoute from "./routes/user";
+import utilsRoute from "./routes/utils";
 
 // Load the env
 config();
@@ -20,8 +21,8 @@ const PORT: string = process.env.PORT || "5000";
 
 // CORS configuration
 const corsConfiguration = {
-  origin: ["https://certimailer.xyz"],
-  // origin: "*",
+  // origin: ["https://certimailer.xyz"],
+  origin: "*",
   optionSucessStatus: 200,
 };
 
@@ -33,7 +34,8 @@ app.use(cors(corsConfiguration));
 app.use("/api/certificate", certificatesRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/send-email", sendEmailsRoute);
-app.use("/api/user", UserRoute);
+app.use("/api/user", userRoute);
+app.use("/api/utils", utilsRoute);
 
 // Landing endpoint
 app.get("/", (req: Request, res: Response) => {

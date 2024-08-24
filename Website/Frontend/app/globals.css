@@ -141,6 +141,7 @@
   height: 100%;
   left: 50%;
   text-align: center;
+  background-color: #fdba2c;
 }
 
 .bar:nth-child(1) {
