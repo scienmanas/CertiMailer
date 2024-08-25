@@ -8,6 +8,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { GoOrganization } from "react-icons/go";
+import { FaCameraRetro } from "react-icons/fa";
 import { TopLoader } from "@/app/ui/components/top-loader";
 import { SubmissionLoader } from "@/app/ui/loaders";
 import logo from "@/public/assets/logo/logo_fig_nobg.png";
@@ -55,15 +56,13 @@ export default function Signup(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);
 
-  // To store the values in forms
-  const [name, setName] = useState<string>(""); // It works "" -> thing
-  const [email, setEmail] = useState<string>(""); // It works "" -> thing
-  const [about, setAbout] = useState<string>("");
-  const [designation, setDesignation] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  // To store the values in forms and UI enchancements
+  const [name, setName] = useState<string>("Gagan Vedhi"); // It works "" -> thing
+  const [email, setEmail] = useState<string>("astronomyclub@iittp.ac.in"); // It works "" -> thing
+  const [image, setImage] = useState<string | null>(null);
 
   // Top Loader running on every occassions - varibale
-  const [startTopLoader, setStartTopLoader] = useState<boolean>(false);
+  const [startTopLoader, setStartTopLoader] = useState<boolean>(true);
 
   const handleInitialFormSubmission: React.FormEventHandler<
     HTMLFormElement
@@ -106,6 +105,11 @@ export default function Signup(): JSX.Element {
 
     return () => clearInterval(slideInterval);
   }, [slides.length]);
+
+  // Top stop loading bar once the page is loaded - ui
+  useEffect(() => {
+    setStartTopLoader(false);
+  }, []);
 
   return (
     <div className="w-full h-full flex items-center justify-center">
@@ -185,7 +189,7 @@ export default function Signup(): JSX.Element {
             </div>
           </div>
         </div>
-        <div className="form-space relative w-fit  lg:px-20 xl:px-28 xl:py-24 lg:py-16 flex flex-col items-center gap-14 lg:gap-20 bg-neutral-50 rounded-xl  lg:rounded-tr-xl lg:rounded-br-xl lg:rounded-bl-none lg:rounded-tl-none md:px-10 md:py-14 sm:px-8 sm:py-12 px-7 py-12">
+        <div className="form-space relative w-fit lg:px-20 xl:px-28 xl:py-24 lg:py-16 flex flex-col items-center gap-6 lg:gap-20 bg-neutral-50 rounded-xl lg:rounded-tr-xl lg:rounded-br-xl lg:rounded-bl-none lg:rounded-tl-none md:px-10 md:py-14 sm:px-8 sm:py-12 px-7 pb-12 pt-4">
           <div className="head-space w-full items-center justify-center flex flex-col gap-1">
             <Link onClick={() => setStartTopLoader(true)} href={"/"}>
               <Image alt="logo" src={logo} width={150} height={150} />
@@ -194,11 +198,11 @@ export default function Signup(): JSX.Element {
               Resgister Now !
             </h1>
             <p className="w-60 text-sm sm:text-base text-center">
-              We will verify your details and if required will reach you through
-              mail.
+              We will verify your details and if required, will reach you
+              through mail.
             </p>
           </div>
-          <div className="forms">
+          <div className="forms w-full">
             <form
               className="flex flex-col w-fit gap-10 hidden"
               onSubmit={handleInitialFormSubmission}
@@ -286,7 +290,9 @@ export default function Signup(): JSX.Element {
               <div className=" feild-elements flex flex-col gap-2 w-fit">
                 <div className="text flex gap-1 flex-row">
                   <span className="text-sm">Enter OTP</span>
-                  <span className="text-sm font-semibold text-blue-500">({email})</span>
+                  <span className="text-sm font-semibold text-blue-500">
+                    ({email})
+                  </span>
                 </div>
                 <div className="input-and-error flex flex-col gap-2">
                   <div className="input-elements flex flex-col">
@@ -343,8 +349,166 @@ export default function Signup(): JSX.Element {
                 </label>
               </div>
             </form>
-
-            
+            <form
+              className="flex flex-col w-fit gap-5"
+              onSubmit={handleFinalDetailsAndSubmit}
+            >
+              <div className="input-elements flex flex-col gap-2 w-64 sm:w-80">
+                <div className="logo-name-email flex flex-row items-center gap-2">
+                  <div className="logo relative w-[70px] h-[70px] rounded-full overflow-hidden border-2 border-gray-300 cursor-pointer flex items-center justify-center">
+                    <input
+                      required
+                      className="absolute z-20 inset-0 w-full h-full opacity-0 cursor-pointer"
+                      accept="image/"
+                      type="file"
+                      name="logo"
+                      id=""
+                      onChange={(e) => {
+                        const target = e.target as HTMLInputElement;
+                        const file = target.files?.[0] || null;
+                        if (file) {
+                          setImage(URL.createObjectURL(file));
+                        }
+                      }}
+                    />
+                    {image && (
+                      <Image
+                        className="absolute z-10 inset-0 w-ful h-full object-cover"
+                        alt="logo"
+                        src={image}
+                        width={70}
+                        height={70}
+                      />
+                    )}
+                    {!image && (
+                      <div className="absolute z-10 w-full h-full flex justify-center items-center bg-neutral-200">
+                        <FaCameraRetro className="text-xl" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="email-and-nane flex flex-col">
+                    <div className="name text-sm font-bold">{name}</div>
+                    <div className="email text-xs">
+                      <span>(</span>
+                      <span className="font-semibold text-blue-700">
+                        {email}
+                      </span>
+                      <span>)</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="type-and-designation flex flex-row w-full justify-between sm:gap-2 sm:justify-start ">
+                  <label className="flex flex-col" htmlFor="type">
+                    <span className="text-sm">Type</span>
+                    <select
+                      required
+                      defaultValue={"Select"}
+                      name="type"
+                      id="type"
+                      className="text-sm px-2 py-1 w-fit h-fit rounded-md border-2 border-gray-300 focus-within:border-gray-400 bg-[#e9e9ed]"
+                    >
+                      <option
+                        className="text-sm w-fit h-fit"
+                        disabled
+                        value="Select"
+                      >
+                        Select
+                      </option>
+                      <option
+                        className="text-sm w-fit h-fit"
+                        value="Non Profit"
+                      >
+                        Non Profit
+                      </option>
+                      <option
+                        className="text-sm w-fit h-fit"
+                        value="Student Club"
+                      >
+                        Student Club
+                      </option>
+                      <option className="text-sm w-fit h-fit" value="School">
+                        School
+                      </option>
+                      <option className="text-sm w-fit h-fit" value="Corporate">
+                        Corporate
+                      </option>
+                      <option
+                        className="text-sm w-fit h-fit"
+                        value="Competitions"
+                      >
+                        Competitions
+                      </option>
+                      <option className="text-sm w-fit h-fit" value="others">
+                        Others
+                      </option>
+                    </select>
+                  </label>
+                  <label className="flex flex-col" htmlFor="designation">
+                    <span className="text-sm">Designaion</span>
+                    <select
+                      required
+                      className="text-sm px-2 py-1 w-fit h-fit rounded-md border-2 border-gray-300 focus-within:border-gray-400 bg-[#e9e9ed]"
+                      defaultValue={"Select"}
+                      name="designation"
+                      id=""
+                    >
+                      <option disabled value="Select">
+                        Select
+                      </option>
+                      <option value="Club Head">Club Head</option>
+                      <option value="Teacher">Teacher</option>
+                      <option value="Employee">Employee</option>
+                      <option value="Oraganizer">Organizer</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="about-and-reason w-full h-fit flex flex-col gap-1">
+                  <div className="about w-full h-fit">
+                    <textarea
+                      minLength={50}
+                      required
+                      placeholder="About the organisation ?"
+                      className="w-full h-12 bg-[#e9e9ed] rounded-md px-2 py-2 text-xs border-2 border-gray-300"
+                      name="about"
+                      id=""
+                    ></textarea>
+                  </div>
+                  <div className="reason w-full h-fit">
+                    <textarea
+                      minLength={50}
+                      required
+                      placeholder="Reason for registering ?"
+                      className="w-full h-12 bg-[#e9e9ed] rounded-md px-2 py-2 text-xs border-2 border-gray-300"
+                      name="reason"
+                      id=""
+                    ></textarea>
+                  </div>
+                </div>
+                <div className="webiste">
+                  <input
+                    required
+                    name="website"
+                    placeholder="Website ?"
+                    className="w-full bg-[#e9e9ed] border-2 border-gray-300 px-2 py-2 rounded-md text-sm"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div className="submit-button w-full">
+                <label htmlFor="" className="w-full">
+                  <button
+                    type="submit"
+                    className="w-full text-center bg-[#3e68b5] hover:bg-[#2357ba] py-3 rounded-lg flex items-center justify-center gap-2"
+                  >
+                    <span className="text-white font-semibold">Submit</span>
+                    {isSubmitting && (
+                      <SubmissionLoader height={20} width={20} color="pink" />
+                    )}
+                  </button>
+                </label>
+              </div>
+            </form>
           </div>
           <div className="bottom-register-links absolute bottom-4 w-fit flex flex-row gap-2 items-center">
             <span className="text-[#727272] text-sm">Already regsitered?</span>
