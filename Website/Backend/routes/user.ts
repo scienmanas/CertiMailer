@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { randomBytes } from "crypto";
 import bycrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { waitlistParams } from "../lib/definitions";
 import { newsLetterParams } from "../lib/definitions";
 import Waitlist from "../models/waitlist";
@@ -10,6 +11,10 @@ import User from "../models/user";
 
 // Make router
 const router = Router();
+
+router.get("/", (req: Request, res: Response) => {
+  res.status(200).json({ message: "Mae jinda hu bhai" });
+});
 
 // Route - 1 : Insert wailist user
 router.post("/newsletter-insert-user", async (req: Request, res: Response) => {
@@ -41,20 +46,98 @@ router.post("/waitlist-insert-user", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/pending-list", async (req: Request, res: Response) => {
+  // OTP Endpoint
+  const OTP_ENDPOINT = "http://localhost:5000/api/utils/send-otp";
+  const EMAIL_API = "http://localhost:5000/api/send-email/test";
+  const JWT_SECRET = process.env.JWT_SECRET as string;
+
+  // Get the body data
+  const { name, email } = req.body;
+
+  try {
+    // Create user in pending list
+    const data = await PendingUser.create({
+      name: name,
+      email: email,
+    });
+
+    console.log(data);
+
+    let response = await fetch(OTP_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: data._id,
+      }),
+    });
+
+    if (response.status === 500) {
+      const ErrorData = await response.json();
+      console.log(ErrorData.message);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+
+    // Get the response otp
+    let responseData = await response.json();
+    const otp = responseData.value;
+
+    // Generate token
+    const signupToekn = jwt.sign({ otp }, JWT_SECRET, { expiresIn: "15d" });
+    console.log(signupToekn);
+
+    // Give cookie
+    res.cookie("jwt", signupToekn, {
+      maxAge: 15 * 24 * 60 * 60 * 1000, // MS
+      httpOnly: true, // prevent XSS attacks cross-site scripting attacks
+      sameSite: "strict", // CSRF attacks cross-site request forgery attacks
+      // secure: process.env.NODE_ENV !== "development",
+    });
+
+    console.log(req.cookies)
+
+    response = await fetch(EMAIL_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fromName: "No-Reply",
+        toName: name,
+        toEmail: email,
+        subject: "OTP for registartion",
+        message: `Hi, ${name}\nUse the below otp for verification for registration. The otp is only valid for 5 minutes. Please donot share this otp with anyone \n\nOTP: ${otp}\n\nTeam CertiMailer\n(Open Source)`,
+      }),
+    });
+
+    res.status(201).json({ message: "User successfully created" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 // Route - 3: Add to the pending user - only for admin
 // --------------------- To Test-----------------
-router.post("/pending-list", async (req: Request, res: Response) => {
+router.put("/pending-list", async (req: Request, res: Response) => {
   // Get the body
-  const { name, email, logo_url, status, designation, message } = req.body;
+  const { name, email, type, logo_url, about, website, designation, reason } =
+    req.body;
+
+  console.log(req.body);
 
   try {
     await PendingUser.create({
       name: name,
       email: email,
+      type: type,
       logo_url: logo_url,
-      status: status,
+      about: about,
+      website: website,
       designation: designation,
-      message: message,
+      reason: reason,
     });
     res.status(201).json({ message: "User added to pending list" });
   } catch (error: any) {
@@ -176,6 +259,33 @@ router.get("/all-users", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+// Route - 8 : Check if request or user already exists
+router.post("/check-user", async (req: Request, res: Response) => {
+  // Get the email from the body
+  const { email } = req.body;
+
+  try {
+    // Check in user database
+    let user = await User.findOne({ email: email });
+    if (user) {
+      return res.status(409).json({ message: "User Already exist" });
+    }
+
+    // Check in pending database
+    user = await PendingUser.findOne({ email: email });
+    if (user) {
+      return res.status(409).json({ message: "Request Already Submitted" });
+    }
+
+    res.status(200).json({ message: "No user/requests found" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Router - 9: Flagged user checking
 
 // Pending - One more admin route to get all the data of the user on admin pannel
 

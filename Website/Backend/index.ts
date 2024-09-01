@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { config } from "dotenv";
 import { connectToDB } from "./config/db";
+import cookieParser from "cookie-parser";
 // Routes import
 import certificatesRoute from "./routes/certificate";
 import authRoute from "./routes/auth";
@@ -29,6 +30,7 @@ const corsConfiguration = {
 // middleware to use import routes and enable cors
 app.use(express.json());
 app.use(cors(corsConfiguration));
+app.use(cookieParser());
 
 // Routes
 app.use("/api/certificate", certificatesRoute);
