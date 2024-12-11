@@ -6,7 +6,6 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa";
 import hero from "@/public/assets/hero/hero.png";
 import { FlipWords } from "@/app/ui/components/flip-words";
-import { SpotLight } from "@/app/ui/components/spot-lights";
 
 export function Hero(): JSX.Element {
   const heroHeadWords = [
@@ -19,7 +18,6 @@ export function Hero(): JSX.Element {
   return (
     <div className="hero w-full flex items-center justify-center relative md:mt-0 mt-12 z-10">
       <div className="hero-content z-10 max-w-screen-2xl flex sm:flex-row flex-col p-8 relative items-center justify-between">
-        <SpotLight width={170} height={150} opacity={0.4} top={40} left={150} />
         <div className="hero-text sm:w-[60%] gap-5 flex flex-col">
           <div className="hero-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl w-fit">
             <div className="w-fit h-[4rem] sm:h-[5rem] py-5">

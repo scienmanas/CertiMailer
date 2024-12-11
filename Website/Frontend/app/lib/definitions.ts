@@ -1,7 +1,9 @@
 import { StaticImageData } from "next/image";
+import { IconType } from "react-icons";
 
 export type MarqueeProps = {
-  svgs: string[];
+  svg: IconType;
+  text: string;
 };
 
 export type CardProps = {

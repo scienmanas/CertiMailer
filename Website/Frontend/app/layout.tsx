@@ -1,43 +1,10 @@
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import displayImage from "@/public/assets/view/display.png";
-import { Navbar } from "@/app/ui/landing/Navbar";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://certimailer.xyz"),
-  title: "CertiMailer",
-  description:
-    "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-  keywords:
-    "certificate, certificate generator, email certificates, verify certificates, CertiMailer, certification, automated mailing, digital certificates",
-  // authors: "CertiMailer Team",
-  robots: "index, follow",
-  openGraph: {
-    title: "CertiMailer",
-    description:
-      "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    url: "https://www.certimailer.xyz", // replace with your actual domain
-    type: "website",
-    locale: "en_US",
-    siteName: "CertiMailer",
-    images: displayImage.src,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "CertiMailer",
-    description:
-      "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    // site: "@certimailer", // replace with your actual Twitter handle
-    creator: "@ScientistManas", // replace with your actual Twitter handle
-    images: displayImage.src,
-  },
-};
+import { Viewport } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { ThemeProvider } from "next-themes";
 
 export const viewport: Viewport = {
-  themeColor: "purple",
+  themeColor: "pink",
 };
 
 export default function RootLayout({
@@ -46,9 +13,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} dark w-full antialiased`}>
-        <section className="dark:bg-[#151c25]">{children}</section>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className="w-full h-fit antialiased dark:bg-[#151c25] bg-[#f2f2f2]"
+      >
+        <ThemeProvider attribute="class">
+          {children}
+          <GoogleAnalytics
+            gaId={process.env.G_ANALYTICS_ID as string}
+            debugMode={false}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );

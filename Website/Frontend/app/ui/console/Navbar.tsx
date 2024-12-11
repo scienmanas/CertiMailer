@@ -2,7 +2,7 @@ import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
 import Link from "next/link";
 import { useState } from "react";
-import logo from "@/public/assets/logo/logo_full_no_bg.png";
+import logo from "@/public/assets/logo/logo.png";
 
 export function Navbar(): JSX.Element {
   // Implememt function to fetch user image and details
