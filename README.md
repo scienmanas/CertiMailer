@@ -58,10 +58,6 @@ To set up the project locally, follow the steps mentioned in their respective fo
 
 Contributions are always welcome! Additionally you can contact me by my email: **iamscientistmanas@gmail.com**. There are many thinsg which can be improved, if you feel something needs to be added/modified raise an issue. Additionally if you want you can work on that issue too.
 
-## 📷 Screenshots
-
-![display](https://github.com/user-attachments/assets/6b209d02-d326-452f-b76c-be87bb96a01b)
-
 ## 🔒 License
 
 This repository is open source and under [MIT](https://choosealicense.com/licenses/mit/) License.
