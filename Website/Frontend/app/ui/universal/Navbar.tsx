@@ -31,11 +31,9 @@ export function Navbar(): JSX.Element {
       hasMounted.current = true;
       setMounted(true);
       if (theme === "system") {
-        console.log(theme);
         setWebsiteTheme("light");
         setTheme("light");
       } else if (theme === "dark" || theme === "light") {
-        console.log(theme);
         setWebsiteTheme(theme); // Set the website theme based on next-themes
       }
     }
