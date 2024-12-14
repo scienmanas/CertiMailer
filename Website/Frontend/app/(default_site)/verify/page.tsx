@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import logo from "@/public/assets/logo/logo_fig_nobg.png";
-import { Navbar } from "@/app/ui/landing/Navbar";
-import { Footer } from "@/app/ui/landing/Footer";
+import logo from "@/public/assets/logo/logo.png";
+import { Navbar } from "@/app/ui/universal/Navbar";
+import { Footer } from "@/app/ui/universal/Footer";
 import { CiSearch } from "react-icons/ci";
 import { useState } from "react";
 import { FetchedDetails } from "@/app/ui/verify/FetchedDetails";
