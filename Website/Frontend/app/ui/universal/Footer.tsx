@@ -216,11 +216,11 @@ export function Footer(): JSX.Element {
         </div>
 
         {/* Donations */}
-        <div className="donations flex flex-col gap-2">
+        <div className="donations flex flex-col gap-2 w-full items-start">
           <div className="heading text-xl dark:text-neutral-200 text-neutral-700 font-semibold">
             Support Us
           </div>
-          <div className="text dark:text-neutral-200 text-neutral-700">
+          <div className="text dark:text-neutral-200 text-neutral-700 text-wrap max-w-[40rem]">
             CertiMailer is a free and open-source project. We rely on
             contributions from the community to keep it running. You can support
             us by donating to the following addresses:
