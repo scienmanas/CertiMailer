@@ -1,8 +1,8 @@
 import express, { Express, Request, Response } from "express";
-import cors from "cors";
 import { config } from "dotenv";
 import { connectToDB } from "./config/db";
 import cookieParser from "cookie-parser";
+
 // Routes import
 import certificatesRoute from "./routes/certificate";
 import authRoute from "./routes/auth";
@@ -20,33 +20,31 @@ connectToDB();
 const app: Express = express();
 const PORT: string = process.env.PORT || "5000";
 
-// CORS configuration: Allow only your domain
-const allowedOrigins = ["https://certimailer.xyz"];
-const allowedHosts = ["certimailer.xyz"];
+// CORS configuration: Manually handle origins and preflight requests
+const allowedOrigins = ["https://certimailer.xyz"]; 
+const allowedMethods = ["GET", "POST", "PUT", "DELETE"];
+const allowedHeaders = ["Content-Type", "Authorization"];
 
-// Use CORS with the specified options
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  const host = req.headers.host;
-  console.log(origin);
-  console.log(host);
-  if (
-    origin &&
-    allowedOrigins.includes(origin) &&
-    host &&
-    allowedHosts.includes(host)
-  ) {
+app.use((req: Request, res: Response, next) => {
+  const origin = req.headers.origin as string | undefined;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    // Allow the origin if it's in the allowedOrigins list
     res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Methods", allowedMethods.join(", "));
+    res.setHeader("Access-Control-Allow-Headers", allowedHeaders.join(", "));
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
-    next();
-  } else {
-    res.status(403).json({ message: "Access denied: Not allowed" });
+
+    // Handle preflight requests (OPTIONS)
+    if (req.method === "OPTIONS") {
+      return res.status(200).end();
+    }
+  } else  {
+    // If origin doesn't match, send a 403 error
+    return res.status(403).json({ message: "Access denied: Not allowed" });
   }
+
+  next();
 });
 
 // Middleware to parse JSON and cookies
