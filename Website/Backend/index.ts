@@ -37,6 +37,7 @@ const allowedHeaders = ["Content-Type", "Authorization"];
 
 app.use((req: Request, res: Response, next) => {
   const origin = req.headers.origin as string | undefined;
+  console.log(`Request from : ${origin}`);
 
   if (req.url === "/") {
     if (origin && allowedOriginsHitPoint.includes(origin))
