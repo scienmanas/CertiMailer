@@ -25,24 +25,17 @@ const allowedOrigins = [
   "https://certimailer.xyz",
   "https://www.certimailer.xyz",
 ];
-const allowedOriginsHitPoint = [
-  "https://certimailer.xyz",
-  "https://www.certimailer.xyz",
-  "https://cron-job.org",
-  "https://www.cron-job.org",
-  "http://localhost:3000",
-];
 const allowedMethods = ["GET", "POST", "PUT", "DELETE"];
 const allowedHeaders = ["Content-Type", "Authorization"];
 
 app.use((req: Request, res: Response, next) => {
   const origin = req.headers.origin as string | undefined;
-  console.log(`Request from : ${origin}`);
 
-  if (req.url === "/") {
-    if (origin && allowedOriginsHitPoint.includes(origin))
-      return res.status(200).json({ message: "200 OK Hello guys :)" }).end();
-  }
+  if (req.url === "/")
+    return res
+      .status(200)
+      .json({ message: "CertiMailer server on fire :)" })
+      .end();
 
   if (origin && allowedOrigins.includes(origin)) {
     // Allow the origin if it's in the allowedOrigins list
