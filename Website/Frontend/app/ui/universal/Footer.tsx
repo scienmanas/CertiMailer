@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo/logo.png";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,14 +11,15 @@ import { SiFarcaster } from "react-icons/si";
 import { useState } from "react";
 import { SubscribeToNewsletter } from "@/app/lib/control";
 import { SubmissionLoader } from "@/app/ui/loaders";
-import bmcImg from "@/public/assets/donation/bmc.svg";
-import solImg from "@/public/assets/donation/sol.png";
-import btcImg from "@/public/assets/donation/btc.png";
-import ethImg from "@/public/assets/donation/eth.png";
+import { SiBuymeacoffee } from "react-icons/si";
+import { SiSolana } from "react-icons/si";
+import { RiBtcFill } from "react-icons/ri";
+import { FaEthereum } from "react-icons/fa";
+import { IconType } from "react-icons";
 
 type donationType = {
   name: string;
-  icon: StaticImageData;
+  icon: IconType;
   address: string;
 };
 
@@ -72,24 +73,24 @@ export function Footer(): JSX.Element {
   const donationLinks: donationType[] = [
     {
       name: "Buy me a coffee",
-      icon: bmcImg,
+      icon: SiBuymeacoffee,
       address: "https://buymeacoffee.com/scienmanas",
     },
     {
       name: "Bitcoin",
-      icon: btcImg,
+      icon: RiBtcFill,
       address:
         "https://btcscan.org/address/bc1qwcahm8aq9uqg5zthnvnkvl0vxkm3wku90hs4j4",
     },
     {
       name: "Ethereum",
-      icon: ethImg,
+      icon: FaEthereum,
       address:
         "https://etherscan.io/address/0x54da97548d91f8A157634C3a60f82831cD913A9c",
     },
     {
       name: "Solana",
-      icon: solImg,
+      icon: SiSolana,
       address:
         "https://solscan.io/account/E3FrcftDnb1FXDpRBA96ja7vQmWnQ8mTk85i7m85FmhD",
     },
@@ -216,11 +217,11 @@ export function Footer(): JSX.Element {
         </div>
 
         {/* Donations */}
-        <div className="donations flex flex-col gap-2 w-full items-start">
+        <div className="donations flex flex-col gap-3 w-full items-start">
           <div className="heading text-xl dark:text-neutral-200 text-neutral-700 font-semibold">
             Support Us
           </div>
-          <div className="text dark:text-neutral-200 text-neutral-700 text-wrap max-w-[40rem]">
+          <div className="text-donation text-sm sm:text-base dark:text-neutral-200 text-neutral-700 text-wrap max-w-[40rem]">
             CertiMailer is a free and open-source project. We rely on
             contributions from the community to keep it running. You can support
             us by donating to the following addresses:
@@ -232,12 +233,7 @@ export function Footer(): JSX.Element {
                 href={donation.address}
                 className={donation.name}
               >
-                <Image
-                  src={donation.icon}
-                  alt={donation.name}
-                  width={20}
-                  height={20}
-                />
+                <donation.icon className="text-xl dark:text-neutral-200 text-neutral-700" />
               </Link>
             ))}
           </div>

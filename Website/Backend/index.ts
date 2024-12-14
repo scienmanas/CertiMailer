@@ -13,23 +13,44 @@ import utilsRoute from "./routes/utils";
 // Load the env
 config();
 
-// connect to Database
+// Connect to Database
 connectToDB();
 
-// configure app
+// Configure app
 const app: Express = express();
 const PORT: string = process.env.PORT || "5000";
 
-// CORS configuration
-const corsConfiguration = {
-  origin: ["https://certimailer.xyz"],
-  // origin: "*",
-  optionSucessStatus: 200,
-};
+// CORS configuration: Allow only your domain
+const allowedOrigins = ["https://certimailer.xyz"];
+const allowedHosts = ["certimailer.xyz"];
 
-// middleware to use import routes and enable cors
+// Use CORS with the specified options
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const host = req.headers.host;
+  console.log(origin);
+  console.log(host);
+  if (
+    origin &&
+    allowedOrigins.includes(origin) &&
+    host &&
+    allowedHosts.includes(host)
+  ) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    next();
+  } else {
+    res.status(403).json({ message: "Access denied: Not allowed" });
+  }
+});
+
+// Middleware to parse JSON and cookies
 app.use(express.json());
-app.use(cors(corsConfiguration));
 app.use(cookieParser());
 
 // Routes
@@ -44,8 +65,7 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "200 OK Hello guys :)" });
 });
 
-// Listening at
+// Start server
 app.listen(PORT, () => {
   console.log(`Server active at port: ${PORT}`);
-  // console.log(`Server active at: http://localhost:${PORT}`);
 });

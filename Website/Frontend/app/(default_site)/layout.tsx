@@ -47,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="w-full h-fit antialiased dark:bg-[#151c25] bg-[#f2f2f2]">
+      <body className="w-full h-fit antialiased dark:bg-[#151c25] bg-[#f2f2f2] scroll-smooth">
         {children}
       </body>
     </html>
