@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import displayImage from "@/public/assets/view/display.png";
-import { ThemeProvider } from "next-themes";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import displayImage from "@/public/metadata/image.png";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,13 +12,12 @@ export const metadata: Metadata = {
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
   keywords:
     "certificate, certificate generator, email certificates, verify certificates, CertiMailer, certification, automated mailing, digital certificates",
-  // authors: "CertiMailer Team",
   robots: "index, follow",
   openGraph: {
     title: "CertiMailer",
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    url: "https://www.certimailer.xyz", // replace with your actual domain
+    url: "https://www.certimailer.xyz",
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
@@ -31,7 +28,7 @@ export const metadata: Metadata = {
     title: "CertiMailer",
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    creator: "@ScientistManas", // replace with your actual Twitter handle
+    creator: "@ScientistManas",
     images: displayImage.src,
   },
 };
