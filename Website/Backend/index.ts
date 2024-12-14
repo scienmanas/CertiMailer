@@ -21,12 +21,27 @@ const app: Express = express();
 const PORT: string = process.env.PORT || "5000";
 
 // CORS configuration: Manually handle origins and preflight requests
-const allowedOrigins = ["https://certimailer.xyz"]; 
+const allowedOrigins = [
+  "https://certimailer.xyz",
+  "https://www.certimailer.xyz",
+];
+const allowedOriginsHitPoint = [
+  "https://certimailer.xyz",
+  "https://www.certimailer.xyz",
+  "https://cron-job.org",
+  "https://www.cron-job.org",
+  "http://localhost:3000",
+];
 const allowedMethods = ["GET", "POST", "PUT", "DELETE"];
 const allowedHeaders = ["Content-Type", "Authorization"];
 
 app.use((req: Request, res: Response, next) => {
   const origin = req.headers.origin as string | undefined;
+
+  if (req.url === "/") {
+    if (origin && allowedOriginsHitPoint.includes(origin))
+      return res.status(200).json({ message: "200 OK Hello guys :)" }).end();
+  }
 
   if (origin && allowedOrigins.includes(origin)) {
     // Allow the origin if it's in the allowedOrigins list
@@ -39,7 +54,7 @@ app.use((req: Request, res: Response, next) => {
     if (req.method === "OPTIONS") {
       return res.status(200).end();
     }
-  } else  {
+  } else {
     // If origin doesn't match, send a 403 error
     return res.status(403).json({ message: "Access denied: Not allowed" });
   }
@@ -57,11 +72,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/send-email", sendEmailsRoute);
 app.use("/user", userRoute);
 app.use("/api/utils", utilsRoute);
-
-// Landing endpoint
-app.get("/", (req: Request, res: Response) => {
-  res.status(200).json({ message: "200 OK Hello guys :)" });
-});
 
 // Start server
 app.listen(PORT, () => {
