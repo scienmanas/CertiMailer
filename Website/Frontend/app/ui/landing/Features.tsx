@@ -9,6 +9,7 @@ import compass from "@/public/assets/universal/compass.png";
 import clsx from "clsx";
 import { CardProps } from "@/app/lib/definitions";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { firaSansFont } from "@/app/utils/font";
 
 export function Features(): JSX.Element {
   const cards = [
@@ -47,7 +48,7 @@ export function Features(): JSX.Element {
   ];
 
   return (
-    <div className="features w-full flex items-center relative justify-center">
+    <div className={`features w-full flex items-center relative justify-center ${firaSansFont.className}`}>
       <div className="features-content w-screen max-w-screen-2xl flex p-7 relative flex-col gap-10 lg:gap-14">
         <div className="svg w-fit h-fit p-5">
           <BsStars className="dark:text-purple-400 text-purple-700 text-5xl" />

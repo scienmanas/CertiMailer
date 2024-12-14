@@ -2,12 +2,10 @@ import { Router, Request, Response, NextFunction } from "express";
 import { randomBytes } from "crypto";
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { waitlistParams } from "../lib/definitions";
-import { newsLetterParams } from "../lib/definitions";
-import Waitlist from "../models/waitlist";
 import Newsletter from "../models/newsletter";
 import PendingUser from "../models/pending-user";
 import User from "../models/user";
+import { sendMail } from "../helpers/mailer";
 
 // Make router
 const router = Router();
@@ -16,30 +14,28 @@ router.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "Mae jinda hu bhai" });
 });
 
-// Route - 1 : Insert wailist user
-router.post("/newsletter-insert-user", async (req: Request, res: Response) => {
+// Route - 1 : Add user to newsletter
+router.post("/newsletter", async (req: Request, res: Response) => {
   // Get the body
-  const userData: newsLetterParams = req.body;
+  const { email } = req.body;
 
   try {
+    // Check if user already exists
+    const user = await Newsletter.findOne({ email: email });
+    if (user) {
+      return res.status(409).json({ message: "User already exists" });
+    }
+
     // insert data
-    const data = await Newsletter.create(userData);
+    const data = await Newsletter.create({ email: email });
     res.status(201).json({ message: "Successfully added user to waitlist" });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
-// Route - 2: Insert email to newsletter
-router.post("/waitlist-insert-user", async (req: Request, res: Response) => {
-  // Get the body
-  const email: waitlistParams = req.body;
-
-  try {
-    // Insert data
-    const data = await Waitlist.create(email);
-    res.status(201).json({ message: "Successfully added user to newsletter" });
+    await sendMail({
+      fromName: "Manas",
+      toEmail: email,
+      message:
+        "Hi there! ✨\n\nThank you so much for subscribing to the newsletter—you're amazing! 🤩 Just a quick note to let you know that your subscription has been successfully added.\n\nEven though this is an automated email sent from the server, I personally crafted this template, so it’s more than just a system message 😉. I’m super excited to share updates, insights, and stories with you in the upcoming newsletters.\n\nFeel free to reply to this email if you ever have any questions or feedback—I check my inbox regularly 📬 and love connecting with awesome people like you!\n\nAlright, that’s all for now! Stay tuned for some exciting content heading your way. Until then, take care and cheers! 🥂\n\n--\n\nManas Poddar\n📧 Email: manas@certimailer.xyz\n🐙 Github: https://github.com/scienmanas\n🌐 Web: https://scienmanas.xyz",
+      subject: "Subscribed to Newsletter 💌",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -96,7 +92,7 @@ router.post("/pending-list", async (req: Request, res: Response) => {
       // secure: process.env.NODE_ENV !== "development",
     });
 
-    console.log(req.cookies)
+    console.log(req.cookies);
 
     response = await fetch(EMAIL_API, {
       method: "POST",

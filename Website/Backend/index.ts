@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use("/api/certificate", certificatesRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/send-email", sendEmailsRoute);
-app.use("/api/user", userRoute);
+app.use("/user", userRoute);
 app.use("/api/utils", utilsRoute);
 
 // Landing endpoint

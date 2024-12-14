@@ -2,7 +2,7 @@ import { MarqueeProps } from "@/app/lib/definitions";
 
 export function Marquee({ svg, text }: MarqueeProps): JSX.Element {
   // Ensure we have at least 5 items by repeating if necessary
-  const marqueeItems: MarqueeProps[] = Array(5).fill({ svg, text });
+  const marqueeItems: MarqueeProps[] = Array(10).fill({ svg, text });
 
   return (
     <section

@@ -9,6 +9,8 @@ import { useState, useEffect, Fragment } from "react";
 import { useTheme } from "next-themes";
 import { TopLoader } from "@/app/ui/components/top-loader";
 import buyMeCofeeSvg from "@/public/assets/buymecoffee/bmc.svg";
+import { comicNeueFont } from "@/app/utils/font";
+import { firaSansFont } from "@/app/utils/font";
 
 export function Navbar(): JSX.Element {
   const [isHamburgerOpened, setIsHamburgerOpened] = useState<boolean>(false);
@@ -25,10 +27,15 @@ export function Navbar(): JSX.Element {
   // Set mounted state to true after the component has mounted
   useEffect(() => {
     setMounted(true);
-    if (theme) {
+    if (theme === "system") {
+      console.log(theme);
+      setWebsiteTheme("light");
+      setTheme("light");
+    } else if (theme === "dark" || theme === "light") {
+      console.log(theme);
       setWebsiteTheme(theme); // Set the website theme based on next-themes
     }
-  }, [theme]);
+  }, []);
 
   // Change the theme between light and dark
   const toggleTheme = () => {
@@ -53,7 +60,9 @@ export function Navbar(): JSX.Element {
                   className=""
                 />
 
-                <div className="text-company font-bold text-neutral-800 dark:text-neutral-200 text-xl">
+                <div
+                  className={`text-company font-bold text-neutral-800 dark:text-neutral-200 text-xl ${comicNeueFont.className}`}
+                >
                   CertiMailer
                 </div>
               </div>
@@ -80,7 +89,9 @@ export function Navbar(): JSX.Element {
                 className="line relative w-4 text-end h-[3px] bg-neutral-800 dark:bg-neutral-200 duration-200"
               ></div>
             </button>
-            <div className="link-wrapper sm:relative absolute w-full h-fit inset-0 p-4 sm:p-0 top-12 sm:top-0 sm:w-fit ">
+            <div
+              className={`link-wrapper sm:relative absolute w-full h-fit inset-0 p-4 sm:p-0 top-12 sm:top-0 sm:w-fit ${firaSansFont.className}`}
+            >
               <div
                 className={`link-tabs relative inset-0 w-full p-[2px] h-fit items-center`}
               >

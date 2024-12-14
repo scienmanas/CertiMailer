@@ -1,29 +1,17 @@
-"use client"; // Ensures this component is treated as a client-side component
+"use client";
 
-// Import necessary components and assets
-import Image from "next/image"; // Next.js component for optimized image rendering
-import Link from "next/link"; // Link component for client-side navigation
-import logo from "@/public/assets/logo/logo.png"; // Logo image import
-
-// Import required icons from various libraries
-import { FaInstagram } from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
+import logo from "@/public/assets/logo/logo.png";
 import { FaXTwitter } from "react-icons/fa6";
-import { FaDiscord } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { CiMail } from "react-icons/ci";
 import { FiGithub } from "react-icons/fi";
 import { SiFarcaster } from "react-icons/si";
-
-// Import React hooks
-import { useState } from "react"; // useState for handling state
-
-// Import for handling navigation redirection on failure
-import { notFound } from "next/navigation";
-
-// Import for custom submission loader component
+import { useState } from "react";
+import { SubscribeToNewsletter } from "@/app/lib/control";
 import { SubmissionLoader } from "@/app/ui/loaders";
 
-// Footer component definition
 export function Footer(): JSX.Element {
   // Define all the navigation and legal links
   const links = [
@@ -73,39 +61,25 @@ export function Footer(): JSX.Element {
   ];
 
   // State variables for newsletter subscription process
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // To track form submission state
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false); // To track subscription status
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubscribed, setIsSubscribed] = useState<boolean | string | null>(
+    null
+  );
 
   // Function to handle the newsletter subscription form submission
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent page reload on form submission
     setIsSubmitting(true); // Set submitting state to true
 
-    // Backend URI from environment variables
-    const API_URI: string = (process.env.BACKEND_URI +
-      "/user/newsletter-user") as string;
-
     // Get email value from the form data
     const formData = new FormData(e.currentTarget);
     const email: string = formData.get("email") as string;
 
-    // API request to handle newsletter subscription
-    try {
-      await fetch(API_URI, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }), // Send email as payload
-      });
-
-      setIsSubscribed(true); // Set subscription state to true on success
-    } catch (error) {
-      console.error(error); // Log error in case of failure
-      notFound(); // Redirect to not found page in case of error
-    } finally {
-      setIsSubmitting(false); // Set submitting state to false
-    }
+    // Send request and update the state
+    const response = await SubscribeToNewsletter(email);
+    if (response.status === 201) setIsSubscribed(true);
+    else if (response.status === 409) setIsSubscribed("Hmm, already");
+    setIsSubmitting(false); // Set submitting state to false
   };
 
   return (
@@ -131,7 +105,7 @@ export function Footer(): JSX.Element {
 
             {/* Newsletter signup form */}
             <form
-              // onSubmit={handleFormSubmit} Uncomment for form action
+              onSubmit={handleFormSubmit}
               className="flex w-fit h-fit flex-col gap-3"
             >
               <div className="text-for-signup w-fit dark:text-neutral-100 text-neutral-700 h-fit">
@@ -141,6 +115,7 @@ export function Footer(): JSX.Element {
                 {/* Email input */}
                 <label htmlFor="">
                   <input
+                    disabled={isSubmitting || (isSubscribed as boolean)}
                     autoComplete="off"
                     required
                     placeholder="Email"
@@ -155,9 +130,20 @@ export function Footer(): JSX.Element {
                 <label htmlFor="">
                   <button
                     type="submit"
-                    className="text-center w-32 h-[42px] bg-transparent bg-gradient-to-tr from-[#7e3eee] to-purple-800 rounded-md font-semibold duration-300 hover:from-[#6e33d4] hover:to-purple-900 text-neutral-200 dark:text-neutral-200 flex flex-row items-center justify-center gap-1"
+                    disabled={isSubmitting || (isSubscribed as boolean)}
+                    className={`text-center w-32 h-[42px] bg-transparent bg-gradient-to-tr from-[#7e3eee] to-purple-800 rounded-md font-semibold duration-300   text-neutral-200 dark:text-neutral-200 flex flex-row items-center justify-center gap-1 ${
+                      isSubmitting || isSubscribed
+                        ? "cursor-not-allowed opacity-50"
+                        : "cursor-pointer hover:to-purple-900 hover:from-[#6e33d4]"
+                    }`}
                   >
-                    <span>Subscribe</span>
+                    <span>
+                      {isSubscribed === null || isSubscribed === false
+                        ? "Subscribe"
+                        : isSubscribed === true
+                        ? "Subscribed"
+                        : "Hmm 🤔"}
+                    </span>
                     {isSubmitting && (
                       <SubmissionLoader
                         color="pink"

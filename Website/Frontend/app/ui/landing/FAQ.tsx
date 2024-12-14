@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { firaSansFont } from "@/app/utils/font";
 
 // Interface defining the structure of each FAQ item
 interface FAQItem {
@@ -36,7 +37,9 @@ export function FAQ(): JSX.Element {
   ];
 
   return (
-    <section className="faq w-full flex h-fit items-center justify-center flex-col gap-10">
+    <section
+      className={`faq w-full flex h-fit items-center justify-center flex-col gap-10 ${firaSansFont.className}`}
+    >
       <div className="heading-wrapper w-fit h-fit flex flex-col items-center justify-center gap-6 p-4">
         <div className="heading text-transparent bg-clip-text bg-gradient-to-br dark:from-purple-400 dark:to-neutral-100 from-purple-800 to-neutral-800 text-lg w-fit h-fit text-center">
           FAQ
@@ -45,7 +48,7 @@ export function FAQ(): JSX.Element {
           Answer to all your questions
         </div>
       </div>
-      <div className="faq-wrapper w-full h-fit flex flex-col gap-4 p-4">
+      <div className="faq-wrapper w-fit h-fit flex flex-col gap-4 p-4">
         {faqData.map((faq, index) => (
           <div
             key={index}

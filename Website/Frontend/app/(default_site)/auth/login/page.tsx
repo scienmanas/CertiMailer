@@ -10,7 +10,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { TopLoader } from "@/app/ui/components/top-loader";
 import { SubmissionLoader } from "@/app/ui/loaders";
-import logo from "@/public/assets/logo/logo_fig_nobg.png";
+import logo from "@/public/assets/logo/logo.png";
 import slide1 from "@/public/assets/auth/login-1.png";
 import slide2 from "@/public/assets/auth/login-2.png";
 
