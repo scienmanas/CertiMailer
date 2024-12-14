@@ -6,7 +6,7 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa";
 import hero from "@/public/assets/hero/hero.png";
 import { FlipWords } from "@/app/ui/components/flip-words";
-import { firaSansFont } from "@/app/utils/font";
+import { firaSansFont } from "@/app/utils/fonts";
 
 export function Hero(): JSX.Element {
   const heroHeadWords = [
@@ -18,7 +18,7 @@ export function Hero(): JSX.Element {
 
   return (
     <div
-      className={`hero w-full flex items-center justify-center relative md:mt-0 mt-12 z-10 overflow-x-hidden ${firaSansFont.className}`}
+      className={`hero w-full flex items-center justify-center relative md:mt-0 z-10 overflow-x-hidden ${firaSansFont.className}`}
     >
       <div className="hero-content z-10 max-w-screen-2xl flex relative items-center justify-between">
         <div className="content-wrapper flex sm:flex-row flex-col p-8 relative z-10">

@@ -22,8 +22,8 @@ const PORT: string = process.env.PORT || "5000";
 
 // CORS configuration
 const corsConfiguration = {
-  // origin: ["https://certimailer.xyz"],
-  origin: "*",
+  origin: ["https://certimailer.xyz"],
+  // origin: "*",
   optionSucessStatus: 200,
 };
 

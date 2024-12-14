@@ -5,14 +5,15 @@ import Link from "next/link";
 import logoImg from "@/public/assets/logo/logo.png";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment, useRef } from "react";
 import { useTheme } from "next-themes";
 import { TopLoader } from "@/app/ui/components/top-loader";
-import buyMeCofeeSvg from "@/public/assets/buymecoffee/bmc.svg";
-import { comicNeueFont } from "@/app/utils/font";
-import { firaSansFont } from "@/app/utils/font";
+import buyMeCofeeSvg from "@/public/assets/donation/bmc.svg";
+import { comicNeueFont } from "@/app/utils/fonts";
+import { firaSansFont } from "@/app/utils/fonts";
 
 export function Navbar(): JSX.Element {
+  const hasMounted = useRef<boolean>(false);
   const [isHamburgerOpened, setIsHamburgerOpened] = useState<boolean>(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
@@ -26,16 +27,19 @@ export function Navbar(): JSX.Element {
 
   // Set mounted state to true after the component has mounted
   useEffect(() => {
-    setMounted(true);
-    if (theme === "system") {
-      console.log(theme);
-      setWebsiteTheme("light");
-      setTheme("light");
-    } else if (theme === "dark" || theme === "light") {
-      console.log(theme);
-      setWebsiteTheme(theme); // Set the website theme based on next-themes
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      setMounted(true);
+      if (theme === "system") {
+        console.log(theme);
+        setWebsiteTheme("light");
+        setTheme("light");
+      } else if (theme === "dark" || theme === "light") {
+        console.log(theme);
+        setWebsiteTheme(theme); // Set the website theme based on next-themes
+      }
     }
-  }, []);
+  }, [theme, setTheme, setWebsiteTheme]);
 
   // Change the theme between light and dark
   const toggleTheme = () => {

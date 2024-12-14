@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/logo/logo.png";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,6 +11,16 @@ import { SiFarcaster } from "react-icons/si";
 import { useState } from "react";
 import { SubscribeToNewsletter } from "@/app/lib/control";
 import { SubmissionLoader } from "@/app/ui/loaders";
+import bmcImg from "@/public/assets/donation/bmc.svg";
+import solImg from "@/public/assets/donation/sol.png";
+import btcImg from "@/public/assets/donation/btc.png";
+import ethImg from "@/public/assets/donation/eth.png";
+
+type donationType = {
+  name: string;
+  icon: StaticImageData;
+  address: string;
+};
 
 export function Footer(): JSX.Element {
   // Define all the navigation and legal links
@@ -18,19 +28,18 @@ export function Footer(): JSX.Element {
     {
       category: "Navigation",
       items: [
-        { site: "Blog", link: "/blog" },
-        { site: "Overview", link: "/" },
         { site: "About", link: "/" },
-        { site: "Contact", link: "/" },
+        { site: "Blog", link: "/blog" },
+        { site: "Verify", link: "/" },
+        { site: "Register", link: "/" },
       ],
     },
     {
       category: "Legal",
       items: [
-        { site: "License", link: "/license" },
-        { site: "Terms of use", link: "/terms" },
-        { site: "Privacy policy", link: "/privacy-policy" },
-        { site: "Support", link: "/support" },
+        { site: "License", link: "/legal/license" },
+        { site: "Terms of use", link: "/legal/terms" },
+        { site: "Privacy policy", link: "/legal/privacy-policy" },
       ],
     },
     {
@@ -57,6 +66,32 @@ export function Footer(): JSX.Element {
       name: "Farcaster",
       icon: SiFarcaster,
       link: "https://warpcast.com/scienmanas",
+    },
+  ];
+
+  const donationLinks: donationType[] = [
+    {
+      name: "Buy me a coffee",
+      icon: bmcImg,
+      address: "https://buymeacoffee.com/scienmanas",
+    },
+    {
+      name: "Bitcoin",
+      icon: btcImg,
+      address:
+        "https://btcscan.org/address/bc1qwcahm8aq9uqg5zthnvnkvl0vxkm3wku90hs4j4",
+    },
+    {
+      name: "Ethereum",
+      icon: ethImg,
+      address:
+        "https://etherscan.io/address/0x54da97548d91f8A157634C3a60f82831cD913A9c",
+    },
+    {
+      name: "Solana",
+      icon: solImg,
+      address:
+        "https://solscan.io/account/E3FrcftDnb1FXDpRBA96ja7vQmWnQ8mTk85i7m85FmhD",
     },
   ];
 
@@ -176,6 +211,34 @@ export function Footer(): JSX.Element {
                   ))}
                 </ul>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Donations */}
+        <div className="donations flex flex-col gap-2">
+          <div className="heading text-xl dark:text-neutral-200 text-neutral-700 font-semibold">
+            Support Us
+          </div>
+          <div className="text dark:text-neutral-200 text-neutral-700">
+            CertiMailer is a free and open-source project. We rely on
+            contributions from the community to keep it running. You can support
+            us by donating to the following addresses:
+          </div>
+          <div className="donation-addresses flex flex-row gap-4 items-center">
+            {donationLinks.map((donation, index) => (
+              <Link
+                key={index}
+                href={donation.address}
+                className={donation.name}
+              >
+                <Image
+                  src={donation.icon}
+                  alt={donation.name}
+                  width={20}
+                  height={20}
+                />
+              </Link>
             ))}
           </div>
         </div>

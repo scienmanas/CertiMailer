@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { firaSansFont } from "@/app/utils/font";
+import { firaSansFont } from "@/app/utils/fonts";
 
 // Interface defining the structure of each FAQ item
 interface FAQItem {

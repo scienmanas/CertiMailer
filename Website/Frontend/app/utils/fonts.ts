@@ -9,6 +9,6 @@ export const comicNeueFont = Comic_Neue({
 
 export const firaSansFont = Fira_Sans({
   subsets: ["latin"],
-  weight: "500",
+  weight: "400",
   display: "swap",
 });

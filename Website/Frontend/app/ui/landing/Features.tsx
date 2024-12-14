@@ -9,7 +9,7 @@ import compass from "@/public/assets/universal/compass.png";
 import clsx from "clsx";
 import { CardProps } from "@/app/lib/definitions";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { firaSansFont } from "@/app/utils/font";
+import { firaSansFont } from "@/app/utils/fonts";
 
 export function Features(): JSX.Element {
   const cards = [
