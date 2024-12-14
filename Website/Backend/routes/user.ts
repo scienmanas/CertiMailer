@@ -18,7 +18,6 @@ router.get("/", (req: Request, res: Response) => {
 router.post("/newsletter", async (req: Request, res: Response) => {
   // Get the body
   const { email } = req.body;
-  console.log("got a ew request");
   try {
     // Check if user already exists
     const user = await Newsletter.findOne({ email: email });
