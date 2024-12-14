@@ -1,7 +1,9 @@
 import { StaticImageData } from "next/image";
+import { IconType } from "react-icons";
 
 export type MarqueeProps = {
-  svgs: string[];
+  svg: IconType;
+  text: string;
 };
 
 export type CardProps = {
@@ -14,12 +16,21 @@ export type CardProps = {
   };
 };
 
-export type emailParams = {
-  to: string;
-  subject: string;
-  text: string;
-  fromName: string;
-  toName?: string;
+export type submissionLoaderProps = {
+  width: number;
+  height: number;
+  color: string;
+};
+
+export type BlogPostMetaDataProps = {
+  cardData: {
+    title: string;
+    image: string;
+    publishedDate: string;
+    description: string;
+    tags: string[];
+    slug: string;
+  };
 };
 
 export type FetchedCertificateDataProps = {

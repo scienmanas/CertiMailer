@@ -2,11 +2,13 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { config } from "dotenv";
 import { connectToDB } from "./config/db";
+import cookieParser from "cookie-parser";
 // Routes import
 import certificatesRoute from "./routes/certificate";
 import authRoute from "./routes/auth";
 import sendEmailsRoute from "./routes/sendEmails";
-import UserRoute from "./routes/user";
+import userRoute from "./routes/user";
+import utilsRoute from "./routes/utils";
 
 // Load the env
 config();
@@ -28,12 +30,14 @@ const corsConfiguration = {
 // middleware to use import routes and enable cors
 app.use(express.json());
 app.use(cors(corsConfiguration));
+app.use(cookieParser());
 
 // Routes
 app.use("/api/certificate", certificatesRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/send-email", sendEmailsRoute);
-app.use("/api/user", UserRoute);
+app.use("/user", userRoute);
+app.use("/api/utils", utilsRoute);
 
 // Landing endpoint
 app.get("/", (req: Request, res: Response) => {

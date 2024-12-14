@@ -18,7 +18,7 @@ router.post(
   upload.single("file"),
   async (req: Request, res: Response) => {
     // Get the body
-    const { fromName="", toName = "", toEmail, subject, message } = req.body;
+    const { fromName = "", toName = "", toEmail, subject, message } = req.body;
 
     // Get the uploaded file
     const file = req.file;
@@ -26,8 +26,7 @@ router.post(
     // Get the auth parameters
     const EMAIL = process.env.ADMIN_EMAIL;
     const PASSWORD = process.env.ADMIN_APP_PASSWORD;
-    console.log(EMAIL);
-    console.log(PASSWORD);
+
     // Create transporter
     const transporter = nodemailer.createTransport({
       host: "smtppro.zoho.in",
@@ -59,7 +58,7 @@ router.post(
     }
 
     try {
-      const info = await transporter.sendMail(mailOptions);
+      await transporter.sendMail(mailOptions);
       res.status(200).json({ message: "Mail sent successfully" });
     } catch (error) {
       console.log(error);
@@ -74,8 +73,7 @@ router.post(
   upload.single("file"),
   async (req: Request, res: Response) => {
     // Get the body
-    const { fromName="", toName = "", toEmail, subject, message } = req.body;
-
+    const { fromName = "", toName = "", toEmail, subject, message } = req.body;
     // Get the uploaded file
     const file = req.file;
 
@@ -131,8 +129,8 @@ router.post(
   async (req: Request, res: Response) => {
     // Get the body as well as auth credentials
     const {
-      fromName="",
-      toName="",
+      fromName = "",
+      toName = "",
       toEmail,
       subject,
       message,
@@ -175,7 +173,7 @@ router.post(
     }
 
     try {
-      const info = await transporter.sendMail(mailOptions);
+      await transporter.sendMail(mailOptions);
       res.status(200).json({ message: "Mail sent successfully" });
     } catch (error) {
       console.log(error);

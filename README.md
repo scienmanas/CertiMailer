@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/68574249-3ed4-4651-bdba-84791185ee7b" alt="Logo">
+  <img src="images/logo.png" alt="Logo">
 </div>
 
 # 🔰 Certiailer
@@ -9,6 +9,7 @@ An all in one tool to generate certificates is mass and mail them. Moreover the 
 ## Divisions
 
 CertiMailer is an open source project with a website as well as script version. The whole project is divided into two division for differnt users:
+
 - `Python Script`: For advanced user who want to use the codebase or make their own.
 - `Web version`: A web version is made hosted on free tier of different services. Intended for normal users.
 
@@ -19,11 +20,10 @@ CertiMailer is an open source project with a website as well as script version. 
 - Mailny python and its differnt libraries.
 
 ### Website
+
 - **Client:** Next JS, TailwindCSS.
 - **Server:** Node, Express.
 - **Datebase:** Mongo DB, Google cloud storage bucket.
-
-
 
 ## 🔨 Setting Up
 
@@ -34,8 +34,7 @@ To set up the project locally, follow the steps mentioned in their respective fo
 - `Fully customizable`: The python script is fully customizable (developer, get your hands dirty).
 - `id verification, automatic generation, automatic mailing, etc`.
 
-## 📁 File Structure 
-
+## 📁 File Structure
 
 ```
 .
@@ -52,6 +51,7 @@ To set up the project locally, follow the steps mentioned in their respective fo
 ├── LICENSE
 └── README.md
 ```
+
 - For detail view of file structure for each part look into that specific part respectively.
 
 ## 🔥 Contributing
