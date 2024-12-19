@@ -15,7 +15,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `Blogs - ${process.env.SITE_NAME}`,
       description: "Read the blogs from core team of CertiMailer.",
       url: `${process.env.DOMAIN}/blog`,
-      //   images: [metaDataImg.src],
       type: "article",
       siteName: `${process.env.SITE_NAME}`,
       locale: "en_US",
@@ -25,7 +24,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `Blogs - ${process.env.SITE_NAME}`,
       description:
         "Read my blogs, I write about tech, do some poetry, and makes memes.",
-      //   images: [metaDataImg.src],
       creator: "@scienmanas",
       site: `${process.env.DOMAIN}/blog`,
     },

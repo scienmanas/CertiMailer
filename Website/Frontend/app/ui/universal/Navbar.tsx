@@ -7,7 +7,7 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { useState, useEffect, Fragment, useRef } from "react";
 import { useTheme } from "next-themes";
-import { TopLoader } from "@/app/ui/components/top-loader";
+import { TopLoader } from "@/app/ui/loaders";
 import buyMeCofeeSvg from "@/public/assets/donation/bmc.svg";
 import { comicNeueFont } from "@/app/utils/fonts";
 import { firaSansFont } from "@/app/utils/fonts";
@@ -170,9 +170,12 @@ export function Navbar(): JSX.Element {
                         }
                       />
                     </Link>
-                    <button className="px-3 py-[4px] bg-transparent bg-gradient-to-tr from-[#7f40ef] to-[#a47aed] rounded-md text-bl font-semibold hover:from-[#7a47d4] hover:to-[#9767ea] transition-colors duration-300 transform text-white">
+                    <Link
+                      href={"/auth/login"}
+                      className="px-3 py-[4px] bg-transparent bg-gradient-to-tr from-[#7f40ef] to-[#a47aed] rounded-md text-bl font-semibold hover:from-[#7a47d4] hover:to-[#9767ea] transition-colors duration-300 transform text-white"
+                    >
                       Log in
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
