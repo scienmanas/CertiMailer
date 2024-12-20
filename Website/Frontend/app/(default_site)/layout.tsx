@@ -1,11 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "@/app/globals.css";
 import displayImage from "@/public/metadata/image.png";
-<<<<<<< HEAD
-
-const inter = Inter({ subsets: ["latin"] });
-=======
->>>>>>> 9cad656 (Backend: Auth done)
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.DOMAIN as string),
@@ -19,11 +14,8 @@ export const metadata: Metadata = {
     title: process.env.SITE_NAME,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-<<<<<<< HEAD
-    url: "https://www.certimailer.xyz",
-=======
+
     url: process.env.DOMAIN,
->>>>>>> 9cad656 (Backend: Auth done)
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
@@ -34,11 +26,7 @@ export const metadata: Metadata = {
     title: process.env.SITE_NAME,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-<<<<<<< HEAD
-    creator: "@ScientistManas",
-=======
     creator: "@scienmanas",
->>>>>>> 9cad656 (Backend: Auth done)
     images: displayImage.src,
     site: process.env.DOMAIN,
   },

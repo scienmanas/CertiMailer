@@ -10,12 +10,13 @@ import { LuLogOut } from "react-icons/lu";
 import { FiActivity } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { handleLogout } from "@/app/lib/controls/auth";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 export function SideBar(): JSX.Element {
   // Router for navigating & Path fetching
   const router = useRouter();
   const pathName = usePathname();
-  console.log(pathName);
 
   // UI enhancements
   const [hoveredIndex, setHoveredIndex] = useState<number>(0);
@@ -44,6 +45,19 @@ export function SideBar(): JSX.Element {
 
   return (
     <section className="side-bar h-full p-2">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <div className="side-bar-wrapper px-2 h-full flex flex-col justify-between bg-transparent bg-gradient-to-br from-[#385c7d] to-[#834358] rounded-md py-2">
         <div className="controls w-fit h-fit relative">
           <ul className="relative top-0 items flex flex-col gap-2 w-fit h-fit items-center">
@@ -102,22 +116,65 @@ export function SideBar(): JSX.Element {
           </ul>
         </div>
         <div className="setting-and-loggin-out flex gap-1 flex-col">
-          <div className="setting flex gap-1 group flex-col  items-center">
+          {/* <div className="setting flex gap-1 group flex-col  items-center">
             <span className="">
               <IoSettingsOutline className="text-lg sm:text-2xl text-white" />
             </span>
             <span className="text-[9px] sm:text-[11px] text-pink-400 font-bold">
               Settings
             </span>
-          </div>
-          <div className="logout flex gap-1 group  flex-col items-center">
+          </div> */}
+          <button
+            type="button"
+            onClick={async () => {
+              toast.info("Logging you out", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+              });
+              // Start logout
+              const response = await handleLogout();
+              if (response.status === 200) {
+                toast.success("Logged out successfully", {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  transition: Bounce,
+                });
+                router.push("/");
+              } else
+                toast.error("Logout failed", {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  transition: Bounce,
+                });
+            }}
+            className="logout flex gap-1 group  flex-col items-center"
+          >
             <span className="">
               <LuLogOut className="text-lg sm:text-2xl text-white" />
             </span>
             <span className="text-[9px] sm:text-[11px] text-pink-400 font-bold">
               Logout
             </span>
-          </div>
+          </button>
         </div>
       </div>
     </section>

@@ -15,8 +15,9 @@ router.post("/create", async (req: Request, res: Response) => {});
 
 router.post("/delete", async (req: Request, res: Response) => {});
 
-router.post(
-  "/data",
+// Route - 3 : Send the data of user to frontend dasnboard
+router.get(
+  "/home-data",
   protectUserRoutes,
   async (req: CustomRequest, res: Response) => {
     const userId = req?.userId;
@@ -24,14 +25,28 @@ router.post(
       const user = await User.findById({ _id: userId });
       if (!user) return res.status(404).json({ message: "User not found" });
       // Return the data for homepage for user
-      return res.status(200).json({ user });
+      return res.status(200).json({
+        data: {
+          name: user.name,
+          email: user.email,
+          logoUrl: user.logoUrl,
+          status: user.status,
+          type: user.type,
+          about: user.about,
+          maxAllocatedEvents: user.maxAllocatedEvents,
+          totalEvents: user.totalEvents,
+          AllocatedEmails: user.AllocatedEmails,
+          date: user.date,
+        },
+        message: "User data fetched successfully",
+      });
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
 );
 
-// Route - 1 : Add user to newsletter
+// Route - 4 : Add user to newsletter
 router.post("/newsletter", async (req: Request, res: Response) => {
   // Get the body
   const { email } = req.body;

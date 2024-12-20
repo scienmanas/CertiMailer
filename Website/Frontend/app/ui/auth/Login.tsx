@@ -16,7 +16,7 @@ import logo from "@/public/assets/logo/logo.png";
 import slide1 from "@/public/assets/auth/login-1.png";
 import slide2 from "@/public/assets/auth/login-2.png";
 
-export default function Login(): JSX.Element {
+export function Login(): JSX.Element {
   // Define next router
   const router = useRouter();
 
@@ -49,7 +49,7 @@ export default function Login(): JSX.Element {
   const [error, setError] = useState<null | string>(null);
   // UI enchancements
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   // Top Loader running on every occassions - varibale
@@ -344,7 +344,7 @@ export default function Login(): JSX.Element {
                   </label>
                   <Link
                     href={"/auth/reset-password"}
-                    className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-semibold"
+                    className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-semibold hover:underline"
                   >
                     Forgot Password
                   </Link>

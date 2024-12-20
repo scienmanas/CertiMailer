@@ -45,7 +45,7 @@ export function Footer(): JSX.Element {
     },
     {
       category: "Know",
-      items: [{ site: "@scienmamas", link: "https://x.com/scienmanas" }],
+      items: [{ site: "@scienmanas", link: "https://x.com/scienmanas" }],
     },
   ];
 

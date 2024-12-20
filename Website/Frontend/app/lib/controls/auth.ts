@@ -105,6 +105,7 @@ export async function handleLogin({
   }
 }
 
+// Handle Logout
 export async function handleLogout() {
   const API_URI = new URL(process.env.NEXT_PUBLIC_BACKEND_URI + "/auth/logout");
 
@@ -126,6 +127,7 @@ export async function handleLogout() {
   }
 }
 
+// Validate the credentials
 export async function validateCredentials() {
   const API_URI = new URL(
     process.env.NEXT_PUBLIC_BACKEND_URI + "/auth/validate"
@@ -137,6 +139,47 @@ export async function validateCredentials() {
       credentials: "include",
     });
     const data = await response.json();
+    return {
+      status: response.status,
+      message: data.message,
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Internal Server Error",
+    };
+  }
+}
+
+// Testing remain
+// Request for password reset
+export async function ResetPassword({
+  email,
+  password,
+  otp,
+}: {
+  email: string;
+  password: string;
+  otp: number;
+}) {
+  const API_URI = new URL(
+    process.env.NEXT_PUBLIC_BACKEND_URI + "/auth/reset-password"
+  );
+
+  try {
+    const response = await fetch(API_URI.toString(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        otp: otp,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
     return {
       status: response.status,
       message: data.message,

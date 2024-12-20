@@ -12,6 +12,13 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
+interface JwtPayload {
+  user: {
+    _id: string;
+  };
+}
+const JWT_SECRET: string = process.env.JWT_SECRET as string;
+
 // Initialse the router & multer
 const router = Router();
 const storage = multer.diskStorage({
@@ -154,7 +161,7 @@ router.post("/login", async (req: Request, res: Response) => {
     }
 
     // Get the uuser id and store it in a nice format
-    const data = { user: { id: user._id } };
+    const data = { user: { _id: user._id } };
     const authToken = jwt.sign(data, JWT_SECRET);
     res
       .cookie("authToken", authToken, {
@@ -182,8 +189,13 @@ router.get("/validate", async (req: Request, res: Response) => {
     const token = req.cookies.authToken;
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    if (!decoded) return res.status(401).json({ message: "Unauthorized" });
+    const decode = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    if (!decode)
+      return res.status(401).json({ message: "Unauthorised - Invalid Token" });
+
+    // Find the user in database and check whther he is correct
+    const findUser = await User.findById(decode.user._id);
+    if (!findUser) return res.status(401).json({ message: "Unauthorised" });
 
     res.status(200).json({ message: "User Validated" });
   } catch (error) {
@@ -193,16 +205,50 @@ router.get("/validate", async (req: Request, res: Response) => {
 
 // Route - 4: Logout the user
 router.get("/logout", async (req: Request, res: Response) => {
-  res
-    .clearCookie("authToken", {
-      httpOnly: true,
-      secure: process.env.ENV === "prod",
-      sameSite: process.env.ENV === "prod" ? "strict" : "lax",
-      path: "/",
-      domain: process.env.ENV === "prod" ? process.env.DOMAIN : "localhost",
-    })
-    .status(200)
-    .json({ message: "Logged out" });
+  if (!req.cookies.authToken)
+    return res.status(200).json({ message: "No cookie" });
+  try {
+    return res
+      .clearCookie("authToken", {
+        httpOnly: true,
+        secure: process.env.ENV === "prod",
+        sameSite: process.env.ENV === "prod" ? "strict" : "lax",
+        path: "/",
+        domain: process.env.ENV === "prod" ? process.env.DOMAIN : "localhost",
+      })
+      .status(200)
+      .json({ message: "Logged out" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Route - 5: Reset Password --> Check Remaining
+router.post("/reset-password", async (req: Request, res: Response) => {
+  const { email, otp, password } = req.body;
+  if (!email || !otp || !password)
+    return res.status(400).json({ message: "All fields are required" });
+
+  try {
+    // Find the user
+    const user = await User.findOne({ email: email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Verify the OTP
+    const otpVerify = await verifyOtp({ userId: email, otp: parseInt(otp) });
+    if (otpVerify.status === 400 || otpVerify.status === 500)
+      return res.status(otpVerify.status).json({ message: otpVerify.message });
+
+    // Hash the password
+    const salt = await bycrypt.genSalt(10);
+    const secPass = await bycrypt.hash(password, salt);
+    // Change the password
+    user.password = secPass;
+    await user.save();
+    return res.status(200).json({ message: "Password Reset Successful" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 export default router;

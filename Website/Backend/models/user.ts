@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
     approved: { type: Boolean, required: true, default: false },
     maxAllocatedEvents: { type: Number, required: true, default: 5 },
     totalEvents: { type: Number, required: true, default: 0 },
+    AllocatedEmails: { type: Number, required: true, default: 20 },
     date: { type: Date, required: true, default: Date.now },
   },
   {

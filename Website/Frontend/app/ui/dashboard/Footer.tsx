@@ -36,7 +36,7 @@ export function Footer(): JSX.Element {
   }, []);
 
   return (
-    <footer className="w-full h-fit bg-[#403939] flex flex-row justify-between py-2 px-2 items-center">
+    <footer className="w-full h-fit bg-[#403939] fixed bottom-0 flex flex-row justify-between py-2 px-2 items-center">
       <div className="text-white sm:text-sm text-[10px] flex flex-col">
         <span>
           &copy; 2024 |{" "}

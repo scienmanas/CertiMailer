@@ -6,9 +6,13 @@ import { TopLoader } from "@/app/ui/loaders";
 import { PageLoader } from "@/app/ui/loaders";
 import { Footer } from "@/app/ui/dashboard/Footer";
 import { useEffect, useState, useRef } from "react";
-import { validateCredentials } from "@/app/lib/controls/auth";
+import { getUserData } from "@/app/lib/controls/user";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+
+interface userDataType {
+  logoUrl: string;
+}
 
 export default function AuthLayout({
   children,
@@ -21,17 +25,22 @@ export default function AuthLayout({
   const [Mounted, setMounted] = useState<boolean>(false);
   const hasMounted = useRef<boolean>(false);
   const { theme, setTheme } = useTheme();
+  const [userLogoUrl, setUserLogoUrl] = useState<string | null>(null);
 
   // Redirect when auth-token present logic
   useEffect(() => {
     const checkCredentials = async () => {
-      const response = await validateCredentials();
-      if (response.status !== 200) {
-        router.push("/auth/login");
+      const response = await getUserData();
+      if (response.status === 500) {
+        // For internal server error
+        router.push("/");
       } else if (response.status === 200) {
-        router.push("/dashboard");
+        // For successful response
+        setUserLogoUrl(response.userData.logoUrl);
         setMounted(true);
         setStartTopLoader(false);
+      } else {
+        router.push("/auth/login");
       }
     };
 
@@ -50,10 +59,10 @@ export default function AuthLayout({
   if (!Mounted) return <PageLoader />;
   else
     return (
-      <div className="flex flex-col w-full h-dvh bg-neutral-200 dark:bg-neutral-200">
+      <div className="flex flex-col w-full h-dvh bg-neutral-200 dark:bg-neutral-200 pb-16 relative">
         {startTopLoader && <TopLoader />}
         <div className="nav w-full h-fit">
-          <Navbar />
+          <Navbar userLogoUrl={userLogoUrl as string} />
         </div>
         <div className="side-nav-and-functionality flex flex-row h-full">
           <div className="side-nav h-full w-fit">
@@ -61,7 +70,7 @@ export default function AuthLayout({
           </div>
           <div className="tab-conetnts w-full h-full">{children}</div>
         </div>
-        <section className="footer">
+        <section className="footer relative z-20">
           <Footer />
         </section>
       </div>
