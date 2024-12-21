@@ -1,7 +1,5 @@
-import type { Metadata } from "next";
-import { Verify } from "@/app/ui/verify/Verify";
-import { Footer } from "@/app/ui/universal/Footer";
-import { Navbar } from "@/app/ui/universal/Navbar";
+import IdDetails from "@/app/ui/verify/IdDetails";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.DOMAIN as string),
@@ -30,18 +28,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function VerifyPage(): JSX.Element {
-  return (
-    <section className="verify-page w-full h-fit flex items-center justify-center flex-col gap-6 sm:gap-10">
-      <div className="navbar w-full h-fit">
-        <Navbar />
-      </div>
-      <div className="verify w-full h-fit mt-8 p-4">
-        <Verify />
-      </div>
-      <div className="footer w-full h-fit">
-        <Footer />
-      </div>
-    </section>
-  );
+export default function IdDetailsPage(): JSX.Element {
+  return <IdDetails />;
 }

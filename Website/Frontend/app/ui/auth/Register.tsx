@@ -86,6 +86,7 @@ export function Register(): JSX.Element {
     // Get the form data & call registration function
     const formData = new FormData(e.target as HTMLFormElement);
     const response = await handleRegister(formData);
+    // Reset the loaders
     setIsSubmitting(false);
 
     if (response.status === 201) {
@@ -397,7 +398,7 @@ export function Register(): JSX.Element {
 
                               // Cooldown and wait
                               setIsCooldown(true);
-                              setTimer(120); // Set 2-minute cooldown (120 seconds)
+                              setTimer(119); // Set 2-minute cooldown (120 seconds)
                               const countdown = setInterval(() => {
                                 setTimer((prev) => {
                                   if (prev <= 1) {
@@ -433,7 +434,7 @@ export function Register(): JSX.Element {
                           >
                             <span className="text-xs sm:text-sm">
                               {isCooldown
-                                ? `${Math.ceil(timer / 60)} : ${Math.ceil(
+                                ? `${Math.floor(timer / 60)} : ${Math.ceil(
                                     timer % 60
                                   )}`
                                 : isFetchingOtp

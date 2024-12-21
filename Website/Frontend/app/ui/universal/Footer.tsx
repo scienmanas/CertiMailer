@@ -31,7 +31,7 @@ export function Footer(): JSX.Element {
       items: [
         { site: "About", link: "/" },
         { site: "Blog", link: "/blog" },
-        { site: "Verify", link: "/" },
+        { site: "Verify", link: "/verify" },
         { site: "Register", link: "/auth/register" },
       ],
     },

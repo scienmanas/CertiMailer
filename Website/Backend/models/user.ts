@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
     totalEvents: { type: Number, required: true, default: 0 },
     AllocatedEmails: { type: Number, required: true, default: 20 },
     date: { type: Date, required: true, default: Date.now },
+    website: { type: String, required: false },
   },
   {
     collection: "user",

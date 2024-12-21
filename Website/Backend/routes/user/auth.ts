@@ -141,7 +141,7 @@ router.post("/login", async (req: Request, res: Response) => {
   const JWT_SECRET = process.env.JWT_SECRET as string;
 
   // Get email and password
-  const { email, password } = req.body;
+  const { email, password, rememberMe } = req.body;
   if (!email || !password)
     return res.status(400).json({ message: "All fields are required" });
 
@@ -168,7 +168,7 @@ router.post("/login", async (req: Request, res: Response) => {
         httpOnly: true,
         secure: process.env.ENV === "prod",
         sameSite: process.env.ENV === "prod" ? "strict" : "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 1 Week expiry
+        maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 30 * 60 * 1000, // 1 Week expiry otherwise 30 minutes
         path: "/",
         domain: process.env.ENV === "prod" ? process.env.DOMAIN : "localhost",
       })
@@ -223,7 +223,7 @@ router.get("/logout", async (req: Request, res: Response) => {
   }
 });
 
-// Route - 5: Reset Password --> Check Remaining
+// Route - 5: Reset Password
 router.post("/reset-password", async (req: Request, res: Response) => {
   const { email, otp, password } = req.body;
   if (!email || !otp || !password)
@@ -233,6 +233,15 @@ router.post("/reset-password", async (req: Request, res: Response) => {
     // Find the user
     const user = await User.findOne({ email: email });
     if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Check if approved
+    if (user.approved === false)
+      return res.status(400).json({ message: "Application not approved" });
+
+    // Check if user enetered same password
+    const passwordCompare = await bycrypt.compare(password, user.password);
+    if (passwordCompare)
+      return res.status(400).json({ message: "Please enter a new password" });
 
     // Verify the OTP
     const otpVerify = await verifyOtp({ userId: email, otp: parseInt(otp) });
@@ -245,7 +254,15 @@ router.post("/reset-password", async (req: Request, res: Response) => {
     // Change the password
     user.password = secPass;
     await user.save();
-    return res.status(200).json({ message: "Password Reset Successful" });
+    res.status(200).json({ message: "Password Reset Successful" });
+    // Send mail to user
+    await sendMail({
+      fromName: "Admin - CertiMailer",
+      toEmail: email,
+      toName: user.name,
+      subject: "Password Reset Successful 🎉",
+      message: `Hi ${user.name}! 🎉\n\nYour password has been successfully reset. If you did not request this change, please contact us immediately.Your account security is our top priority, and we’re always here to help you stay secure.\n\nIf you have any questions or concerns, feel free to reply to this email—we check our inbox regularly 📬 and are happy to assist you!\n\nStay safe and take care! 🛡️\n\n--\n\nManas Poddar\n📧 Email: manas@certimailer.xyz\n🐙 Github: https://github.com/scienmanas\n🌐 Web: https://scienmanas.xyz`,
+    });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
   }

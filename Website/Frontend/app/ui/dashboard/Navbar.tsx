@@ -18,13 +18,13 @@ export function Navbar({ userLogoUrl }: { userLogoUrl: string }): JSX.Element {
           <div className="bmc">
             <SiBuymeacoffee className="text-2xl text-white" />
           </div>
-          <div className="profile-photo">
+          <div className="profile-photo overflow-hidden">
             <Image
               src={userLogoUrl}
               alt="profile"
               width={30}
               height={30}
-              className="rounded-full"
+              className="rounded-full w-[30px] h-[30px] object-cover"
             />
           </div>
         </div>

@@ -64,9 +64,11 @@ export async function handleRegister(formData: FormData) {
 export async function handleLogin({
   email,
   password,
+  rememberMe,
 }: {
   email: string;
   password: string;
+  rememberMe: boolean;
 }) {
   const API_URI = new URL(process.env.NEXT_PUBLIC_BACKEND_URI + "/auth/login");
 
@@ -80,6 +82,7 @@ export async function handleLogin({
       body: JSON.stringify({
         email: email,
         password: password,
+        rememberMe: rememberMe,
       }),
       credentials: "include",
     });
@@ -151,16 +154,15 @@ export async function validateCredentials() {
   }
 }
 
-// Testing remain
 // Request for password reset
-export async function ResetPassword({
+export async function handleResetPassword({
   email,
   password,
   otp,
 }: {
   email: string;
   password: string;
-  otp: number;
+  otp: string;
 }) {
   const API_URI = new URL(
     process.env.NEXT_PUBLIC_BACKEND_URI + "/auth/reset-password"
@@ -179,7 +181,6 @@ export async function ResetPassword({
       }),
     });
     const data = await response.json();
-    console.log(data);
     return {
       status: response.status,
       message: data.message,

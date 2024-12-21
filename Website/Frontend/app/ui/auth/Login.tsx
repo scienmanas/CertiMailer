@@ -78,14 +78,18 @@ export function Login(): JSX.Element {
     setIsSubmitting(true);
     setStartTopLoader(true);
 
-    
     // Get the form data
     const formData = new FormData(e.target as HTMLFormElement);
     const email: string = formData.get("email") as string;
     const password: string = formData.get("password") as string;
     const rememberMe: boolean = formData.get("remember") === "on";
 
-    const response = await handleLogin({ email, password });
+    const response = await handleLogin({
+      email: email,
+      password: password,
+      rememberMe: rememberMe,
+    });
+    // Reset the loaders
     setIsSubmitting(false);
 
     if (response.status === 200) {
@@ -121,10 +125,6 @@ export function Login(): JSX.Element {
         transition: Bounce,
       });
     }
-
-    // Reset the loaders
-    setIsSubmitting(false);
-    setStartTopLoader(false);
   };
 
   useEffect(() => {
@@ -282,6 +282,7 @@ export function Login(): JSX.Element {
                       <MdOutlineAlternateEmail className="text-lg sm:text-xl dark:text-neutral-200" />
                     </label>
                     <label
+                      onClick={() => setError(null)}
                       htmlFor="password"
                       className={`flex bg-[#f3f4f4] dark:bg-gray-700 relative z-10 items-center px-5 py-3 rounded-lg group border-2 border-gray-300 dark:border-gray-600 focus-:border-blue-500 gap-1 w-fit justify-between focus-within:border-blue-500 dark:focus-within:border-blue-400 ${
                         error ? "border-red-600 dark:border-red-500" : ""

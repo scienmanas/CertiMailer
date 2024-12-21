@@ -52,7 +52,7 @@ export function Hero(): JSX.Element {
                 <FaArrowRight className="group-hover:translate-x-1 duration-200 text-white" />
               </Link>
               <Link
-                href="#"
+                href="https://github.com/scienmanas/CertiMailer"
                 className="github flex flex-row gap-2 items-center"
               >
                 <span className="dark:text-white text-neutral-900 font-bold">

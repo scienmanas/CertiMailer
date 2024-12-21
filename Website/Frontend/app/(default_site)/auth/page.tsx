@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Auth(): JSX.Element {
   return (
     <section
-      className={`options w-full flex items-center justify-center flex-col ${firaSansFont.className}`}
+      className={`options w-full flex items-center justify-center flex-col ${firaSansFont.className} gap-6 sm:gap-10`}
     >
       <Navbar />
       <div className="content-wrapper w-full max-w-screen-2xl h-fit flex flex-col items-start justify-center p-4 mt-14 gap-6">

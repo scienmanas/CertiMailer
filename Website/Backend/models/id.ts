@@ -1,29 +1,25 @@
 import mongoose, { Schema } from "mongoose";
 
-const certificateSchema = new mongoose.Schema(
+const idSchema = new mongoose.Schema(
   {
-    organization_logo_url: { type: String, required: true },
-    organization_name: { type: String, required: true },
-    organization_id: { type: String, required: true },
-    organization_status: {
-      type: String,
-      enum: ["verified", "unverified"],
-      required: true,
-    },
-    organization_email: { type: String, required: true },
     _id: {
       type: Schema.Types.ObjectId,
       default: () => new mongoose.Types.ObjectId(),
     },
-    issued_to: { type: String, required: true },
-    issued_email: { type: String, required: true },
-    issued_date: { type: String, required: true },
-    expiry_date: { type: String, required: true },
+    organizationId: {
+      type: String,
+      required: true,
+    },
+    idtype: { type: String, required: true },
+    eventId: { type: String, required: true },
+    issuedTo: { type: String, required: true },
+    issuedEmail: { type: String, required: true },
+    issuedDate: { type: String, required: true, default: Date.now }, // default to current date
+    expiryDate: { type: String, required: true },
   },
   {
-    collection: "certificates",
+    collection: "id",
   }
 );
 
-export default mongoose.models.Certificate ||
-  mongoose.model("Certificate", certificateSchema);
+export default mongoose.models.Id || mongoose.model("Id", idSchema);

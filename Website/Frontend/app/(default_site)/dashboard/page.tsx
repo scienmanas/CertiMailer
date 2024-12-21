@@ -68,6 +68,7 @@ function DashBoardFilled({
           alt="User Logo"
           className="w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full object-cover"
         />
+
         <div className="flex flex-col flex-wrap w-full">
           <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold text-black gap-2 flex items-center">
             <span>{userData.name}</span>
@@ -177,7 +178,7 @@ export default function DashBoard(): JSX.Element {
       className={`w-full h-full flex items-center justify-start px-1 py-4 sm:p-4 md:p-6 ${firaSansFont.className}`}
     >
       <div className="wrapper w-full h-full max-w-screen-xl flex items-start flex-col gap-4 md:gap-6 overflow-y-auto">
-        <div className="heading font-extrabold text-2xl sm:text-3xl md:text-4xl">
+        <div className="heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-black">
           Profile ✨
         </div>
         {mounted ? (
