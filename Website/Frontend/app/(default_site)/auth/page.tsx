@@ -70,8 +70,8 @@ export default function Auth(): JSX.Element {
               </div>
             </div>
           </Link>
-          <Link href={"/dashboard"}>
-            <div className="card max-w-[450px] w-fit h-fit flex items-center justify-center gap-4 p-4 bg-yellow-100 dark:bg-yellow-800 rounded-lg">
+          <Link href={"/auth/login"}>
+            <div className="card max-w-[450px] w-fit h-fit flex items-center justify-center gap-4 p-4 bg-yellow-300 dark:bg-yellow-800 rounded-lg">
               <div className="card-content w-full h-fit flex flex-col items-start justify-center gap-2">
                 <div className="card-heading font-semibold text-lg sm:text-xl md:text-2xl underline text-black dark:text-white">
                   Limited Generation

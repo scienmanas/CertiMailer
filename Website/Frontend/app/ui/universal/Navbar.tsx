@@ -20,7 +20,7 @@ export function Navbar(): JSX.Element {
   const [websiteTheme, setWebsiteTheme] = useState<string>("light");
 
   const tabs = [
-    { text: "About", link: "#hero" },
+    { text: "About", link: "/" },
     { text: "Blogs", link: "/blog" },
     { text: "Community", link: "https://github.com/scienmanas/CertiMailer" },
   ];

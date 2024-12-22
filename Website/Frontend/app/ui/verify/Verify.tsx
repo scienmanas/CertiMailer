@@ -2,10 +2,12 @@
 
 import { firaSansFont } from "@/app/utils/fonts";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function Verify(): JSX.Element {
   // To push to different page on button click
   const router = useRouter();
+  const [idSubmitted, setIdSubmitted] = useState<boolean>(false);
 
   return (
     <section
@@ -47,6 +49,7 @@ export function Verify(): JSX.Element {
             <form
               onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                 event.preventDefault();
+                setIdSubmitted(true);
                 const formData = new FormData(event.currentTarget);
                 const id = formData.get("id") as string;
                 router.push(`/verify/${id}`);
@@ -60,8 +63,14 @@ export function Verify(): JSX.Element {
                 placeholder="Enter your unique ID"
                 className="input w-full h-10 px-4 py-2 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
               />
-              <button className="button w-full h-10 px-4 py-2 text-white bg-blue-800 dark:bg-blue-600 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent">
-                Verify ID/Certificate
+              <button
+                className={`button w-[228px] h-10 px-4 py-2 text-white bg-blue-800 dark:bg-blue-600 rounded-lg font-semibold ${
+                  idSubmitted
+                    ? "cursor-not-allowed opacity-60"
+                    : "focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                } `}
+              >
+                {idSubmitted ? "Verifying..." : "Verify ID/Certificate"}
               </button>
             </form>
           </div>
