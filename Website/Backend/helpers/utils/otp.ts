@@ -1,6 +1,6 @@
 import mongoose, { Types } from "mongoose";
 import crypto from "crypto";
-import Otp from "../models/otp";
+import Otp from "../../models/otp";
 
 interface IOtp extends mongoose.Document {
   _id: Types.ObjectId;

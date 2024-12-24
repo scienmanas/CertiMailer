@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import Newsletter from "../../models/newsletter";
 import User from "../../models/user";
 import { protectUserRoutes } from "../../middlewares/protectRoutes";
-import { sendMail } from "../../helpers/mailer";
+import { sendMail } from "../../helpers/utils/mailer";
 import { ObjectId } from "mongoose";
 
 interface CustomRequest extends Request {

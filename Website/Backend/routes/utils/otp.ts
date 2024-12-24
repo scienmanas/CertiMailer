@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { generateOtp, verifyOtp } from "../../helpers/otp";
-import { sendMail } from "../../helpers/mailer";
-import { validateEmail } from "../../helpers/data-validators";
+import { generateOtp, verifyOtp } from "../../helpers/utils/otp";
+import { sendMail } from "../../helpers/utils/mailer";
+import { validateEmail } from "../../helpers/validators/data-validators";
 
 const router = Router();
 

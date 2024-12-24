@@ -5,7 +5,9 @@ config();
 
 import express, { Express, Request, Response } from "express";
 import { connectToDB } from "./config/db";
+import { registerFonts } from "./config/RegisterFonts";
 import cookieParser from "cookie-parser";
+import fs from "fs";
 // Routes import
 import idRoute from "./routes/id/id";
 import authRoute from "./routes/user/auth";
@@ -17,6 +19,15 @@ import deleteOtp from "./cron-jobs/delete-otp";
 // Connect to Database
 console.log(`Environment: ${process.env.ENV as string}`);
 connectToDB();
+
+// Register Fonts
+registerFonts();
+
+// Ensure uploads directory exists
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+  console.log("Created uploads directory");
+}
 
 // Configure app
 const app: Express = express();
@@ -45,6 +56,7 @@ app.use((req: Request, res: Response, next) => {
     res.setHeader("Access-Control-Allow-Methods", allowedMethods.join(", "));
     res.setHeader("Access-Control-Allow-Headers", allowedHeaders.join(", "));
     res.setHeader("Access-Control-Allow-Credentials", "true");
+
     return next();
   } else if (process.env.ENV === "prod") {
     if (origin && allowedOrigins.includes(origin)) {

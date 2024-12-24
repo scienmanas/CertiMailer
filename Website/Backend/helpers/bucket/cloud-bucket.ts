@@ -1,8 +1,4 @@
 import { Storage } from "@google-cloud/storage";
-import multer from "multer";
-import path from "path";
-import { Request } from "express";
-import fs from "fs";
 
 // Initialize the Google Cloud client
 const bucketName = process.env.G_BUCKET_NAME as string;

@@ -4,12 +4,11 @@ import jwt from "jsonwebtoken";
 import bycrypt from "bcryptjs";
 import User from "../../models/user";
 import { multerErrorHandler } from "../../middlewares/multerErrorHandler";
-import { sendMail } from "../../helpers/mailer";
-import { verifyOtp } from "../../helpers/otp";
-import { uploadFile } from "../../helpers/cloud-bucket";
-import { createFolder } from "../../helpers/cloud-bucket";
-import multer from "multer";
-import path from "path";
+import { sendMail } from "../../helpers/utils/mailer";
+import { verifyOtp } from "../../helpers/utils/otp";
+import { uploadFile } from "../../helpers/bucket/cloud-bucket";
+import { createFolder } from "../../helpers/bucket/cloud-bucket";
+import { upload } from "../../config/multer";
 import fs from "fs";
 
 interface JwtPayload {
@@ -21,25 +20,6 @@ const JWT_SECRET: string = process.env.JWT_SECRET as string;
 
 // Initialse the router & multer
 const router = Router();
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Directory to save files temporarily
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Generate unique file name
-  },
-});
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 1 }, // File size limit = 1MB
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new Error("Only images are allowed"));
-    }
-    cb(null, true);
-  },
-});
 
 // Route - 1: Register a new User
 router.post(

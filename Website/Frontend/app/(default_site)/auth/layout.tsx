@@ -28,5 +28,5 @@ export default function AuthLayout({
   }, [theme, setTheme]);
 
   if (!mounted) return <PageLoader />;
-  else return <section className="h-dvh w-dvw">{children}</section>;
+  else return <section className="w-full h-fit">{children}</section>;
 }

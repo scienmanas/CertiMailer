@@ -49,7 +49,7 @@ export function Navbar(): JSX.Element {
   return (
     <Fragment>
       {!mounted && <TopLoader />}
-      <nav className="w-full z-10 h-fit top-0 flex items-center justify-center  dark:bg-neutral-800 bg-[#c9c9ca] transition-all duration-300 border-b border-transparent fixed backdrop-blur-2xl dark:border-[#3c3c43] border-[#a2a1a1] dark:bg-opacity-55 bg-opacity-55">
+      <nav className="w-dvw z-10 h-fit top-0 flex items-center justify-center  dark:bg-neutral-800 bg-[#c9c9ca] transition-all duration-300 border-b border-transparent fixed backdrop-blur-2xl dark:border-[#3c3c43] border-[#a2a1a1] dark:bg-opacity-55 bg-opacity-55">
         <div className="wrapper relative flex w-full max-w-screen-2xl items-center justify-between">
           <div className="relative flex px-4 py-3 flex-row items-center justify-between w-full">
             <Link href={"/"} className="w-fit h-fit">
