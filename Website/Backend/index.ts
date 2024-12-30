@@ -70,13 +70,12 @@ app.use((req: Request, res: Response, next) => {
       if (req.method === "OPTIONS") {
         return res.status(200).end();
       }
+    } else {
+      // If origin doesn't match, send a 403 error
+      return res.status(403).json({ message: "Access denied: Not allowed" });
     }
-  } else {
-    // If origin doesn't match, send a 403 error
-    return res.status(403).json({ message: "Access denied: Not allowed" });
+    next();
   }
-
-  next();
 });
 
 // Middleware to parse JSON and cookies
