@@ -7,7 +7,7 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { useState, useEffect, Fragment, useRef } from "react";
 import { useTheme } from "next-themes";
-import { TopLoader } from "@/app/ui/components/top-loader";
+import { TopLoader } from "@/app/ui/loaders";
 import buyMeCofeeSvg from "@/public/assets/donation/bmc.svg";
 import { comicNeueFont } from "@/app/utils/fonts";
 import { firaSansFont } from "@/app/utils/fonts";
@@ -20,7 +20,7 @@ export function Navbar(): JSX.Element {
   const [websiteTheme, setWebsiteTheme] = useState<string>("light");
 
   const tabs = [
-    { text: "About", link: "#hero" },
+    { text: "About", link: "/" },
     { text: "Blogs", link: "/blog" },
     { text: "Community", link: "https://github.com/scienmanas/CertiMailer" },
   ];
@@ -49,7 +49,7 @@ export function Navbar(): JSX.Element {
   return (
     <Fragment>
       {!mounted && <TopLoader />}
-      <nav className="w-full z-10 h-fit top-0 flex items-center justify-center  dark:bg-neutral-800 bg-[#c9c9ca] transition-all duration-300 border-b border-transparent fixed backdrop-blur-2xl dark:border-[#3c3c43] border-[#a2a1a1] dark:bg-opacity-55 bg-opacity-55">
+      <nav className="w-dvw z-10 h-fit top-0 flex items-center justify-center  dark:bg-neutral-800 bg-[#c9c9ca] transition-all duration-300 border-b border-transparent fixed backdrop-blur-2xl dark:border-[#3c3c43] border-[#a2a1a1] dark:bg-opacity-55 bg-opacity-55">
         <div className="wrapper relative flex w-full max-w-screen-2xl items-center justify-between">
           <div className="relative flex px-4 py-3 flex-row items-center justify-between w-full">
             <Link href={"/"} className="w-fit h-fit">
@@ -170,9 +170,12 @@ export function Navbar(): JSX.Element {
                         }
                       />
                     </Link>
-                    <button className="px-3 py-[4px] bg-transparent bg-gradient-to-tr from-[#7f40ef] to-[#a47aed] rounded-md text-bl font-semibold hover:from-[#7a47d4] hover:to-[#9767ea] transition-colors duration-300 transform text-white">
+                    <Link
+                      href={"/auth/login"}
+                      className="px-3 py-[4px] bg-transparent bg-gradient-to-tr from-[#7f40ef] to-[#a47aed] rounded-md text-bl font-semibold hover:from-[#7a47d4] hover:to-[#9767ea] transition-colors duration-300 transform text-white"
+                    >
                       Log in
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

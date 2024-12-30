@@ -1,35 +1,34 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import displayImage from "@/public/metadata/image.png";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://certimailer.xyz"),
-  title: "CertiMailer",
+  metadataBase: new URL(process.env.DOMAIN as string),
+  title: process.env.SITE_NAME,
   description:
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
   keywords:
     "certificate, certificate generator, email certificates, verify certificates, CertiMailer, certification, automated mailing, digital certificates",
   robots: "index, follow",
   openGraph: {
-    title: "CertiMailer",
+    title: process.env.SITE_NAME,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    url: "https://www.certimailer.xyz",
+
+    url: process.env.DOMAIN,
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
     images: displayImage.src,
   },
   twitter: {
-    card: "summary_large_image",
-    title: "CertiMailer",
+    card: "summary",
+    title: process.env.SITE_NAME,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    creator: "@ScientistManas",
+    creator: "@scienmanas",
     images: displayImage.src,
+    site: process.env.DOMAIN,
   },
 };
 

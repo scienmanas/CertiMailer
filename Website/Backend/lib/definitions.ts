@@ -1,16 +1,3 @@
-export type certificatesParams = {
-  organization_logo_url: string;
-  organization_name: string;
-  organization_id: string;
-  organization_status: string;
-  organization_email: string;
-  _id: string;
-  issued_to: string;
-  issued_email: string;
-  issued_date: string;
-  expiry_date: string;
-};
-
 export type waitlistParams = {
   name: string;
   email: string;
@@ -20,3 +7,29 @@ export type waitlistParams = {
 export type newsLetterParams = {
   email: string;
 };
+
+// ------------------- Id  ---------------------------
+
+export interface Point {
+  xPercent: number;
+  yPercent: number;
+  field: string;
+}
+
+export interface FieldMapping {
+  name: string;
+  mapping: string;
+  point: Point;
+}
+
+export interface CSVData {
+  headers: string[];
+  rows: Record<string, string>[];
+  emails?: string[];
+}
+
+export interface TextPosition {
+  text: string;
+  xPercent: number;
+  yPercent: number;
+}

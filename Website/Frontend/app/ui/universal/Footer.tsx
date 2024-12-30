@@ -9,7 +9,7 @@ import { CiMail } from "react-icons/ci";
 import { FiGithub } from "react-icons/fi";
 import { SiFarcaster } from "react-icons/si";
 import { useState } from "react";
-import { SubscribeToNewsletter } from "@/app/lib/control";
+import { SubscribeToNewsletter } from "@/app/lib/controls/newsletter";
 import { SubmissionLoader } from "@/app/ui/loaders";
 import { SiBuymeacoffee } from "react-icons/si";
 import { SiSolana } from "react-icons/si";
@@ -31,8 +31,8 @@ export function Footer(): JSX.Element {
       items: [
         { site: "About", link: "/" },
         { site: "Blog", link: "/blog" },
-        { site: "Verify", link: "/" },
-        { site: "Register", link: "/" },
+        { site: "Verify", link: "/verify" },
+        { site: "Register", link: "/auth/register" },
       ],
     },
     {
@@ -45,7 +45,7 @@ export function Footer(): JSX.Element {
     },
     {
       category: "Know",
-      items: [{ site: "@scienmamas", link: "https://x.com/scienmanas" }],
+      items: [{ site: "@scienmanas", link: "https://x.com/scienmanas" }],
     },
   ];
 

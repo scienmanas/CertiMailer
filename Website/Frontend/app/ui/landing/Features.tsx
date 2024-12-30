@@ -10,6 +10,7 @@ import clsx from "clsx";
 import { CardProps } from "@/app/lib/definitions";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { firaSansFont } from "@/app/utils/fonts";
+import Link from "next/link";
 
 export function Features(): JSX.Element {
   const cards = [
@@ -48,7 +49,9 @@ export function Features(): JSX.Element {
   ];
 
   return (
-    <div className={`features w-full flex items-center relative justify-center ${firaSansFont.className}`}>
+    <div
+      className={`features w-full flex items-center relative justify-center ${firaSansFont.className}`}
+    >
       <div className="features-content w-screen max-w-screen-2xl flex p-7 relative flex-col gap-10 lg:gap-14">
         <div className="svg w-fit h-fit p-5">
           <BsStars className="dark:text-purple-400 text-purple-700 text-5xl" />
@@ -98,9 +101,11 @@ const Card = ({ card }: CardProps): JSX.Element => {
         </div>
       </div>
       <div className="arrow-animated-readme-more flex flex-row justify-between items-center">
-        <p className="w-fit h-fit cursor-pointer dark:border-blue-400 border-pink-800 border-[1px] rounded-2xl py-1 px-2 dark:group-hover:text-yellow-200 group-hover:text-amber-800 dark:text-white text-neutral-800">
-          Read more
-        </p>
+        <Link href={"/blog/getting-started"}>
+          <p className="w-fit h-fit cursor-pointer dark:border-blue-400 border-pink-800 border-[1px] rounded-2xl py-1 px-2 dark:group-hover:text-yellow-200 group-hover:text-amber-800 dark:text-white text-neutral-800">
+            Read more
+          </p>
+        </Link>
         <FaLongArrowAltRight className="invisible group-hover:visible group-hover:translate-x-3 duration-200 group-hover:text-violet-400 text-violet-400" />
       </div>
     </div>

@@ -45,14 +45,14 @@ export function Hero(): JSX.Element {
             </div>
             <div className="redirect-buttons flex gap-6 flex-row items-center">
               <Link
-                href="#"
+                href="/auth"
                 className="get-started bg-transparent bg-gradient-to-bl from-[#9b48e8] to-[#9d7af9] flex flex-row items-center gap-2 px-3 py-3 sm:gap-2 sm:px-5 sm:py-4 rounded-3xl font-semibold group"
               >
                 <span className="text-white">Get started</span>
                 <FaArrowRight className="group-hover:translate-x-1 duration-200 text-white" />
               </Link>
               <Link
-                href="#"
+                href="https://github.com/scienmanas/CertiMailer"
                 className="github flex flex-row gap-2 items-center"
               >
                 <span className="dark:text-white text-neutral-900 font-bold">

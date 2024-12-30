@@ -12,7 +12,7 @@ function getMarkDownData(slug: string) {
   return data;
 }
 
-// Generate the metadata for the blogs page
+// Generate the metadata for the legal page
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
