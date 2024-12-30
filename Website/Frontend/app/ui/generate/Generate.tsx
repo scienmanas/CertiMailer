@@ -514,8 +514,15 @@ export function Generate(): JSX.Element {
         </div>
         {/* Type */}
         <div className="choice w-fit h-fit flex flex-row flex-wrap gap-6">
-          <label className="text-base flex items-center gap-1 cursor-pointer text-black dark:text-neutral-200">
+          <label
+            className={`text-base flex items-center gap-1 cursor-pointer text-black dark:text-neutral-200 ${
+              isGenerating || downloadBlob !== null
+                ? "cursor-not-allowed opacity-60"
+                : ""
+            }`}
+          >
             <input
+              disabled={isGenerating || downloadBlob !== null}
               defaultChecked
               type="radio"
               name="generationType"
@@ -524,8 +531,20 @@ export function Generate(): JSX.Element {
             />
             PNG
           </label>
-          <label className="text-sm sm:text-base flex items-center gap-2 cursor-pointer text-black dark:text-neutral-200">
-            <input type="radio" name="generationType" id="" value="PDF" />
+          <label
+            className={`text-sm sm:text-base flex items-center gap-2 cursor-pointer text-black dark:text-neutral-200 ${
+              isGenerating || downloadBlob !== null
+                ? "cursor-not-allowed opacity-60"
+                : ""
+            }`}
+          >
+            <input
+              disabled={isGenerating || downloadBlob !== null}
+              type="radio"
+              name="generationType"
+              id=""
+              value="PDF"
+            />
             PDF
           </label>
         </div>

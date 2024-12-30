@@ -18,8 +18,9 @@ export function FAQ(): JSX.Element {
   // Array containing FAQ data
   const faqData: FAQItem[] = [
     {
-      question: "When it will be released ?",
-      answer: "It will be released by this month end (Dec 2025)",
+      question: "How much time will it take to get the application approved?",
+      answer:
+        "The application approval process takes 2-3 days. But depending upon the number of applications, it may take more time.",
     },
     {
       question: "Will it be fee of cost ?",

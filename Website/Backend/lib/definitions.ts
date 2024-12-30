@@ -8,7 +8,6 @@ export type newsLetterParams = {
   email: string;
 };
 
-
 // ------------------- Id  ---------------------------
 
 export interface Point {
@@ -26,7 +25,7 @@ export interface FieldMapping {
 export interface CSVData {
   headers: string[];
   rows: Record<string, string>[];
-  hasMore: boolean;
+  emails?: string[];
 }
 
 export interface TextPosition {

@@ -146,7 +146,7 @@ export function Register(): JSX.Element {
       }
     };
     checkCredentials();
-  }, []);
+  }, [router]);
   // Load page only if mouting is done
   if (!Mounted) return <PageLoader />;
   else
@@ -188,7 +188,7 @@ export function Register(): JSX.Element {
                   ))}
                 </div>
               </div>
-              <div className="relative text-content w-[322px] h-fit items-center justify-center flex overflow-scroll ">
+              <div className="relative text-content w-[322px] h-fit items-center justify-center flex overflow-hidden ">
                 <div
                   style={{
                     width: 322,

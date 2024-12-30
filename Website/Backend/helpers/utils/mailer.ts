@@ -2,8 +2,6 @@ import nodemailer from "nodemailer";
 import multer from "multer";
 
 const PORT: number = 465;
-const storage = multer.memoryStorage(); // Store the files in memory
-const upload = multer({ storage });
 
 export async function sendMail({
   fromName = "",

@@ -24,19 +24,22 @@ interface userDataType {
 function DashBoardSkeleton(): JSX.Element {
   return (
     <div className="animate-pulse space-y-6 w-full">
-      <div className="flex items-start space-x-4 p-4 bg-gray-100 rounded-md shadow">
-        <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+      <div className="flex items-start space-x-4 p-4 bg-gray-100 dark:bg-black rounded-md shadow">
+        <div className="w-16 h-16 bg-gray-300 dark:bg-neutral-700 rounded-full"></div>
         <div className="space-y-2 flex-1">
-          <div className="h-4 w-1/3 bg-gray-300 rounded"></div>
-          <div className="h-4 w-1/2 bg-gray-300 rounded"></div>
-          <div className="h-16 w-full bg-gray-300 rounded"></div>
+          <div className="h-4 w-1/3 bg-gray-300 dark:bg-neutral-800 rounded"></div>
+          <div className="h-4 w-1/2 bg-gray-300 dark:bg-neutral-800 rounded"></div>
+          <div className="h-16 w-full bg-gray-300 dark:bg-neutral-800 rounded"></div>
         </div>
       </div>
 
       {/* Data Skeleton */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[1, 2, 3, 4, 5].map((item) => (
-          <div key={item} className="h-24 bg-gray-300 rounded-md"></div>
+          <div
+            key={item}
+            className="h-24 bg-gray-300 dark:bg-neutral-800 rounded-md"
+          ></div>
         ))}
       </div>
     </div>
@@ -60,7 +63,7 @@ function DashBoardFilled({
 
   return (
     <div className="w-full flex flex-col gap-4 sm:gap-5 h-fit">
-      <div className="flex items-start space-x-2 sm:space-x-4 md:space-x-6 p-3 sm:p-4 md:p-6 bg-white rounded-md shadow-md w-full h-fit">
+      <div className="flex items-start space-x-2 sm:space-x-4 md:space-x-6 p-3 sm:p-4 md:p-6 bg-white dark:bg-black rounded-md shadow-md w-full h-fit">
         <Image
           width={80}
           height={80}
@@ -70,8 +73,10 @@ function DashBoardFilled({
         />
 
         <div className="flex flex-col flex-wrap w-full">
-          <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold text-black gap-2 flex items-center">
-            <span>{userData.name}</span>
+          <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold gap-2 flex items-center">
+            <span className="text-black dark:text-neutral-200">
+              {userData.name}
+            </span>
             <span
               className={`px-3 py-1 rounded-md text-xs sm:text-sm md:text-base ${
                 userData.status === "Active"
@@ -82,15 +87,15 @@ function DashBoardFilled({
               {userData.status}
             </span>
           </h2>
-          <p className="text-gray-500 text-xs sm:text-sm md:text-base">
+          <p className="text-gray-500 dark:text-neutral-400 text-xs sm:text-sm md:text-base">
             {userData.email}
           </p>
           <div className="flex items-center space-x-4 mt-2">
-            <span className="text-gray-700 text-xs sm:text-sm md:text-base">
+            <span className="text-gray-700 dark:text-neutral-400 text-xs sm:text-sm md:text-base">
               <strong className="underline">Joined:</strong> {formattedDate}
             </span>
           </div>
-          <p className="text-gray-600 text-wrap text-xs sm:text-sm md:text-base">
+          <p className="text-gray-600 dark:text-neutral-400 text-wrap text-xs sm:text-sm md:text-base">
             <strong className="underline">About:</strong>{" "}
             <span>{userData.about}</span>
           </p>
@@ -98,38 +103,38 @@ function DashBoardFilled({
       </div>
 
       {/* Account Type with Emoji */}
-      <div className="p-3 sm:p-4 bg-white rounded-md shadow-md">
-        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black">
+      <div className="p-3 sm:p-4 bg-white dark:bg-black rounded-md shadow-md">
+        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black dark:text-neutral-200">
           Account Type {accountTypeEmoji}
         </h3>
-        <p className="text-gray-500 text-xs sm:text-sm md:text-base">
+        <p className="text-gray-500 dark:text-neutral-400 text-xs sm:text-sm md:text-base">
           {userData.type}
         </p>
       </div>
 
       {/* Data Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="p-4 bg-white rounded-md shadow-md">
-          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black">
+        <div className="p-4 bg-white dark:bg-black rounded-md shadow-md">
+          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black dark:text-neutral-200">
             Max Allocated Events
           </h3>
-          <p className="text-gray-500 text-xs sm:text-sm md:text-base">
+          <p className="text-gray-500 dark:text-neutral-400 text-xs sm:text-sm md:text-base">
             {userData.maxAllocatedEvents}
           </p>
         </div>
-        <div className="p-4 bg-white rounded-md shadow-md">
-          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black">
+        <div className="p-4 bg-white dark:bg-black rounded-md shadow-md">
+          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black dark:text-neutral-200">
             Total Events
           </h3>
-          <p className="text-gray-500 text-xs sm:text-sm md:text-base">
+          <p className="text-gray-500 dark:text-neutral-400 text-xs sm:text-sm md:text-base">
             {userData.totalEvents}
           </p>
         </div>
-        <div className="p-4 bg-white rounded-md shadow-md">
-          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black">
+        <div className="p-4 bg-white dark:bg-black rounded-md shadow-md">
+          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black dark:text-neutral-200">
             Allocated Emails Per Event
           </h3>
-          <p className="text-gray-500 text-xs sm:text-sm md:text-base">
+          <p className="text-gray-500 dark:text-neutral-400 text-xs sm:text-sm md:text-base">
             {userData.AllocatedEmails}
           </p>
         </div>
@@ -178,7 +183,7 @@ export default function DashBoard(): JSX.Element {
       className={`w-full h-full flex items-center justify-start px-1 py-4 sm:p-4 md:p-6 ${firaSansFont.className}`}
     >
       <div className="wrapper w-full h-full max-w-screen-xl flex items-start flex-col gap-4 md:gap-6 overflow-y-auto">
-        <div className="heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-black">
+        <div className="heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-black dark:text-neutral-200 underline">
           Profile ✨
         </div>
         {mounted ? (

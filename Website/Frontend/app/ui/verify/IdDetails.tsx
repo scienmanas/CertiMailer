@@ -142,38 +142,38 @@ export default function IdDetails() {
     };
     // fetchIdData();
 
-    setIdData({
-      user: {
-        issuedTo: "Manas Poddar",
-        issuedEmail: "manas@example.com",
-      },
-      id: {
-        _id: "123456",
-        issuedDate: "22 July 2024",
-        expiryDate: "23 July 2024",
-        idType: "Participant",
-      },
-      event: {
-        eventId: "event123",
-        eventName: "MediHacks 2024",
-        eventType: "Hackathon",
-        eventDate: "2024-07-07",
-      },
-      organization: {
-        organizationName: "MediHacks",
-        organizationId: "org123",
-        organizationEmail: "manas@certimailer.xyz",
-        organizationLogo:
-          "https://storage.googleapis.com/certimailer/676435f2b91236d1bd7ec819/logo/logo.png",
-        organizationAbout:
-          "Hackathon dedicated to push innovation in society by fusing AI with medicine.",
-        organizationStatus: "unverified",
-        organizationWebsite: "https://medihacks.com",
-      },
-    });
-    setIsFetchingSuccessful(true);
+    // setIdData({
+    //   user: {
+    //     issuedTo: "Manas Poddar",
+    //     issuedEmail: "manas@example.com",
+    //   },
+    //   id: {
+    //     _id: "123456",
+    //     issuedDate: "22 July 2024",
+    //     expiryDate: "23 July 2024",
+    //     idType: "Participant",
+    //   },
+    //   event: {
+    //     eventId: "event123",
+    //     eventName: "MediHacks 2024",
+    //     eventType: "Hackathon",
+    //     eventDate: "2024-07-07",
+    //   },
+    //   organization: {
+    //     organizationName: "MediHacks",
+    //     organizationId: "org123",
+    //     organizationEmail: "manas@certimailer.xyz",
+    //     organizationLogo:
+    //       "https://storage.googleapis.com/certimailer/676435f2b91236d1bd7ec819/logo/logo.png",
+    //     organizationAbout:
+    //       "Hackathon dedicated to push innovation in society by fusing AI with medicine.",
+    //     organizationStatus: "unverified",
+    //     organizationWebsite: "https://medihacks.com",
+    //   },
+    // });
+    // setIsFetchingSuccessful(true);
     setIsFetching(false);
-  }, [id]);
+  }, [id, router]);
 
   if (isFetching) return <PageLoader />;
   else if (!isFetchingSuccessful) return <IdNotFound />;

@@ -7,15 +7,21 @@ const idSchema = new mongoose.Schema(
       default: () => new mongoose.Types.ObjectId(),
     },
     organizationId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
-    idtype: { type: String, required: true },
-    eventId: { type: String, required: true },
-    issuedTo: { type: String, required: true },
-    issuedEmail: { type: String, required: true },
-    issuedDate: { type: String, required: true, default: Date.now }, // default to current date
+    eventId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+      required: true,
+    },
+    idType: { type: String, required: true },
+    issuedTo: { type: String, required: false },
+    issuedEmail: { type: String, required: false },
+    issuedDate: { type: Date, required: true, default: Date.now }, // default to current date
     expiryDate: { type: String, required: true },
+    textPosition: { type: Array, required: true },
   },
   {
     collection: "id",

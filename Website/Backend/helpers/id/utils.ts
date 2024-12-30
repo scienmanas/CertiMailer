@@ -2,7 +2,7 @@ import { FieldMapping, TextPosition } from "../../lib/definitions";
 import PDFDocument from "pdfkit";
 import sharp from "sharp";
 
-export function mapCSVToTextPositions(
+export function mapCSVToTextPosition(
   row: Record<string, string>,
   fields: FieldMapping[]
 ): TextPosition[] {

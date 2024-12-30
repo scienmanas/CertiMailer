@@ -1,12 +1,10 @@
 import Papa from "papaparse";
+import { CSVData } from "../../lib/definitions";
 
-export interface CSVData {
-  headers: string[];
-  rows: Record<any | string, any | string>[];
-  hasMore: boolean;
-}
-
-export async function parseCSV(content: string): Promise<CSVData> {
+export async function parseCSV(
+  content: string,
+  loggedIn: boolean
+): Promise<CSVData> {
   return new Promise((resolve, reject) => {
     Papa.parse(content, {
       complete(results) {
@@ -16,10 +14,14 @@ export async function parseCSV(content: string): Promise<CSVData> {
         }
 
         const headers = results.data[0] as string[];
-        const rows = (results.data.slice(1) as string[][]).map(row => {
+        const emails: string[] = [];
+        const rows = (results.data.slice(1) as string[][]).map((row) => {
           const obj: Record<string, string> = {};
           headers.forEach((header, index) => {
-            obj[header] = row[index];
+            if (loggedIn) {
+              if (index === 1) emails.push(row[index]); // For user email
+              else obj[header] = row[index];
+            } else obj[header] = row[index]; // For not logged user
           });
           return obj;
         });
@@ -27,7 +29,7 @@ export async function parseCSV(content: string): Promise<CSVData> {
         resolve({
           headers: headers,
           rows: rows,
-          hasMore: false,
+          ...(loggedIn ? { emails: emails } : {}),
         });
       },
       header: false,

@@ -56,3 +56,36 @@ export async function generateUnlimitedId(formData: FormData) {
     };
   }
 }
+
+export async function generateLimitedId(formData: FormData) {
+  const APIURI = new URL(
+    process.env.NEXT_PUBLIC_BACKEND_URI + "/id/generate/logged-in"
+  );
+  try {
+    const response: Response = await fetch(APIURI.toString(), {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+    if (response.status === 200) {
+      const blob = await response.blob();
+      return {
+        status: response.status,
+        message: "Success",
+        blob: blob,
+      };
+    } else {
+      const data = await response.json();
+      return {
+        status: response.status,
+        message: data.message,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      status: 500,
+      message: "Internal Server Error",
+    };
+  }
+}

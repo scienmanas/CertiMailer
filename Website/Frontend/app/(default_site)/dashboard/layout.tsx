@@ -53,26 +53,26 @@ export default function AuthLayout({
         setTheme(theme);
       }
     }
-  }, []);
+  }, [router, setTheme, theme]);
 
   // Load page only if mouting is done
   if (!Mounted) return <PageLoader />;
   else
     return (
-      <div className="flex flex-col w-full h-dvh bg-neutral-200 dark:bg-neutral-200 pb-16 relative">
+      <div className="flex flex-col w-full h-dvh bg-neutral-200 dark:bg-[#1a2029] relative">
         {startTopLoader && <TopLoader />}
-        <div className="nav w-full h-fit">
+        <div className="nav fixed z-30 top-0 w-full h-fit">
           <Navbar userLogoUrl={userLogoUrl as string} />
         </div>
-        <div className="side-nav-and-functionality flex flex-row h-full">
+        <div className="side-nav-and-functionality flex flex-row h-full pt-[48px] pb-[60px]">
           <div className="side-nav h-full w-fit">
             <SideBar />
           </div>
-          <div className="tab-conetnts w-full h-full">{children}</div>
+          <div className="tab-conetnts w-fit h-fit max-h-full overflow-scroll no-scrollbar">
+            {children}
+          </div>
         </div>
-        <section className="footer relative z-20">
-          <Footer />
-        </section>
+        <Footer />
       </div>
     );
 }

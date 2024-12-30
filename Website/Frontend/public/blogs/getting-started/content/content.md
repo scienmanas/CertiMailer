@@ -1,13 +1,14 @@
 ---
 publishedDate: 2024-12-14T00:00:00Z
-title: The Launch
-description: The launch of the certimailer, read about features and stuff.
+title: Getting to know - CertiMailer
+description: In this blog we will discuss about CertiMailer, a free, open-source platform designed to simplify the process of issuing, managing, and verifying digital certificates
 tags:
   - launch
+  - CertiMailer
 #  All the comtents of the blog goes here.
 ---
 
-After months of development and dedication, I am thrilled to announce the official launch of **CertiMailer** on **December 30**! What started as a simple script for developers has now evolved into a fully functional, user-friendly website that anyone can use. For those who still enjoy tinkering with code, the original script will remain available—because geeks are always welcome here. 😊
+After months of development and dedication, the web version of **CertiMailer** was launched on **December 30**! What started as a simple script for developers has now evolved into a fully functional, user-friendly website that anyone can use. For those who still enjoy tinkering with code, the original script will remain available—because geeks are always welcome here. 😊
 
 ### What is CertiMailer?
 
@@ -25,10 +26,12 @@ If you need these limits adjusted for your use case, just shoot me an email, and
 ### Exciting Features of CertiMailer:
 
 1. **Unique ID and Verification**:
+
    - Every certificate or ID issued comes with a unique identifier.
    - These can be verified on the CertiMailer website to display validity, recipient details, and the creator’s information—adding a layer of trust and professionalism.
 
 2. **Organization Dashboard**:
+
    - All certificates and IDs are securely stored in the cloud.
    - If certificates are ever lost, they can be regenerated effortlessly.
    - Centralized management helps keep everything organized for your events.
@@ -38,7 +41,7 @@ If you need these limits adjusted for your use case, just shoot me an email, and
 
 ### How to Get Started:
 
-Visit the official website at [certimailer.xyz](https://certimailer.xyz) and subscribe to the newsletter to get notified as soon as we go live. Whether you’re organizing a seminar, a workshop, or a certification program, CertiMailer will make your workflow seamless.
+Visit the official website at [certimailer.xyz](https://certimailer.xyz) and you will find a demo video to get started. The platform is designed to be intuitive and user-friendly, but if you have any questions, feel free to reach out to me via email.
 
 ### A Note from Me:
 
@@ -52,4 +55,4 @@ Thank you for being part of this journey. If you’ve read this far, I appreciat
 
 Cheers 🥂,  
 **Manas**  
-[GitHub](https://github.com/scienmanas) | [Email](mailto:iamscientistmanas@gmail.com)  
+[GitHub](https://github.com/scienmanas) | [Email](mailto:iamscientistmanas@gmail.com)

@@ -48,7 +48,7 @@ export function Footer(): JSX.Element {
         <span>
           Made by{" "}
           <span className="text-cyan-300 hover:underline">
-            <Link href={"https://github.com/scienmanas"}>Manas</Link>
+            <Link href={"https://scienmanas.xyz"}>Manas</Link>
           </span>{" "}
           with 💖.
         </span>
