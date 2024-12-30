@@ -1,7 +1,7 @@
 ---
 publishedDate: 2024-12-30T00:00:00Z
 title: Public generation Guide
-description: In this blog we will discuss about how to generate id/certificated in bulk without assigning and unique id to them.
+description: In this blog we will discuss about how to generate id/certificated in bulk without assigning the unique id to them.
 tags:
   - no login
   - generation
