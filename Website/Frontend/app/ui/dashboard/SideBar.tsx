@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { IoSettingsOutline } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 import { PiCertificateDuotone } from "react-icons/pi";
 import { SiFuturelearn } from "react-icons/si";

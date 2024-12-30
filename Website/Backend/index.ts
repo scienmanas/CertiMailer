@@ -58,7 +58,7 @@ app.use((req: Request, res: Response, next) => {
     res.setHeader("Access-Control-Allow-Credentials", "true");
 
     return next();
-  } else if (process.env.ENV === "prod") {
+  } else if (process.env.ENV === "prod" || process.env.ENV === "test") {
     if (origin && allowedOrigins.includes(origin)) {
       // Allow the origin if it's in the allowedOrigins list
       res.setHeader("Access-Control-Allow-Origin", origin);
