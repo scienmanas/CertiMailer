@@ -101,7 +101,7 @@ const Card = ({ card }: CardProps): JSX.Element => {
         </div>
       </div>
       <div className="arrow-animated-readme-more flex flex-row justify-between items-center">
-        <Link href={"/blog/getting-started"}>
+        <Link href={"/blog/get-to-know"}>
           <p className="w-fit h-fit cursor-pointer dark:border-blue-400 border-pink-800 border-[1px] rounded-2xl py-1 px-2 dark:group-hover:text-yellow-200 group-hover:text-amber-800 dark:text-white text-neutral-800">
             Read more
           </p>
