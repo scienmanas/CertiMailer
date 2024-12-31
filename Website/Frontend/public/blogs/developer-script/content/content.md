@@ -81,6 +81,7 @@ chmod +x certimailer.sh
 
 [Video](https://github.com/scienmanas/CertiMailer/assets/99756067/0e9d664d-ff87-4663-a8f9-2e8103e5a344)
 
-Cheers 🥂,
-**Manas**
+
+Cheers 🥂,  
+**Manas**  
 [GitHub](https://github.com/scienmanas) | [Email](mailto:iamscientistmanas@gmail.com)
