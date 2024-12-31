@@ -233,5 +233,10 @@
   decoration-color: yellow;
 }
 
+.markdown code {
+  text-wrap: wrap;
+  font-size: medium;
+}
+
 /* ----------------------------------------------- */
 
