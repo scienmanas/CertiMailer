@@ -5,6 +5,7 @@ import { parseCSV } from "../../helpers/parsers/parsers";
 import { generateId } from "../../helpers/id/id";
 import { mapCSVToTextPosition, convertPNGtoPDF } from "../../helpers/id/utils";
 import { sendMail } from "../../helpers/utils/mailer";
+import { updateGenerationCount } from "../../helpers/utils/analytics";
 import { protectUserRoutes } from "../../middlewares/protectRoutes";
 import Event from "../../models/event";
 import Id from "../../models/id";
@@ -96,6 +97,13 @@ router.post(
         else
           return res.status(400).json({ message: "Invalid generation type" });
       }
+
+      // Update the generation count
+      updateGenerationCount({
+        total: { number: csvData.rows.length, update: true },
+        publicGeneration: { number: csvData.rows.length, update: true },
+        loggedInGeneration: { number: 0, update: false },
+      });
 
       // Generate zip file & save it
       const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
@@ -302,6 +310,13 @@ router.post(
         } else
           return res.status(400).json({ message: "Invalid generation type" });
       }
+
+      // Update the generation count
+      updateGenerationCount({
+        total: { number: csvData.rows.length, update: true },
+        publicGeneration: { number: 0, update: false },
+        loggedInGeneration: { number: csvData.rows.length, update: true },
+      });
 
       // Generate zip and save it
       const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });

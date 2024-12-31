@@ -146,11 +146,17 @@ router.post("/login", async (req: Request, res: Response) => {
     res
       .cookie("authToken", authToken, {
         httpOnly: true,
-        secure: process.env.ENV === "prod",
-        sameSite: process.env.ENV === "prod" ? "strict" : "lax",
+        secure: process.env.ENV === "prod" || process.env.ENV === "test",
+        sameSite:
+          process.env.ENV === "prod" || process.env.ENV === "test"
+            ? "strict"
+            : "lax",
         maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 30 * 60 * 1000, // 1 Week expiry otherwise 30 minutes
         path: "/",
-        domain: process.env.ENV === "prod" ? process.env.DOMAIN : "localhost",
+        domain:
+          process.env.ENV === "prod" || process.env.ENV === "test"
+            ? process.env.DOMAIN
+            : "localhost",
       })
       .status(200)
       .json({
