@@ -168,7 +168,7 @@ export default function BlogsPage({ params }: BlogPageProps): JSX.Element {
           </section>
           <section className="post-content-and-share h-fit w-fit flex flex-col gap-6">
             <div className="post-content text-base text-neutral-700 dark:text-neutral-300 sm:text-lg markdown">
-              <Markdown>{blogData.content}</Markdown>{" "}
+              <Markdown>{blogData.content}</Markdown>
               {/* Render blog content */}
             </div>
             <div className="relative tags-and-share flex flex-row flex-wrap gap-6 w-full items-center justify-between">

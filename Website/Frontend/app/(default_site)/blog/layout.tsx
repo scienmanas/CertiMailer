@@ -1,7 +1,6 @@
 import { Metadata } from "next"; // Import the Metadata type from Next.js
 import { Navbar } from "@/app/ui/universal/Navbar";
 import { Footer } from "@/app/ui/universal/Footer";
-// import metaDataImg from "@/public/assets/metadata/blog.png"; // Import image for OpenGraph and Twitter meta
 
 // Generate the metadata for the blogs page
 export async function generateMetadata(): Promise<Metadata> {
@@ -9,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(process.env.DOMAIN as string),
     title: `Blogs - ${process.env.SITE_NAME}`,
     description: "Read the blogs, discover phenomenal things happening around",
-    keywords: ["reading", "article", "tech", "knowledge", "poetry"],
+    keywords: ["reading", "article", "tech", "knowledge"],
     robots: "index, follow",
     openGraph: {
       title: `Blogs - ${process.env.SITE_NAME}`,
@@ -22,8 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary",
       title: `Blogs - ${process.env.SITE_NAME}`,
-      description:
-        "Read my blogs, I write about tech, do some poetry, and makes memes.",
+      description: "Read the blogs from core team of CertiMailer.",
       creator: "@scienmanas",
       site: `${process.env.DOMAIN}/blog`,
     },
@@ -39,7 +37,7 @@ export default function Layout({
       <div className="navbar w-full h-fit">
         <Navbar />
       </div>
-      <main className="w-full h-fit flex flex-col items-center justify-center p-4">
+      <main className="relative w-full h-fit flex flex-col items-center justify-center px-2 py-4">
         {children}
       </main>
       <div className="footer w-full h-fit">
