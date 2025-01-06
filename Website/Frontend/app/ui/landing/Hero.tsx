@@ -11,7 +11,7 @@ import { firaSansFont } from "@/app/utils/fonts";
 export function Hero(): JSX.Element {
   const heroHeadWords = [
     "Mailing.",
-    "Verificaion.",
+    "Verification.",
     "Authenticity.",
     "Automation.",
   ];
