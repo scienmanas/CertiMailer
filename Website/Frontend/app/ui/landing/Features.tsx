@@ -27,7 +27,7 @@ export function Features(): JSX.Element {
       alt: "hat",
       head: "Geneartion, Mailaing & verification",
       description:
-        "Generate organization with a valid organization domain or show a proof of your oraganization, That's enough. We will take care of the rest.",
+        "Generate organization with a valid organization SITE_URL or show a proof of your oraganization, That's enough. We will take care of the rest.",
       className: "bg-[#ebebee] dark:bg-gray-700",
     },
     {

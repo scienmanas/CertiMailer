@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import displayImage from "@/public/metadata/image.png";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.DOMAIN as string),
+  metadataBase: new URL(process.env.SITE_URL as string),
   title: process.env.SITE_NAME,
   description:
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
 
-    url: process.env.DOMAIN,
+    url: process.env.SITE_URL,
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
     creator: "@scienmanas",
     images: displayImage.src,
-    site: process.env.DOMAIN,
+    site: process.env.SITE_URL,
   },
 };
 

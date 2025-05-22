@@ -5,7 +5,7 @@ import { Footer } from "@/app/ui/universal/Footer";
 // Generate the metadata for the blogs page
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL(process.env.DOMAIN as string),
+    metadataBase: new URL(process.env.SITE_URL as string),
     title: `Blogs - ${process.env.SITE_NAME}`,
     description: "Read the blogs, discover phenomenal things happening around",
     keywords: ["reading", "article", "tech", "knowledge"],
@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: `Blogs - ${process.env.SITE_NAME}`,
       description: "Read the blogs from core team of CertiMailer.",
-      url: `${process.env.DOMAIN}/blog`,
+      url: `${process.env.SITE_URL}/blog`,
       type: "article",
       siteName: `${process.env.SITE_NAME}`,
       locale: "en_US",
@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `Blogs - ${process.env.SITE_NAME}`,
       description: "Read the blogs from core team of CertiMailer.",
       creator: "@scienmanas",
-      site: `${process.env.DOMAIN}/blog`,
+      site: `${process.env.SITE_URL}/blog`,
     },
   };
 }

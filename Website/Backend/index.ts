@@ -51,14 +51,14 @@ app.use((req: Request, res: Response, next) => {
       .json({ message: "CertiMailer server on fire :)" })
       .end();
 
-  if (process.env.ENV === "dev") {
+  if (process.env.ENV === "development") {
     res.setHeader("Access-Control-Allow-Origin", origin || allowedDevOrigin);
     res.setHeader("Access-Control-Allow-Methods", allowedMethods.join(", "));
     res.setHeader("Access-Control-Allow-Headers", allowedHeaders.join(", "));
     res.setHeader("Access-Control-Allow-Credentials", "true");
 
     return next();
-  } else if (process.env.ENV === "prod" || process.env.ENV === "test") {
+  } else if (process.env.ENV === "production" || process.env.ENV === "testing") {
     if (origin && allowedOrigins.includes(origin)) {
       // Allow the origin if it's in the allowedOrigins list
       res.setHeader("Access-Control-Allow-Origin", origin);

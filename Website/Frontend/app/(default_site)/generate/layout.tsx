@@ -3,10 +3,10 @@ import { Footer } from "@/app/ui/universal/Footer";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const pageURL = process.env.DOMAIN + `generate`;
+  const pageURL = process.env.SITE_URL + `generate`;
 
   return {
-    metadataBase: new URL(process.env.DOMAIN as string),
+    metadataBase: new URL(process.env.SITE_URL as string),
     title: "Generate | CertiMailer",
     description:
       "Generate id/certificate in bulk with no restriction on the number of id/certificate generated.",

@@ -2,7 +2,7 @@ import { Register } from "@/app/ui/auth/Register";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.DOMAIN as string),
+  metadataBase: new URL(process.env.SITE_URL as string),
   title: `Register - ${process.env.SITE_NAME}`,
   description:
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: `Register - ${process.env.SITE_NAME}`,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    url: `${process.env.DOMAIN}/auth/register`,
+    url: `${process.env.SITE_URL}/auth/register`,
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
     creator: "@scienmanas",
-    site: `${process.env.DOMAIN}/auth/register`,
+    site: `${process.env.SITE_URL}/auth/register`,
   },
 };
 

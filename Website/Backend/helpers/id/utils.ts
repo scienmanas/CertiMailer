@@ -7,9 +7,9 @@ export function mapCSVToTextPosition(
   fields: FieldMapping[]
 ): TextPosition[] {
   return fields.map((field) => ({
-    text: row[field.mapping],
-    xPercent: field.point.xPercent,
-    yPercent: field.point.yPercent,
+    text: String(row[field.mapping] ?? ""),
+    xPercent: field.point.xPercent ?? 0,
+    yPercent: field.point.yPercent ?? 0,
   }));
 }
 

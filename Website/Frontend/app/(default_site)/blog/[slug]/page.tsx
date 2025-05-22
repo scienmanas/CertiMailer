@@ -32,11 +32,11 @@ export async function generateMetadata({
   const blogData = getBlogPostData("blogs", params.slug);
 
   // Construct a dynamic OpenGraph image URL based on environment variables
-  const ogImageURL = `${process.env.DOMAIN}` + blogData.image;
+  const ogImageURL = `${process.env.SITE_URL}` + blogData.image;
 
   // Return the metadata object, including OpenGraph and Twitter details
   return {
-    metadataBase: new URL(process.env.DOMAIN as string),
+    metadataBase: new URL(process.env.SITE_URL as string),
     title: `${blogData.title} - Blogs`,
     description: blogData.description,
     keywords: blogData.tags,
@@ -44,7 +44,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${blogData.title} - Blogs`,
       description: blogData.description,
-      url: `${process.env.DOMAIN}/blog/${params.slug}`,
+      url: `${process.env.SITE_URL}/blog/${params.slug}`,
       images: [ogImageURL],
       type: "article",
       siteName: `CertiMailer Blogs`,
@@ -56,14 +56,14 @@ export async function generateMetadata({
       description: blogData.description,
       images: [ogImageURL],
       creator: "@scienmanas",
-      site: `${process.env.DOMAIN}/blog/${params.slug}`,
+      site: `${process.env.SITE_URL}/blog/${params.slug}`,
     },
   };
 }
 
 // Blog page component that renders the blog post content and sharing links
 export default function BlogsPage({ params }: BlogPageProps): JSX.Element {
-  const pageURL = process.env.DOMAIN + `/blog/${params.slug}`; // Construct page URL for sharing
+  const pageURL = process.env.SITE_URL + `/blog/${params.slug}`; // Construct page URL for sharing
   const blogData = getBlogPostData("blogs", params.slug); // Fetch blog post data
 
   // Calculate the total number of words and reading time

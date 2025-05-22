@@ -16,11 +16,11 @@ function getMarkDownData(slug: string) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const pageURL = process.env.DOMAIN + `/legal/${params.slug}`;
+  const pageURL = process.env.SITE_URL + `/legal/${params.slug}`;
   const data = getMarkDownData(params.slug);
 
   return {
-    metadataBase: new URL(process.env.DOMAIN as string),
+    metadataBase: new URL(process.env.SITE_URL as string),
     title: `${data.metaData.title} - ${process.env.SITE_NAME}`,
     description: data.metaData.description,
     keywords: data.metaData.keywords,

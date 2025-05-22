@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ResetPassword } from "@/app/ui/auth/ResetPassword";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.DOMAIN as string),
+  metadataBase: new URL(process.env.SITE_URL as string),
   title: `Reset Password - ${process.env.SITE_NAME}`,
   description:
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: `Reset Password - ${process.env.SITE_NAME}`,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    url: `${process.env.DOMAIN}/auth/reset-password`,
+    url: `${process.env.SITE_URL}/auth/reset-password`,
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
     creator: "@scienmanas",
-    site: `${process.env.DOMAIN}/auth/reset-password`,
+    site: `${process.env.SITE_URL}/auth/reset-password`,
   },
 };
 

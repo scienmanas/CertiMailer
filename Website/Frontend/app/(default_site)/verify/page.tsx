@@ -4,7 +4,7 @@ import { Footer } from "@/app/ui/universal/Footer";
 import { Navbar } from "@/app/ui/universal/Navbar";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.DOMAIN as string),
+  metadataBase: new URL(process.env.SITE_URL as string),
   title: `Verify - ${process.env.SITE_NAME}`,
   description:
     "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: `Verify - ${process.env.SITE_NAME}`,
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
-    url: `${process.env.DOMAIN}/verify`,
+    url: `${process.env.SITE_URL}/verify`,
     type: "website",
     locale: "en_US",
     siteName: "CertiMailer",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     description:
       "A complete solution to generate, mail, and verify certificates. Streamline your certification process with ease.",
     creator: "@scienmanas",
-    site: `${process.env.DOMAIN}/verify`,
+    site: `${process.env.SITE_URL}/verify`,
   },
 };
 

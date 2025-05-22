@@ -6,10 +6,10 @@ import Link from "next/link";
 
 // Generate the metadata for the Auth page
 export async function generateMetadata(): Promise<Metadata> {
-  const pageURL = process.env.DOMAIN + `auth`;
+  const pageURL = process.env.SITE_URL + `auth`;
 
   return {
-    metadataBase: new URL(process.env.DOMAIN as string),
+    metadataBase: new URL(process.env.SITE_URL as string),
     title: "Options | CertiMailer",
     description:
       "Choose an options and start automating your certificate/id delivery process.",
